@@ -15,8 +15,8 @@ class PotentialEntry:
         self.entries = dict()
         self.value = 1.0
 
-    def add(self, id, value):
-        self.entries[id] = value;
+    def add(self, k, v):
+        self.entries[k] = v;
         return self
 
     def matches(self, that):
