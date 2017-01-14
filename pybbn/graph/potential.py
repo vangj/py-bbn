@@ -4,10 +4,10 @@ class Potential:
 
     def add_entry(self, entry):
         self.entries.append(entry)
+        return self
 
     def get_matching_entry(self, entry):
-        matches = [e for e in self.entries if e.matches(entry)]
-        return matches
+        return [e for e in self.entries if e.matches(entry)]
 
 
 class PotentialEntry:
