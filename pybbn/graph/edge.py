@@ -5,6 +5,6 @@ class Edge:
 
     @property
     def key(self):
-        a = min(self.i.uid, self.j.uid)
-        b = max(self.i.uid, self.j.uid)
+        a = min(self.i.id, self.j.id)
+        b = max(self.i.id, self.j.id)
         return "{}--{}".format(a, b)

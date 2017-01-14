@@ -14,9 +14,9 @@ class ShortestPath:
     def search(self, i):
         self.seen.add(i)
         for n in self.graph.get_neighbors(i):
-            if n.uid == self.stop:
+            if n.id == self.stop:
                 return True
-            if n.uid not in self.seen:
-                if self.search(n.uid):
+            if n.id not in self.seen:
+                if self.search(n.id):
                     return True
         return False
