@@ -13,7 +13,7 @@ def teardown():
 
 
 @with_setup(setup, teardown)
-def test_graph_creation():
+def test_dag_creation():
     n0 = Node(0)
     n1 = Node(1)
     n2 = Node(2)
