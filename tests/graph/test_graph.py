@@ -33,8 +33,12 @@ def test_graph_creation():
     assert len(list(g.get_neighbors(1))) == 2
     assert len(list(g.get_neighbors(2))) == 1
 
-    assert n1 in g.get_neighbors(0)
-    assert n0 in g.get_neighbors(1)
-    assert n2 in g.get_neighbors(1)
-    assert n1 in g.get_neighbors(2)
+    assert 1 in g.get_neighbors(0)
+    assert 0 in g.get_neighbors(1)
+    assert 2 in g.get_neighbors(1)
+    assert 1 in g.get_neighbors(2)
+
+    assert g.edge_exists(0, 1) == 1
+    assert g.edge_exists(1, 2) == 1
+    assert g.edge_exists(0, 2) == 0
 

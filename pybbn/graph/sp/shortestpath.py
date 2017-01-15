@@ -13,10 +13,10 @@ class ShortestPath:
 
     def search(self, i):
         self.seen.add(i)
-        for n in self.graph.get_neighbors(i):
-            if n.id == self.stop:
+        for node_id in self.graph.get_neighbors(i):
+            if node_id == self.stop:
                 return True
-            if n.id not in self.seen:
-                if self.search(n.id):
+            if node_id not in self.seen:
+                if self.search(node_id):
                     return True
         return False
