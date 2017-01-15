@@ -63,3 +63,8 @@ class Graph:
     def remove_node(self, id):
         self.nodes.pop(id, None)
 
+
+class Ug(Graph):
+    def __init__(self):
+        Graph.__init__()
+
