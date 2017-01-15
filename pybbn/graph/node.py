@@ -1,5 +1,6 @@
 from pybbn.graph.util import IdUtil
 
+
 class Node:
     def __init__(self, id):
         self.id = id
@@ -7,6 +8,9 @@ class Node:
 
     def add_metadata(self, k, v):
         self.metadata[k] = v
+
+    def __str__(self):
+        return '{}'.format(self.id)
 
 
 class BbnNode(Node):
@@ -17,6 +21,9 @@ class BbnNode(Node):
 
     def get_weight(self):
         return len(self.variable.values)
+
+    def __str__(self):
+        return '{}|{}|{}'.format(self.id, self.variable.name, str.join(',', self.variable.values))
 
 
 class Clique(Node):
@@ -64,6 +71,9 @@ class Clique(Node):
     def get_sep_set(self, that):
         return SepSet(self, that)
 
+    def __str__(self):
+        return '({})'.format(str.join(',', [node.variable.name for node in self.nodes]))
+
 
 class SepSet(Clique):
     def __init__(self, left, right):
@@ -81,3 +91,5 @@ class SepSet(Clique):
     def get_mass(self):
         return len(self.nodes)
 
+    def __str__(self):
+        return '|{}|'.format(str.join(',', [node.variable.name for node in self.nodes]))

@@ -101,3 +101,30 @@ def test_sep_set_creation():
     assert sepset.get_cost() == 16
     assert sepset.get_mass() == 2
 
+
+@with_setup(setup, teardown)
+def test_str():
+    a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
+    b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
+    c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
+    d = BbnNode(Variable(3, 'd', ['on', 'off']), [0.9, 0.1, 0.5, 0.5])
+    abc = Clique([a, b, c])
+    bcd = Clique([b, c, d])
+    sepset = abc.get_sep_set(bcd)
+
+    print(a)
+    print(b)
+    print(c)
+    print(d)
+    print(abc)
+    print(bcd)
+    print(sepset)
+
+    assert a.__str__() == '0|a|on,off'
+    assert b.__str__() == '1|b|on,off'
+    assert c.__str__() == '2|c|on,off'
+    assert d.__str__() == '3|d|on,off'
+    assert abc.__str__() == '(a,b,c)'
+    assert bcd.__str__() == '(b,c,d)'
+    assert sepset.__str__() == '|b,c|'
+

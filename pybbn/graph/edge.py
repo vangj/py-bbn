@@ -8,3 +8,6 @@ class Edge:
         a = min(self.i.id, self.j.id)
         b = max(self.i.id, self.j.id)
         return "{}--{}".format(a, b)
+
+    def __str__(self):
+        return self.key()

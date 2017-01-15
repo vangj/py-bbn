@@ -9,6 +9,9 @@ class Potential:
     def get_matching_entry(self, entry):
         return [e for e in self.entries if e.matches(entry)]
 
+    def __str__(self):
+        return str.join('\n', [entry.__str__() for entry in self.entries])
+
 
 class PotentialEntry:
     def __init__(self):
@@ -31,3 +34,9 @@ class PotentialEntry:
             entry.add(k, v)
         entry.value = self.value
         return entry
+
+    def __str__(self):
+        arr = ['{}={}'.format(k, v) for k, v in self.entries.items()]
+        s = str.join(',', arr)
+        return '{}|{}'.format(s, self.value)
+

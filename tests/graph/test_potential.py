@@ -59,3 +59,18 @@ def test_potential_get_matching_entry():
     assert len(potential.get_matching_entry(entry4)) == 1
     assert len(potential.get_matching_entry(entry5)) == 0
 
+@with_setup(setup, teardown)
+def test_str():
+    entry1 = PotentialEntry().add(0, 'on').add(1, 'on')
+    entry2 = PotentialEntry().add(0, 'on').add(1, 'off')
+    entry3 = PotentialEntry().add(0, 'off').add(1, 'on')
+    entry4 = PotentialEntry().add(0, 'off').add(1, 'off')
+
+    potential = Potential() \
+        .add_entry(entry1) \
+        .add_entry(entry2) \
+        .add_entry(entry3) \
+        .add_entry(entry4)
+
+    assert potential.__str__() == '0=on,1=on|1.0\n0=on,1=off|1.0\n0=off,1=on|1.0\n0=off,1=off|1.0'
+
