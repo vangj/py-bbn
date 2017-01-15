@@ -63,6 +63,11 @@ class Graph:
     def remove_node(self, id):
         self.nodes.pop(id, None)
 
+    def __str__(self):
+        nodes = str.join('\n', [x.__str__() for x in self.nodes.values()])
+        edges = str.join('\n', [x.__str__() for x in self.edges.values()])
+        return nodes + '\n' + edges
+
 
 class Ug(Graph):
     def __init__(self):

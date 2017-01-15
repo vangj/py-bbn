@@ -24,7 +24,7 @@ class Edge:
         return "{}{}{}".format(a, edge, b)
 
     def __str__(self):
-        return self.key()
+        return self.key
 
 
 class JtEdge(Edge):
