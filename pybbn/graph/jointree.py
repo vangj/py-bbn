@@ -157,7 +157,7 @@ class JoinTree(Ug):
             node = evidence.node
             potentials = self.evidences[node.id]
 
-            for k, v in evidence.values:
+            for k, v in evidence.values.items():
                 potential = potentials[k]
                 potential.entries[0].value = v
         self.__notify_listener__(change)
@@ -287,7 +287,7 @@ class EvidenceBuilder:
 
     def build(self):
         evidence = Evidence(self.node, self.type)
-        for k, v in self.values:
+        for k, v in self.values.items():
             evidence.add_value(k, v)
         return evidence
 
@@ -328,14 +328,14 @@ class Evidence:
     @staticmethod
     def __convert__(potentials):
         m = dict()
-        for k, v in potentials:
+        for k, v in potentials.items():
             m[k] = v.entries[0].value
         return m
 
     @staticmethod
     def __is_unobserved__(values):
         count = 0
-        for k, v in values:
+        for k, v in values.items():
             count += v
         return count == len(values)
 
@@ -344,7 +344,7 @@ class Evidence:
         one = 0
         zero = 0
 
-        for k, v in values:
+        for k, v in values.items():
             if 1.0 == v:
                 one += 1
             else:
@@ -377,7 +377,12 @@ class Evidence:
                 for value in self.node.variable.values:
                     self.values[value] = 1.0
         elif EvidenceType.OBSERVATION == self.type:
-            key = [k for k in self.values.keys()].sort(None, lambda k: self.values[k], True)[0]
+            tuples = []
+            for k, v in self.values.items():
+                pair = (k, v)
+                tuples.append(pair)
+            tuples = sorted(tuples, key=lambda x: (x[1]), reverse=True)
+            key = tuples[0][0]
             for value in self.node.variable.values:
                 if key == value:
                     self.values[value] = 1.0
