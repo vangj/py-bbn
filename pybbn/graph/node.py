@@ -71,7 +71,8 @@ class Clique(Node):
         return SepSet(self, that)
 
     def __str__(self):
-        return '({})'.format(str.join(',', [node.variable.name for node in self.nodes]))
+        names = sorted([node.variable.name for node in self.nodes])
+        return '({})'.format(str.join(',', names))
 
 
 class SepSet(Clique):

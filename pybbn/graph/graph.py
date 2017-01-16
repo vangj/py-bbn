@@ -67,6 +67,10 @@ class Graph:
 
     def remove_node(self, id):
         self.nodes.pop(id, None)
+        self.map.pop(id, None)
+        for k, v in self.map.items():
+            if id in v:
+                v.remove(id)
 
     def __str__(self):
         nodes = str.join('\n', [x.__str__() for x in self.nodes.values()])

@@ -10,7 +10,7 @@ class Triangulator:
         mm = Triangulator.duplicate(m)
         while len(mm.get_nodes()) > 0:
             node_clique = Triangulator.select_node(mm)
-            clique = Clique(node_clique.get_bbn_nodes)
+            clique = Clique(node_clique.get_bbn_nodes())
 
             if not Triangulator.is_subset(cliques, clique):
                 cliques.append(clique)
@@ -38,7 +38,7 @@ class Triangulator:
         for node in m.get_nodes():
             weight = Triangulator.get_weight(node, m)
             edges = Triangulator.get_edges_to_add(node, m)
-            neighbors = [m.get_node(i) for i in m.get_neighbors(i)]
+            neighbors = [m.get_node(neighbor_id) for neighbor_id in m.get_neighbors(node.id)]
             cliques.append(NodeClique(node, neighbors, weight, edges))
         cliques = sorted(cliques, key=lambda x: (len(x.edges), x.weight, x.node.id))
         return cliques[0]
@@ -66,7 +66,7 @@ class Triangulator:
 
     @staticmethod
     def is_subset(cliques, clique):
-        for i in len(cliques):
+        for i in range(len(cliques)):
             if cliques[i].is_superset(clique):
                 return True
         return False
@@ -80,6 +80,6 @@ class NodeClique:
         self.edges = edges
 
     def get_bbn_nodes(self):
-        nodes = [node for node in self.nodes]
+        nodes = [node for node in self.neighbors]
         nodes.append(self.node)
         return nodes
