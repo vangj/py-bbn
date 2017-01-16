@@ -59,7 +59,9 @@ class Graph:
         return False
 
     def edge_exists(self, id1, id2):
-        if id2 in self.map[id1] and id1 in self.map[id2]:
+        if id1 in self.map and id2 in self.map[id1]:
+            return True
+        if id2 in self.map and id1 in self.map[id2]:
             return True
         return False
 

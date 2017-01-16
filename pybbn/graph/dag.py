@@ -14,6 +14,11 @@ class Dag(Graph):
     def get_children(self, id):
         return [x for x in self.map[id]]
 
+    def edge_exists(self, id1, id2):
+        if id1 in self.map and id2 in self.map[id1]:
+            return True
+        return False
+
     def __shouldadd__(self, edge):
         if EdgeType.DIRECTED != edge.type:
             return False
