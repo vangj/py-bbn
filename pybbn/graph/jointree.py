@@ -156,6 +156,28 @@ class JoinTree(Ug):
 
         potentials = self.evidences[evidence.node.id]
 
+        pvalues = []
+        for v, potential in potentials.items():
+            entry = potential.entries[0]
+            p = entry.value
+            if 1.0 == p:
+                pvalues.append(v)
+
+        cvalues = []
+        for v, likelihood in evidence.values.items():
+            if 1.0 == likelihood:
+                cvalues.append(v)
+
+        if 1 == len(pvalues):
+            last_value = pvalues[0]
+            curr_value = cvalues[0]
+            if last_value == curr_value:
+                self.unobserve([evidence.node])
+            else:
+                self.update_evidences([evidence])
+        else:
+            self.update_evidences([evidence])
+
         return self
 
     def __shouldadd__(self, edge):
