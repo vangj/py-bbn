@@ -23,6 +23,7 @@ class Graph:
 
     def add_node(self, node):
         self.nodes[node.id] = node
+        return self
 
     def add_edge(self, edge):
         self.add_node(edge.i)
@@ -38,6 +39,8 @@ class Graph:
             self.map[edge.i.id].add(edge.j.id)
             if EdgeType.UNDIRECTED == edge.type:
                 self.map[edge.j.id].add(edge.i.id)
+
+        return self
 
     def __shouldadd__(self, edge):
         lhs = edge.i
