@@ -25,5 +25,6 @@ class Transformer:
         size = len(cliques)
         for i in range(size):
             for j in range(i + 1, size):
-                sep_sets.append(SepSet(cliques[i], cliques[j]))
-        return sorted(sep_sets, key=lambda x: (x.getMass(), x.getCost(), x.id))
+                sep_set = SepSet(cliques[i], cliques[j])
+                sep_sets.append(sep_set)
+        return sorted(sep_sets, key=lambda x: (-1 * x.mass, x.cost, x.id))

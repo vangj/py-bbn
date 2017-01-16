@@ -85,6 +85,14 @@ class SepSet(Clique):
         self.left = left
         self.right = right
 
+    @property
+    def cost(self):
+        return self.get_cost()
+
+    @property
+    def mass(self):
+        return self.get_mass()
+
     def get_cost(self):
         return self.left.get_weight() + self.right.get_weight()
 
