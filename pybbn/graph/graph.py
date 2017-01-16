@@ -74,5 +74,5 @@ class Graph:
 
 class Ug(Graph):
     def __init__(self):
-        Graph.__init__()
+        Graph.__init__(self)
 

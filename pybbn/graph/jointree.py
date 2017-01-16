@@ -59,29 +59,43 @@ class JoinTree(Ug):
     def add_edge(self, edge):
         if not isinstance(edge, JtEdge):
             return self
+
+        sep_set = edge.sep_set
+        lhs = edge.i
+        rhs = edge.j
+
+        self.add_node(sep_set)
+        self.add_node(lhs)
+        self.add_node(rhs)
+
+        if sep_set.id not in self.map:
+            self.map[sep_set.id] = set()
+        if lhs.id not in self.map:
+            self.map[lhs.id] = set()
+        if rhs.id not in self.map:
+            self.map[rhs.id] = set()
+
         if self.__shouldadd__(edge):
-            sep_set = edge.sep_set
-            lhs = edge.i
-            rhs = edge.j
-
-            self.add_node(sep_set)
-            self.add_node(lhs)
-            self.add_node(rhs)
-
-            if sep_set.id not in self.map:
-                self.map[sep_set.id] = set()
-            if lhs.id not in self.map:
-                self.map[lhs.id] = set()
-            if rhs.id not in self.map:
-                self.map[rhs.id] = set()
-
             self.map[lhs.id].add(sep_set.id)
             self.map[rhs.id].add(sep_set.id)
 
             self.map[sep_set.id].add(lhs.id)
             self.map[sep_set.id].add(rhs.id)
 
+            self.edges[edge.key] = edge
+            # lhs_edge = edge.get_lhs_edge()
+            # rhs_edge = edge.get_rhs_edge()
+            # self.edges[lhs_edge.key] = lhs_edge
+            # self.edges[rhs_edge.key] = rhs_edge
+
         return self
+
+    def get_flattened_edges(self):
+        edges = []
+        for edge in self.edges.values():
+            edges.append(edge.get_lhs_edge())
+            edges.append(edge.get_rhs_edge())
+        return edges
 
     def set_listener(self, listener):
         self.listener = listener
