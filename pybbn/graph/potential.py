@@ -43,6 +43,7 @@ class PotentialEntry:
         s = str.join(',', arr)
         return '{}|{}'.format(s, self.value)
 
+
 class PotentialUtil:
     @staticmethod
     def pass_single_message(join_tree, x, s, y):

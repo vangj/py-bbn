@@ -43,7 +43,7 @@ class Dag(Graph):
 
 class Bbn(Dag):
     def __init__(self):
-        Dag.__init__()
+        Dag.__init__(self)
 
     def __shouldadd__(self, edge):
         if isinstance(edge.i, BbnNode) and isinstance(edge.j, BbnNode):
