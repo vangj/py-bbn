@@ -9,7 +9,7 @@ class Moralizer:
         for node in dag.get_nodes():
             ug.add_node(node)
         for edge in dag.get_edges():
-            ug.add_edge(Edge(edge.lhs, edge.rhs, EdgeType.UNDIRECTED))
+            ug.add_edge(Edge(edge.i, edge.j, EdgeType.UNDIRECTED))
         for node in dag.get_nodes():
             parents = [dag.get_node(pa) for pa in dag.get_parents(node.id)]
             size = len(parents)
