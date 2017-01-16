@@ -28,10 +28,10 @@ class Edge:
 
 
 class JtEdge(Edge):
-    def __init__(self, sepSet):
-        Edge.__init__(sepSet.left, sepSet.right, EdgeType.UNDIRECTED)
-        self.sepSet = sepSet
+    def __init__(self, sep_set):
+        Edge.__init__(sep_set.left, sep_set.right, EdgeType.UNDIRECTED)
+        self.sep_set = sep_set
 
     def __str__(self):
-        return '{}--{}--{}'.format(self.sepSet.left.__str__(), self.sepSet.__str__(), self.sepSet.right.__str__())
+        return '{}--{}--{}'.format(self.sep_set.left.__str__(), self.sep_set.__str__(), self.sep_set.right.__str__())
 
