@@ -18,6 +18,7 @@ class BbnNode(Node):
         Node.__init__(self, variable.id)
         self.variable = variable
         self.probs = probs
+        self.potential = None
 
     def get_weight(self):
         return len(self.variable.values)
