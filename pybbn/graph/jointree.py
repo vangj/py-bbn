@@ -120,7 +120,6 @@ class JoinTree(Ug):
         changes = []
         for evidence in evidences:
             node = evidence.node
-            clique = self.find_cliques_with_node_and_parents(node.id)[0]
             potentials = self.evidences[node.id]
             change = evidence.compare(potentials)
             changes.append(change)
