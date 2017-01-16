@@ -45,15 +45,13 @@ class Clique(Node):
     def unmark(self):
         self.marked = False
 
-    def is_superset(self, that):
-        s1 = [node.id for node in self.nodes]
-        s2 = [node.id for node in that.nodes]
-        s3 = [id for id in s1 if id in s2]
+    def get_node_ids(self):
+        return [node.id for node in self.nodes]
 
-        if len(s2) == len(s3):
-            return True
-        else:
-            return False
+    def is_superset(self, that):
+        s1 = set(self.get_node_ids())
+        s2 = set(that.get_node_ids())
+        return s1.issuperset(s2)
 
     def get_weight(self):
         weight = 1
