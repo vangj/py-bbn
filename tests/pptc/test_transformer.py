@@ -15,7 +15,7 @@ def teardown():
 
 
 @with_setup(setup, teardown)
-def test_triangulator():
+def test_transformer():
     bbn = BbnUtil.get_huang_graph()
     PotentialInitializer.init(bbn)
 
