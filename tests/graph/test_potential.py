@@ -53,11 +53,11 @@ def test_potential_get_matching_entry():
         .add_entry(entry3)\
         .add_entry(entry4)
 
-    assert len(potential.get_matching_entry(entry1)) == 1
-    assert len(potential.get_matching_entry(entry2)) == 1
-    assert len(potential.get_matching_entry(entry3)) == 1
-    assert len(potential.get_matching_entry(entry4)) == 1
-    assert len(potential.get_matching_entry(entry5)) == 0
+    assert len(potential.get_matching_entries(entry1)) == 1
+    assert len(potential.get_matching_entries(entry2)) == 1
+    assert len(potential.get_matching_entries(entry3)) == 1
+    assert len(potential.get_matching_entries(entry4)) == 1
+    assert len(potential.get_matching_entries(entry5)) == 0
 
 @with_setup(setup, teardown)
 def test_str():

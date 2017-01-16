@@ -9,7 +9,7 @@ class Potential:
         self.entries.append(entry)
         return self
 
-    def get_matching_entry(self, entry):
+    def get_matching_entries(self, entry):
         return [e for e in self.entries if e.matches(entry)]
 
     def __str__(self):

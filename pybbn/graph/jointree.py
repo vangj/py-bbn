@@ -28,13 +28,13 @@ class JoinTree(Ug):
         return list(nodes.values())
 
     def get_bbn_node(self, id):
-        for node in self.get_bbn_node():
+        for node in self.get_bbn_nodes():
             if id == node.id:
                 return node
         return None
 
     def get_bbn_node_by_name(self, name):
-        for node in self.get_bbn_node():
+        for node in self.get_bbn_nodes():
             if name == node.variable.name:
                 return node
         return None
@@ -112,7 +112,7 @@ class JoinTree(Ug):
             potential = Potential()
             potential.add_entry(entry)
 
-            self.evidences[node.id] = potential
+            self.evidences[node.id][value] = potential
 
         return self.evidences[node.id][value]
 
