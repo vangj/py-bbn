@@ -2,8 +2,16 @@ from pybbn.graph.potential import PotentialUtil
 
 
 class Initializer:
+    """
+    Initializes the join tree.
+    """
     @staticmethod
     def initialize(join_tree):
+        """
+        Starts the initialization.
+        :param join_tree: Join tree.
+        :return: Join tree.
+        """
         for clique in join_tree.get_cliques():
             potential = PotentialUtil.get_potential_from_nodes(clique.nodes)
             join_tree.add_potential(clique, potential)
@@ -38,6 +46,12 @@ class Initializer:
 
     @staticmethod
     def get_clique(node, join_tree):
+        """
+        Gets the parent clique associated with the specified BBN node.
+        :param node: BBN node.
+        :param join_tree: Join tree.
+        :return: Parent clique.
+        """
         if 'parent.clique' not in node.metadata:
             cliques = sorted(join_tree.find_cliques_with_node_and_parents(node.id), key=lambda x: x.id)
             clique = cliques[0]

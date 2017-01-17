@@ -30,7 +30,7 @@ def test_inference_controller():
     print('FIRST')
     print_potentials(join_tree)
 
-    assert 1 == 2
+    # assert 1 == 2
 
 
 def print_potentials(join_tree):

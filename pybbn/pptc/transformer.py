@@ -4,8 +4,16 @@ from pybbn.graph.edge import JtEdge
 
 
 class Transformer:
+    """
+    Transformer. Transforms a list of cliques into a join tree.
+    """
     @staticmethod
     def transform(cliques):
+        """
+        Transforms the cliques into a join tree.
+        :param cliques: List of cliques.
+        :return: Join tree.
+        """
         join_tree = JoinTree()
         sep_sets = Transformer.get_sep_sets(cliques)
         n = (len(cliques) - 1) * 2
@@ -21,6 +29,12 @@ class Transformer:
 
     @staticmethod
     def get_sep_sets(cliques):
+        """
+        Gets all pair-wise separation-sets.
+        :param cliques: Array of cliques.
+        :return: Array of separation sets sorted descendingly by mass followed by
+        cost (asc) and id (asc).
+        """
         sep_sets = []
         size = len(cliques)
         for i in range(size):

@@ -4,8 +4,16 @@ from pybbn.graph.node import Clique
 
 
 class Triangulator:
+    """
+    Triangulator. Triangulates an undirected moralized graph and produces cliques in the process.
+    """
     @staticmethod
     def triangulate(m):
+        """
+        Triangulates the specified moralized graph.
+        :param m: Moralized undirected graph.
+        :return: Array of cliques.
+        """
         cliques = []
         mm = Triangulator.duplicate(m)
         while len(mm.get_nodes()) > 0:
@@ -25,6 +33,11 @@ class Triangulator:
 
     @staticmethod
     def duplicate(g):
+        """
+        Duplicates a undirected graph.
+        :param g: Undirected graph.
+        :return: Undirected graph.
+        """
         ug = Ug()
         for node in g.get_nodes():
             ug.add_node(node)
@@ -34,6 +47,11 @@ class Triangulator:
 
     @staticmethod
     def select_node(m):
+        """
+        Selects a clique from the specified graph. Cliques are sorted by number of edges, weight, and id (asc).
+        :param m: Graph.
+        :return: Clique.
+        """
         cliques = []
         for node in m.get_nodes():
             weight = Triangulator.get_weight(node, m)
@@ -45,6 +63,13 @@ class Triangulator:
 
     @staticmethod
     def get_weight(n, m):
+        """
+        Gets the weight of a BBN node. The weight of a node is the product of the its weight with all its
+        neighbors' weight.
+        :param n: BBN node.
+        :param m: Graph.
+        :return: Weight.
+        """
         weight = n.get_weight()
         for neighbor_id in m.get_neighbors(n.id):
             neighbor = m.get_node(neighbor_id)
@@ -53,6 +78,12 @@ class Triangulator:
 
     @staticmethod
     def get_edges_to_add(n, m):
+        """
+        Gets edges to add.
+        :param n: BBN node.
+        :param m: Graph.
+        :return: Array of edges.
+        """
         edges = []
         neighbors = [m.get_node(i) for i in m.get_neighbors(n.id)]
         size = len(neighbors)
@@ -66,6 +97,12 @@ class Triangulator:
 
     @staticmethod
     def is_subset(cliques, clique):
+        """
+        Checks if the specified clique is a subset of the specified list of cliques.
+        :param cliques: List of cliques.
+        :param clique: Clique.
+        :return: A boolean indicating if the clique is a subset.
+        """
         for i in range(len(cliques)):
             if cliques[i].is_superset(clique):
                 return True
@@ -73,13 +110,27 @@ class Triangulator:
 
 
 class NodeClique:
+    """
+    Node clique.
+    """
     def __init__(self, node, neighbors, weight, edges):
+        """
+        Ctor.
+        :param node: BBN node.
+        :param neighbors: BBN nodes (neighbors).
+        :param weight: Weight.
+        :param edges: Edges.
+        """
         self.node = node
         self.neighbors = neighbors
         self.weight = weight
         self.edges = edges
 
     def get_bbn_nodes(self):
+        """
+        Gets all the BBN nodes in this node clique.
+        :return: Array of BBN nodes.
+        """
         nodes = [node for node in self.neighbors]
         nodes.append(self.node)
         return nodes

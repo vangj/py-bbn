@@ -2,11 +2,23 @@ from pybbn.graph.potential import PotentialUtil
 
 
 class EvidenceDistributor:
+    """
+    Evidence distributor. Passes messages using breadth-first-search (BFS).
+    Messages are passed from the start clique to the far remote cliques.
+    """
     def __init__(self, join_tree, start_clique):
+        """
+        Ctor.
+        :param join_tree: Join tree.
+        :param start_clique: Start clique.
+        """
         self.join_tree = join_tree
         self.start_clique = start_clique
 
     def start(self):
+        """
+        Starts the evidence distribution.
+        """
         self.start_clique.mark()
         for sep_set_id in self.join_tree.get_neighbors(self.start_clique.id):
             sep_set = self.join_tree.get_node(sep_set_id)
@@ -17,6 +29,12 @@ class EvidenceDistributor:
                     self.__walk__(self.start_clique, sep_set, y)
 
     def __walk__(self, x, s, y):
+        """
+        Walks away from the specified node y.
+        :param x: Clique.
+        :param s: Separation-set.
+        :param y: Clique.
+        """
         y.mark()
         for sep_set_id in self.join_tree.get_neighbors(y.id):
             sep_set = self.join_tree.get_node(sep_set_id)

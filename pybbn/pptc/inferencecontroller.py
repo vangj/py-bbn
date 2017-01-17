@@ -8,8 +8,16 @@ from pybbn.graph.jointree import JoinTreeListener
 
 
 class InferenceController(JoinTreeListener):
+    """
+    Inference controller.
+    """
     @staticmethod
     def apply(bbn):
+        """
+        Sets up the specified BBN for probability propagation in tree clusters (PPTC).
+        :param bbn: BBN graph.
+        :return: Join tree.
+        """
         PotentialInitializer.init(bbn)
 
         ug = Moralizer.moralize(bbn)
@@ -24,8 +32,16 @@ class InferenceController(JoinTreeListener):
         return join_tree
 
     def evidence_retracted(self, join_tree):
+        """
+        Evidence is retracted.
+        :param join_tree: Join tree.
+        """
         Initializer.initialize(join_tree)
         Propagator.propagate(join_tree)
 
     def evidence_updated(self, join_tree):
+        """
+        Evidence is updated.
+        :param join_tree: Join tree.
+        """
         Propagator.propagate(join_tree)

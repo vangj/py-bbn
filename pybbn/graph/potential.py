@@ -2,14 +2,30 @@ import itertools
 
 
 class Potential:
+    """
+    Potential.
+    """
     def __init__(self):
+        """
+        Ctor.
+        """
         self.entries = []
 
     def add_entry(self, entry):
+        """
+        Adds a PotentialEntry.
+        :param entry: PotentialEntry.
+        :return: This potential.
+        """
         self.entries.append(entry)
         return self
 
     def get_matching_entries(self, entry):
+        """
+        Gets all potential entries matching the specified entry.
+        :param entry: PotentialEntry.
+        :return: Array of matching potential entries.
+        """
         return [e for e in self.entries if e.matches(entry)]
 
     def __str__(self):
@@ -17,21 +33,43 @@ class Potential:
 
 
 class PotentialEntry:
+    """
+    Potential entry.
+    """
     def __init__(self):
+        """
+        Ctor.
+        """
         self.entries = dict()
         self.value = 1.0
 
     def add(self, k, v):
+        """
+        Adds a node id and its value.
+        :param k: Node id.
+        :param v: Value.
+        :return: This potential entry.
+        """
         self.entries[k] = v;
         return self
 
     def matches(self, that):
+        """
+        Checks if this potential entry matches the specified one. A match is determined with all the keys
+        and their associated values in the potential entry passed in matches this one.
+        :param that: PotentialEntry.
+        :return:
+        """
         for k, v in that.entries.items():
             if k not in self.entries or v != self.entries[k]:
                 return False
         return True
 
     def duplicate(self):
+        """
+        Duplicates this entry.
+        :return: PotentialEntry.
+        """
         entry = PotentialEntry()
         for k, v in self.entries.items():
             entry.add(k, v)
@@ -45,8 +83,18 @@ class PotentialEntry:
 
 
 class PotentialUtil:
+    """
+    Potential util.
+    """
     @staticmethod
     def pass_single_message(join_tree, x, s, y):
+        """
+        Single message pass from x -- s -- y (from x to s to y).
+        :param join_tree: Join tree.
+        :param x: Clique.
+        :param s: Separation-set.
+        :param y: Clique.
+        """
         old_sep_set_potential = join_tree.potentials[s.id]
         y_potential = join_tree.potentials[y.id]
 
@@ -57,6 +105,13 @@ class PotentialUtil:
 
     @staticmethod
     def marginalize_for(join_tree, clique, nodes):
+        """
+        Marginalizes the specified clique's potential over the specified nodes.
+        :param join_tree: Join tree.
+        :param clique: Clique.
+        :param nodes: List of BBN nodes.
+        :return: Potential.
+        """
         potential = PotentialUtil.get_potential_from_nodes(nodes)
         clique_potential = join_tree.potentials.get(clique.id)
 
@@ -68,6 +123,11 @@ class PotentialUtil:
 
     @staticmethod
     def normalize(potential):
+        """
+        Normalizes the potential (make sure they sum to 1.0).
+        :param potential: Potential.
+        :return: Potential.
+        """
         total = sum([entry.value for entry in potential.entries])
         for entry in potential.entries:
             d = entry.value / total
@@ -76,6 +136,12 @@ class PotentialUtil:
 
     @staticmethod
     def divide(numerator, denominator):
+        """
+        Divides two potentials.
+        :param numerator: Potential.
+        :param denominator: Potential.
+        :return: Potential.
+        """
         potential = Potential()
         for entry in numerator.entries:
             if len(denominator.entries) > 0:
@@ -90,10 +156,20 @@ class PotentialUtil:
 
     @staticmethod
     def is_zero(d):
+        """
+        Checks if the specified value is 0.0.
+        :param d: Value.
+        :return: A boolean indicating if the value is zero.
+        """
         return 0.0 == d
 
     @staticmethod
     def multiply(bigger, smaller):
+        """
+        Multiplies two potentials. Order matters.
+        :param bigger: Bigger potential.
+        :param smaller: Smaller potential.
+        """
         for entry in smaller.entries:
             for e in bigger.get_matching_entries(entry):
                 d = e.value * entry.value
@@ -101,6 +177,12 @@ class PotentialUtil:
 
     @staticmethod
     def get_potential(node, parents):
+        """
+        Gets the potential associated with the specified node and its parents.
+        :param node: BBN node.
+        :param parents: Parents of the BBN node (that themselves are also BBN nodes).
+        :return: Potential.
+        """
         potential = PotentialUtil.get_potential_from_nodes(PotentialUtil.merge(node, parents))
         for i in range(len(potential.entries)):
             prob = node.probs[i]
@@ -109,6 +191,11 @@ class PotentialUtil:
 
     @staticmethod
     def get_potential_from_nodes(nodes):
+        """
+        Gets a potential from a list of BBN nodes.
+        :param nodes: Array of BBN nodes.
+        :return: Potential.
+        """
         lists = [node.variable.values for node in nodes]
         cartesian = PotentialUtil.get_cartesian_product(lists)
         potential = Potential()
@@ -121,10 +208,27 @@ class PotentialUtil:
 
     @staticmethod
     def get_cartesian_product(lists):
+        """
+        Gets the cartesian product of a list of lists of values. For example, if the list is
+        [ ['on', 'off'], ['on', 'off'] ],
+        then the result will be a list of the following.
+        * [ 'on', 'on']
+        * [ 'on', 'off' ]
+        * [ 'off', 'on' ]
+        * [ 'off', 'off' ]
+        :param lists: List of list of values.
+        :return: Cartesian product of values.
+        """
         return [i for i in itertools.product(*lists)]
 
     @staticmethod
     def merge(node, parents):
+        """
+        Merges the nodes into one array.
+        :param node: BBN node.
+        :param parents: BBN parent nodes.
+        :return: Array of BBN nodes.
+        """
         nodes = [parent for parent in parents]
         nodes.append(node)
         return nodes

@@ -3,8 +3,16 @@ from pybbn.graph.edge import Edge, EdgeType
 
 
 class Moralizer:
+    """
+    Graph moralizer for a DAG.
+    """
     @staticmethod
     def moralize(dag):
+        """
+        Moralizes a DAG.
+        :param dag: DAG.
+        :return: Moralized (undirected) graph.
+        """
         ug = Ug()
         for node in dag.get_nodes():
             ug.add_node(node)

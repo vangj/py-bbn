@@ -1,6 +1,14 @@
 class IdUtil:
+    """
+    ID util.
+    """
     @staticmethod
     def hash_string(s):
+        """
+        Hashes the string.
+        :param s: String.
+        :return: Hash value.
+        """
         hash_value = 0
 
         if len(s) == 0:

@@ -6,21 +6,39 @@ from enum import Enum
 
 
 class JoinTree(Ug):
+    """
+    Join tree.
+    """
     def __init__(self):
+        """
+        Ctor.
+        """
         Ug.__init__(self)
         self.potentials = dict()
         self.evidences = dict()
         self.listener = None
 
     def get_bbn_potential(self, node):
+        """
+        Gets the potential associated with the specified BBN node.
+        :param node: BBN node.
+        :return: Potential.
+        """
         clique = node.metadata['parent.clique']
         return PotentialUtil.normalize(PotentialUtil.marginalize_for(self, clique, [node]))
 
     def unmark_cliques(self):
+        """
+        Unmarks the cliques.
+        """
         for clique in self.get_cliques():
             clique.unmark()
 
     def get_bbn_nodes(self):
+        """
+        Gets all the BBN nodes in this junction tree.
+        :return: List of BBN nodes.
+        """
         nodes = dict()
         for clique in self.get_cliques():
             for node in clique.nodes:
@@ -28,18 +46,33 @@ class JoinTree(Ug):
         return list(nodes.values())
 
     def get_bbn_node(self, id):
+        """
+        Gets the BBN node associated with the specified id.
+        :param id: Node id.
+        :return: BBN node or None if no such node exists.
+        """
         for node in self.get_bbn_nodes():
             if id == node.id:
                 return node
         return None
 
     def get_bbn_node_by_name(self, name):
+        """
+        Gets the BBN node associated with the specified name.
+        :param name: Node name.
+        :return: BBN node or None if no such node exists.
+        """
         for node in self.get_bbn_nodes():
             if name == node.variable.name:
                 return node
         return None
 
     def find_cliques_with_node_and_parents(self, id):
+        """
+        Finds all cliques in this junction tree having the specified node and its parents.
+        :param id: Node id.
+        :return: Array of cliques.
+        """
         ids = self.__get_parent_ids__(id)
         ids.append(id)
 
@@ -47,16 +80,35 @@ class JoinTree(Ug):
         return [clique for clique in self.get_cliques() if set(clique.get_node_ids()).issuperset(set1)]
 
     def add_potential(self, clique, potential):
+        """
+        Adds a potential associated with the specified clique.
+        :param clique: Clique.
+        :param potential: Potential.
+        :return: This join tree.
+        """
         self.potentials[clique.id] = potential
         return self
 
     def get_cliques(self):
+        """
+        Gets all the cliques in this junction tree.
+        :return: Array of cliques.
+        """
         return [clique for clique in self.get_nodes() if not isinstance(clique, SepSet)]
 
     def get_sep_sets(self):
+        """
+        Gets all the separation sets in this junction tree.
+        :return: Array of separation sets.
+        """
         return [sep_set for sep_set in self.get_nodes() if isinstance(sep_set, SepSet)]
 
     def add_edge(self, edge):
+        """
+        Adds an JtEdge.
+        :param edge: JtEdge.
+        :return: This join tree.
+        """
         if not isinstance(edge, JtEdge):
             return self
 
@@ -91,6 +143,11 @@ class JoinTree(Ug):
         return self
 
     def get_flattened_edges(self):
+        """
+        Gets all the edges "flattened" out. Since separation-sets are really hyper-edges, this method breaks
+        separation-sets into two edges.
+        :return: Array of edges.
+        """
         edges = []
         for edge in self.edges.values():
             edges.append(edge.get_lhs_edge())
@@ -98,9 +155,19 @@ class JoinTree(Ug):
         return edges
 
     def set_listener(self, listener):
+        """
+        Sets the listener.
+        :param listener: JoinTreeListener.
+        """
         self.listener = listener
 
     def get_evidence(self, node, value):
+        """
+        Gets the evidence associated with the specified BBN node and value.
+        :param node: BBN node.
+        :param value: Value.
+        :return: Potential (the evidence).
+        """
         if node.id not in self.evidences:
             self.evidences[node.id] = dict()
 
@@ -117,6 +184,11 @@ class JoinTree(Ug):
         return self.evidences[node.id][value]
 
     def get_change_type(self, evidences):
+        """
+        Gets the change type associated with the specified list of evidences.
+        :param evidences: List of evidences.
+        :return: ChangeType.
+        """
         changes = []
         for evidence in evidences:
             node = evidence.node
@@ -135,21 +207,40 @@ class JoinTree(Ug):
         return ChangeType.NONE
 
     def get_unobserved_evidence(self, node):
+        """
+        Gets the unobserved evidences associated with the specified node.
+        :param node: BBN node.
+        :return: Evidence.
+        """
         evidence = Evidence(node, EvidenceType.UNOBSERVE)
         for value in node.variable.values:
             evidence.add_value(value, 1.0)
         return evidence
 
     def unobserve(self, nodes):
+        """
+        Unobserves a list of nodeds.
+        :param nodes: List of nodes.
+        :return: This join tree.
+        """
         evidences = [self.get_unobserved_evidence(node) for node in nodes]
         self.update_evidences(evidences)
         return self
 
     def unobserve_all(self):
+        """
+        Unobserves all BBN nodes.
+        :return: This join tree.
+        """
         self.unobserve(self.get_bbn_nodes())
         return self
 
     def update_evidences(self, evidences):
+        """
+        Updates this join tree with the list of specified evidence.
+        :param evidences: List of evidences.
+        :return: This join tree.
+        """
         for evidence in evidences:
             evidence.validate()
         change = self.get_change_type(evidences)
@@ -164,6 +255,11 @@ class JoinTree(Ug):
         return self
 
     def set_observation(self, evidence):
+        """
+        Sets a single observation.
+        :param evidence: Evidence.
+        :return: This join tree.
+        """
         if EvidenceType.OBSERVATION != evidence.type:
             return self
 
@@ -194,6 +290,11 @@ class JoinTree(Ug):
         return self
 
     def __shouldadd__(self, edge):
+        """
+        Checks if the specified edge should be added.
+        :param edge: Edge.
+        :return: A boolean indicating if the specified edge should be added.
+        """
         lhs = edge.i
         rhs = edge.j
 
@@ -206,12 +307,21 @@ class JoinTree(Ug):
         return False
 
     def __get_parent_ids__(self, id):
+        """
+        Gets the parent ids of the specified node id.
+        :param id: Node id.
+        :return: Array of parent ids.
+        """
         node = self.get_bbn_node(id)
         if 'parents' in node.metadata:
             return [node.id for node in node.metadata['parents']]
         return []
 
     def __notify_listener__(self, change):
+        """
+        Notifies the JoinTreeListener, if any.
+        :param change: ChangeType.
+        """
         if self.listener is None:
             return
         if ChangeType.RETRACTION == change:
@@ -221,40 +331,72 @@ class JoinTree(Ug):
 
 
 class PathDetector:
+    """
+    Detects path between two nodes.
+    """
     def __init__(self, graph, start, stop):
+        """
+        Ctor.
+        :param graph: Join tree.
+        :param start: Start node id.
+        :param stop: Stop node id.
+        """
         self.graph = graph
         self.start = start
         self.stop = stop
         self.seen = set()
 
     def exists(self):
+        """
+        Checks if a path exists.
+        :return: True if a path exists, otherwise, false.
+        """
         if self.start == self.stop:
             return True
         else:
-            return self.find(self.start)
+            return self.__find__(self.start)
 
-    def find(self, i):
+    def __find__(self, i):
+        """
+        Checks if a path exists from the specified node to the stop node.
+        :param i: Node id.
+        :return: True if a path exists, otherwise, false.
+        """
         neighbors = self.graph.get_neighbors(i)
         if self.stop in neighbors:
             return True
 
         self.seen.add(i)
         for neighbor in neighbors:
-            if neighbor not in self.seen and self.find(neighbor):
+            if neighbor not in self.seen and self.__find__(neighbor):
                 return True
 
         return False
 
 
 class JoinTreeListener(object):
+    """
+    Interface like class used for listening to a join tree.
+    """
     def evidence_retracted(self, join_tree):
+        """
+        Evidence is retracted.
+        :param join_tree: Join tree.
+        """
         pass
 
     def evidence_updated(self, join_tree):
+        """
+        Evidence is updated.
+        :param join_tree: Join tree.
+        """
         pass
 
 
 class EvidenceType(Enum):
+    """
+    Evidence type.
+    """
     VIRTUAL = 1
     FINDING = 2
     OBSERVATION = 3
@@ -262,30 +404,59 @@ class EvidenceType(Enum):
 
 
 class ChangeType(Enum):
+    """
+    Change type.
+    """
     NONE = 1
     UPDATE = 2
     RETRACTION = 3
 
 
 class EvidenceBuilder:
+    """
+    Evidence builder.
+    """
     def __init__(self):
+        """
+        Ctor.
+        """
         self.values = dict()
         self.node = None
         self.type = EvidenceType.OBSERVATION
 
     def with_node(self, node):
+        """
+        Adds a BBN node.
+        :param node: BBN node.
+        :return: Builder.
+        """
         self.node = node
         return self
 
     def with_type(self, type):
+        """
+        Adds the EvidenceType.
+        :param type: EvidenceType.
+        :return: Builder.
+        """
         self.type = type
         return self
 
     def with_evidence(self, val, likelihood):
+        """
+        Adds evidence.
+        :param val: Value.
+        :param likelihood: Likelihood.
+        :return: Builder.
+        """
         self.values[val] = likelihood
         return self
 
     def build(self):
+        """
+        Builds an evidence.
+        :return: Evidence.
+        """
         evidence = Evidence(self.node, self.type)
         for k, v in self.values.items():
             evidence.add_value(k, v)
@@ -293,16 +464,35 @@ class EvidenceBuilder:
 
 
 class Evidence:
+    """
+    Evidence.
+    """
     def __init__(self, node, type):
+        """
+        Ctor.
+        :param node: BBN node.
+        :param type: EvidenceType.
+        """
         self.node = node
         self.type = type
         self.values = dict()
 
     def add_value(self, value, likelihood):
+        """
+        Adds a value.
+        :param value: Value.
+        :param likelihood: Likelihood.
+        :return: This evidence.
+        """
         self.values[value] = likelihood
         return self
 
     def compare(self, potentials):
+        """
+        Compares this evidence with previous ones.
+        :param potentials: Map of potentials.
+        :return: The ChangeType from the comparison.
+        """
         that = self.__convert__(potentials)
 
         that_unobserve = self.__is_unobserved__(that)
@@ -327,6 +517,11 @@ class Evidence:
 
     @staticmethod
     def __convert__(potentials):
+        """
+        Converts potentials to a map (dict).
+        :param potentials: Potentials.
+        :return: Dict where keys are BBN node values and values are likelihoods.
+        """
         m = dict()
         for k, v in potentials.items():
             m[k] = v.entries[0].value
@@ -334,6 +529,12 @@ class Evidence:
 
     @staticmethod
     def __is_unobserved__(values):
+        """
+        Checks if the values represent an unobserved evidence. If all likelihoods are 1.0, then this
+        map of values represent unobserved evidence.
+        :param values: Map of values, where keys are values and values are likelihoods.
+        :return: A boolean indicating if the values represent unobserved evidence.
+        """
         count = 0
         for k, v in values.items():
             count += v
@@ -341,6 +542,12 @@ class Evidence:
 
     @staticmethod
     def __is_observed__(values):
+        """
+        Checks if the values represent an observed evidence. If all likelihoods are 0 with exactly
+        one of them being 1, then this map of values represent observed evidence.
+        :param values: Map of values, where keys are values and values are likelihoods.
+        :return: A boolean indicating if the values represent observed evidence.
+        """
         one = 0
         zero = 0
 
@@ -354,10 +561,22 @@ class Evidence:
 
     @staticmethod
     def __get_observed_value__(values):
+        """
+        Gets the value that is observed (the value whose likelihood is 1.0).
+        :param values: Map of values, where keys are values and values are likelihoods.
+        :return: Observed value.
+        """
         strs = [k for k in values if 1.0 == values[k]]
         return strs[0]
 
     def validate(self):
+        """
+        Validates this evidence.
+
+        * virtual evidence: sum of likelihoods must equal to 1.0
+        * finding evidence: all likelihoods must be exactly 1.0 or 0.0.
+        * observation evidence: exactly one likelihood is 1.0 and all others must be 0.0.
+        """
         for value in self.node.variable.values:
             if value not in self.values:
                 self.values[value] = 0.0
