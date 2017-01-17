@@ -10,17 +10,19 @@ from pybbn.pptc.propagator import Propagator
 from pybbn.pptc.inferencecontroller import InferenceController
 
 bbn = BbnUtil.get_huang_graph()
-PotentialInitializer.init(bbn)
+# PotentialInitializer.init(bbn)
+#
+# ug = Moralizer.moralize(bbn)
+# cliques = Triangulator.triangulate(ug)
+#
+# join_tree = Transformer.transform(cliques)
+#
+# Initializer.initialize(join_tree)
+# Propagator.propagate(join_tree)
+#
+# join_tree.set_listener(InferenceController())
 
-ug = Moralizer.moralize(bbn)
-cliques = Triangulator.triangulate(ug)
-
-join_tree = Transformer.transform(cliques)
-
-Initializer.initialize(join_tree)
-Propagator.propagate(join_tree)
-
-join_tree.set_listener(InferenceController())
+join_tree = InferenceController.apply(bbn)
 
 ev = EvidenceBuilder().with_node(join_tree.get_bbn_node_by_name('a')).with_evidence('on', 1.0).build()
 join_tree.set_observation(ev)
