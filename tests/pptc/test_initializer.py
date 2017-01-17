@@ -1,4 +1,5 @@
 from pybbn.graph.dag import BbnUtil
+from pybbn.graph.node import Clique, SepSet
 from pybbn.pptc.potentialinitializer import PotentialInitializer
 from pybbn.pptc.moralizer import Moralizer
 from pybbn.pptc.triangulator import Triangulator
@@ -29,6 +30,8 @@ def test_initializer():
 
     # assert later
     # for clique in join_tree.get_cliques():
+    #     if isinstance(clique, SepSet):
+    #         continue
     #     potential = join_tree.potentials[clique.id]
     #     print(clique)
     #     print(potential)

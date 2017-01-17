@@ -51,7 +51,7 @@ class JoinTree(Ug):
         return self
 
     def get_cliques(self):
-        return [clique for clique in self.get_nodes() if isinstance(clique, Clique)]
+        return [clique for clique in self.get_nodes() if not isinstance(clique, SepSet)]
 
     def get_sep_sets(self):
         return [sep_set for sep_set in self.get_nodes() if isinstance(sep_set, SepSet)]

@@ -5,7 +5,9 @@ from pybbn.pptc.evidencedistributor import EvidenceDistributor
 class Propagator:
     @staticmethod
     def propagate(join_tree):
-        x = join_tree.get_cliques()[0]
+        cliques = sorted(join_tree.get_cliques(), key=lambda c: c.id)
+        x = cliques[0]
+        # print(x)
 
         join_tree.unmark_cliques()
         Propagator.collect_evidence(join_tree, x)

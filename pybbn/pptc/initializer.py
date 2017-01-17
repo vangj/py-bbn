@@ -15,9 +15,16 @@ class Initializer:
         nodes = join_tree.get_bbn_nodes()
         for node in nodes:
             clique = Initializer.get_clique(node, join_tree)
+            # print('{} mapped to clique {}'.format(node.variable.name, clique))
             p1 = join_tree.potentials[clique.id]
             p2 = node.potential
+            # print(p1)
+            # print('>>>>>')
+            # print(p2)
+            # print('----')
             PotentialUtil.multiply(p1, p2)
+            # print(p1)
+            # print('****')
 
         for node in nodes:
             for value in node.variable.values:
@@ -25,13 +32,15 @@ class Initializer:
                 clique_potential = join_tree.potentials[clique.id]
                 node_potential = join_tree.get_evidence(node, value)
                 PotentialUtil.multiply(clique_potential, node_potential)
-
+                # print(clique)
+                # print(clique_potential)
         return join_tree
 
     @staticmethod
     def get_clique(node, join_tree):
         if 'parent.clique' not in node.metadata:
-            clique = join_tree.find_cliques_with_node_and_parents(node.id)[0]
+            cliques = sorted(join_tree.find_cliques_with_node_and_parents(node.id), key=lambda x: x.id)
+            clique = cliques[0]
             node.add_metadata('parent.clique', clique)
             return clique
         else:
