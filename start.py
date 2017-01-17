@@ -26,6 +26,9 @@ ev = EvidenceBuilder().with_node(join_tree.get_bbn_node_by_name('a')).with_evide
 join_tree.set_observation(ev)
 join_tree.set_observation(ev)
 
+ev2 = EvidenceBuilder().with_node(join_tree.get_bbn_node_by_name('a')).with_evidence('on', 1.0).build()
+ev3 = EvidenceBuilder().with_node(join_tree.get_bbn_node_by_name('f')).with_evidence('on', 1.0).build()
+join_tree.update_evidences([ev2, ev3])
 # for k, v in join_tree.potentials.items():
 #     clique = join_tree.get_node(k)
 #     potential = v
