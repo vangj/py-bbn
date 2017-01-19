@@ -61,9 +61,7 @@ for node in join_tree.get_bbn_nodes():
 ```
 # Other Python Bayesian Belief Network Inference Libraries
 
-Here is a list of other Python libraries for inference in Bayesian Belief Networks. Note that all but one libraries are 
-using approximate inference algorithms, whereas PyBBN uses an exact inference algorithm. PyBBN contains no external library
-dependencies (other than for generating documentation and code testing).
+Here is a list of other Python libraries for inference in Bayesian Belief Networks. 
 
 | Library | Algorithm | Algorithm Type | License |
 | -------:| ---------:| -------------: | -------:|
