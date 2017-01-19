@@ -50,7 +50,7 @@ class PotentialEntry:
         :param v: Value.
         :return: This potential entry.
         """
-        self.entries[k] = v;
+        self.entries[k] = v
         return self
 
     def matches(self, that):

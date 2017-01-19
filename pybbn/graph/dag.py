@@ -30,17 +30,6 @@ class Dag(Graph):
         """
         return [x for x in self.map[id]]
 
-    def edge_exists(self, id1, id2):
-        """
-        Checks if a directed edge exists between the specified id. e.g. id1 -> id2
-        :param id1: Node id.
-        :param id2: Node id.
-        :return: A boolean indicating if a directed edge id1 -> id2 exists.
-        """
-        if id1 in self.map and id2 in self.map[id1]:
-            return True
-        return False
-
     def __shouldadd__(self, edge):
         """
         Checks if the specified directed edge should be added.
@@ -63,7 +52,13 @@ class Dag(Graph):
         return False
 
     def edge_exists(self, id1, id2):
-        if id2 in self.map[id1]:
+        """
+        Checks if a directed edge exists between the specified id. e.g. id1 -> id2
+        :param id1: Node id.
+        :param id2: Node id.
+        :return: A boolean indicating if a directed edge id1 -> id2 exists.
+        """
+        if id2 in self.map[id1] and id1 not in self.map[id2]:
             return True
         return False
 

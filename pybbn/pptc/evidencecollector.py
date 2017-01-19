@@ -42,4 +42,3 @@ class EvidenceCollector:
                 if not clique.is_marked():
                     self.__walk__(y, sep_set, clique)
         PotentialUtil.pass_single_message(self.join_tree, y, s, x)
-

@@ -136,4 +136,3 @@ class Ug(Graph):
         Ctor.
         """
         Graph.__init__(self)
-

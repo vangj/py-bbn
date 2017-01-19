@@ -95,4 +95,3 @@ class JtEdge(Edge):
 
     def __str__(self):
         return '{}--{}--{}'.format(self.sep_set.left.__str__(), self.sep_set.__str__(), self.sep_set.right.__str__())
-

@@ -8,6 +8,6 @@ class Variable:
         :param name: Name. e.g. 'a'
         :param values: Array of values. e.g. ['on', 'off']
         """
-        self.id = id;
-        self.name = name;
-        self.values = values;
+        self.id = id
+        self.name = name
+        self.values = values

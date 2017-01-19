@@ -1,6 +1,6 @@
 from pybbn.graph.graph import Ug
 from pybbn.graph.potential import Potential, PotentialEntry, PotentialUtil
-from pybbn.graph.node import Clique, SepSet
+from pybbn.graph.node import SepSet
 from pybbn.graph.edge import JtEdge
 from enum import Enum
 
@@ -610,4 +610,3 @@ class Evidence:
         elif EvidenceType.UNOBSERVE == self.type:
             for value in self.node.variable.values:
                 self.values[value] = 1.0
-
