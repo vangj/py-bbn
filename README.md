@@ -71,5 +71,6 @@ dependencies (other than for generating documentation and code testing).
 | [pomegranate](https://github.com/jmschrei/pomegranate) | loopy belief | approximate | MIT |
 | [pgmpy](https://github.com/pgmpy/pgmpy) | multiple | approximate/exact | MIT |
 | [libpgm](https://github.com/CyberPoint/libpgm) | likelihood sampling | approximate | Proprietary |
+| [bayesnetinference](https://github.com/sonph/bayesnetinference) | variable elimination | exact | None |
 
 I found other [packages](https://pypi.python.org/pypi?%3Aaction=search&term=bayesian+network&submit=search) in PyPI too.
