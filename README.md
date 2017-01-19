@@ -57,8 +57,22 @@ for node in join_tree.get_bbn_nodes():
     potential = join_tree.get_bbn_potential(node)
     print(node)
     print(potential)
+```
+
+# Building
+
+To build, you will need Python 3.5. Type in the following.
 
 ```
+make
+```
+
+To build the documents, go into the docs sub-directory and type in the following.
+
+```
+make html
+```
+
 # Other Python Bayesian Belief Network Inference Libraries
 
 Here is a list of other Python libraries for inference in Bayesian Belief Networks. 
