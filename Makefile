@@ -2,10 +2,10 @@
 .DEFAULT_GOAL := test
 
 init:
-	pip3 install -r requirements.txt
+	pip install -r requirements.txt
 
 lint:
-	python3 -m flake8 ./pybbn
+	python -m flake8 ./pybbn
 
 test: clean lint
 	nosetests --with-coverage --cover-erase --cover-html --cover-html-dir=coverage -v tests
