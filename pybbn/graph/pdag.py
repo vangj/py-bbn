@@ -28,7 +28,7 @@ class Pdag(Graph):
         """
         parents = self.get_parents(id)
         neighbors = self.get_neighbors(id)
-        out_nodes = [id for id in neighbors if id not in parents]
+        out_nodes = [neighbor_id for neighbor_id in neighbors if neighbor_id not in parents]
         return out_nodes
 
     def __shouldadd__(self, edge):

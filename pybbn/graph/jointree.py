@@ -196,11 +196,11 @@ class JoinTree(Ug):
             change = evidence.compare(potentials)
             changes.append(change)
 
-        count = len([change for change in changes if ChangeType.RETRACTION == change])
+        count = len([change_type for change_type in changes if ChangeType.RETRACTION == change_type])
         if count > 0:
             return ChangeType.RETRACTION
 
-        count = len([change for change in changes if ChangeType.UPDATE == change])
+        count = len([change_type for change_type in changes if ChangeType.UPDATE == change_type])
         if count > 0:
             return ChangeType.UPDATE
 
@@ -314,7 +314,7 @@ class JoinTree(Ug):
         """
         node = self.get_bbn_node(id)
         if 'parents' in node.metadata:
-            return [node.id for node in node.metadata['parents']]
+            return [n.id for n in node.metadata['parents']]
         return []
 
     def __notify_listener__(self, change):

@@ -22,13 +22,13 @@ class Dag(Graph):
         """
         return [x for x in self.map if id in self.map[x]]
 
-    def get_children(self, id):
+    def get_children(self, node_id):
         """
         Gets the children IDs of the specified node.
-        :param id: Node id.
+        :param node_id: Node id.
         :return: Array of children ids.
         """
-        return [x for x in self.map[id]]
+        return [x for x in self.map[node_id]]
 
     def __shouldadd__(self, edge):
         """
