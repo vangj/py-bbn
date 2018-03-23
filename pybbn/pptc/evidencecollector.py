@@ -6,6 +6,7 @@ class EvidenceCollector:
     Evidence collector. Passes messages using depth-first-search (DFS).
     Messages are passed from the far remote cliques back to the start clique.
     """
+
     def __init__(self, join_tree, start_clique):
         """
         Ctor.

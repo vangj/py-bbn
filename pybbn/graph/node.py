@@ -5,6 +5,7 @@ class Node:
     """
     A node.
     """
+
     def __init__(self, id):
         """
         :param id: Numeric identifier.
@@ -28,6 +29,7 @@ class BbnNode(Node):
     """
     A BBN node.
     """
+
     def __init__(self, variable, probs):
         """
         :param variable: A variable.
@@ -53,6 +55,7 @@ class Clique(Node):
     """
     A clique.
     """
+
     def __init__(self, nodes):
         """
         :param nodes: An array of BbnNodes.
@@ -138,6 +141,7 @@ class SepSet(Clique):
     """
     Separation-set.
     """
+
     def __init__(self, left, right):
         """
         :param left: Clique.

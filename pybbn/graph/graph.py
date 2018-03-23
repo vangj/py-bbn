@@ -5,6 +5,7 @@ class Graph:
     """
     Graph.
     """
+
     def __init__(self):
         """
         Ctor.
@@ -131,6 +132,7 @@ class Ug(Graph):
     """
     Undirected graph.
     """
+
     def __init__(self):
         """
         Ctor.

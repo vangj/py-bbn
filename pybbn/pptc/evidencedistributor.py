@@ -6,6 +6,7 @@ class EvidenceDistributor:
     Evidence distributor. Passes messages using breadth-first-search (BFS).
     Messages are passed from the start clique to the far remote cliques.
     """
+
     def __init__(self, join_tree, start_clique):
         """
         Ctor.

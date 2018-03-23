@@ -1,12 +1,13 @@
+from pybbn.graph.edge import JtEdge
 from pybbn.graph.jointree import JoinTree
 from pybbn.graph.node import SepSet
-from pybbn.graph.edge import JtEdge
 
 
 class Transformer:
     """
     Transformer. Transforms a list of cliques into a join tree.
     """
+
     @staticmethod
     def transform(cliques):
         """

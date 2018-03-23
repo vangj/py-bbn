@@ -5,6 +5,7 @@ class PotentialInitializer:
     """
     Potential initializer.
     """
+
     @staticmethod
     def init(bbn):
         """

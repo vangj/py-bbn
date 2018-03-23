@@ -13,6 +13,7 @@ class Edge:
     """
     Edge.
     """
+
     def __init__(self, i, j, type):
         """
         Ctor.
@@ -47,6 +48,7 @@ class SepSetEdge(Edge):
     """
     Separation set.
     """
+
     def __init__(self, i, j):
         """
         Ctor.
@@ -71,6 +73,7 @@ class JtEdge(Edge):
     """
     Junction tree edge. This is basically a hyper-edge.
     """
+
     def __init__(self, sep_set):
         """
         Ctor.

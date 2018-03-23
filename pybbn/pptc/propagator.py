@@ -6,6 +6,7 @@ class Propagator:
     """
     Evidence propagator.
     """
+
     @staticmethod
     def propagate(join_tree):
         """

@@ -1,5 +1,5 @@
-from pybbn.graph.graph import Ug
 from pybbn.graph.edge import Edge, EdgeType
+from pybbn.graph.graph import Ug
 from pybbn.graph.node import Clique
 
 
@@ -7,6 +7,7 @@ class Triangulator:
     """
     Triangulator. Triangulates an undirected moralized graph and produces cliques in the process.
     """
+
     @staticmethod
     def triangulate(m):
         """
@@ -113,6 +114,7 @@ class NodeClique:
     """
     Node clique.
     """
+
     def __init__(self, node, neighbors, weight, edges):
         """
         Ctor.

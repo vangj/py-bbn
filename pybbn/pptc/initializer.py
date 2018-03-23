@@ -5,6 +5,7 @@ class Initializer:
     """
     Initializes the join tree.
     """
+
     @staticmethod
     def initialize(join_tree):
         """

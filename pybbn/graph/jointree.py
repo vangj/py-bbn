@@ -1,14 +1,16 @@
-from pybbn.graph.graph import Ug
-from pybbn.graph.potential import Potential, PotentialEntry, PotentialUtil
-from pybbn.graph.node import SepSet
-from pybbn.graph.edge import JtEdge
 from enum import Enum
+
+from pybbn.graph.edge import JtEdge
+from pybbn.graph.graph import Ug
+from pybbn.graph.node import SepSet
+from pybbn.graph.potential import Potential, PotentialEntry, PotentialUtil
 
 
 class JoinTree(Ug):
     """
     Join tree.
     """
+
     def __init__(self):
         """
         Ctor.
@@ -334,6 +336,7 @@ class PathDetector:
     """
     Detects path between two nodes.
     """
+
     def __init__(self, graph, start, stop):
         """
         Ctor.
@@ -378,6 +381,7 @@ class JoinTreeListener(object):
     """
     Interface like class used for listening to a join tree.
     """
+
     def evidence_retracted(self, join_tree):
         """
         Evidence is retracted.
@@ -416,6 +420,7 @@ class EvidenceBuilder:
     """
     Evidence builder.
     """
+
     def __init__(self):
         """
         Ctor.
@@ -467,6 +472,7 @@ class Evidence:
     """
     Evidence.
     """
+
     def __init__(self, node, type):
         """
         Ctor.

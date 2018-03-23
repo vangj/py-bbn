@@ -1,16 +1,17 @@
-from pybbn.pptc.potentialinitializer import PotentialInitializer
-from pybbn.pptc.moralizer import Moralizer
-from pybbn.pptc.triangulator import Triangulator
-from pybbn.pptc.transformer import Transformer
-from pybbn.pptc.initializer import Initializer
-from pybbn.pptc.propagator import Propagator
 from pybbn.graph.jointree import JoinTreeListener
+from pybbn.pptc.initializer import Initializer
+from pybbn.pptc.moralizer import Moralizer
+from pybbn.pptc.potentialinitializer import PotentialInitializer
+from pybbn.pptc.propagator import Propagator
+from pybbn.pptc.transformer import Transformer
+from pybbn.pptc.triangulator import Triangulator
 
 
 class InferenceController(JoinTreeListener):
     """
     Inference controller.
     """
+
     @staticmethod
     def apply(bbn):
         """

@@ -1,11 +1,12 @@
-from pybbn.graph.graph import Ug
 from pybbn.graph.edge import Edge, EdgeType
+from pybbn.graph.graph import Ug
 
 
 class Moralizer:
     """
     Graph moralizer for a DAG.
     """
+
     @staticmethod
     def moralize(dag):
         """

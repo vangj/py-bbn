@@ -2,6 +2,7 @@ class IdUtil:
     """
     ID util.
     """
+
     @staticmethod
     def hash_string(s):
         """

@@ -1,6 +1,6 @@
+from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.graph import Graph
 from pybbn.graph.node import BbnNode
-from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.variable import Variable
 
 
@@ -8,6 +8,7 @@ class Dag(Graph):
     """
     Directed acyclic graph.
     """
+
     def __init__(self):
         """
         Ctor.
@@ -67,6 +68,7 @@ class Bbn(Dag):
     """
     BBN.
     """
+
     def __init__(self):
         """Ctor."""
         Dag.__init__(self)
@@ -86,6 +88,7 @@ class PathDetector:
     """
     Detects path between two nodes.
     """
+
     def __init__(self, graph, start, stop):
         """
         :param graph: DAG.
@@ -129,6 +132,7 @@ class BbnUtil:
     """
     BBN utility.
     """
+
     @staticmethod
     def get_huang_graph():
         """
@@ -144,23 +148,23 @@ class BbnUtil:
         g = BbnNode(Variable(6, 'g', ['on', 'off']), [0.8, 0.2, 0.1, 0.9])
         h = BbnNode(Variable(7, 'h', ['on', 'off']), [0.05, 0.95, 0.95, 0.05, 0.95, 0.05, 0.95, 0.05])
 
-        bbn = Bbn()\
-            .add_node(a)\
-            .add_node(b)\
-            .add_node(c)\
-            .add_node(d)\
-            .add_node(e)\
-            .add_node(f)\
-            .add_node(g)\
-            .add_node(h)\
-            .add_edge(Edge(a, b, EdgeType.DIRECTED))\
-            .add_edge(Edge(a, c, EdgeType.DIRECTED))\
-            .add_edge(Edge(b, d, EdgeType.DIRECTED))\
-            .add_edge(Edge(c, e, EdgeType.DIRECTED))\
-            .add_edge(Edge(d, f, EdgeType.DIRECTED))\
-            .add_edge(Edge(e, f, EdgeType.DIRECTED))\
-            .add_edge(Edge(c, g, EdgeType.DIRECTED))\
-            .add_edge(Edge(e, h, EdgeType.DIRECTED))\
+        bbn = Bbn() \
+            .add_node(a) \
+            .add_node(b) \
+            .add_node(c) \
+            .add_node(d) \
+            .add_node(e) \
+            .add_node(f) \
+            .add_node(g) \
+            .add_node(h) \
+            .add_edge(Edge(a, b, EdgeType.DIRECTED)) \
+            .add_edge(Edge(a, c, EdgeType.DIRECTED)) \
+            .add_edge(Edge(b, d, EdgeType.DIRECTED)) \
+            .add_edge(Edge(c, e, EdgeType.DIRECTED)) \
+            .add_edge(Edge(d, f, EdgeType.DIRECTED)) \
+            .add_edge(Edge(e, f, EdgeType.DIRECTED)) \
+            .add_edge(Edge(c, g, EdgeType.DIRECTED)) \
+            .add_edge(Edge(e, h, EdgeType.DIRECTED)) \
             .add_edge(Edge(g, h, EdgeType.DIRECTED))
 
         return bbn

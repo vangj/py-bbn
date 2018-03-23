@@ -2,6 +2,7 @@ class Variable:
     """
     A variable.
     """
+
     def __init__(self, id, name, values):
         """
         :param id: Numeric identifier. e.g. 0

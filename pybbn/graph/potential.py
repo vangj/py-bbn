@@ -5,6 +5,7 @@ class Potential:
     """
     Potential.
     """
+
     def __init__(self):
         """
         Ctor.
@@ -36,6 +37,7 @@ class PotentialEntry:
     """
     Potential entry.
     """
+
     def __init__(self):
         """
         Ctor.
@@ -86,6 +88,7 @@ class PotentialUtil:
     """
     Potential util.
     """
+
     @staticmethod
     def pass_single_message(join_tree, x, s, y):
         """

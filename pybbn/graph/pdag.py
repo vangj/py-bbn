@@ -5,6 +5,7 @@ class Pdag(Graph):
     """
     Partially directed acyclic graph.
     """
+
     def __init__(self):
         """
         Ctor.
@@ -76,6 +77,7 @@ class PathDetector:
     """
     Detects path between two nodes.
     """
+
     def __init__(self, graph, start, stop):
         """
         Ctor.
