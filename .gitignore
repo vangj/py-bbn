@@ -3,5 +3,6 @@
 docs/build/
 coverage/
 .coverage
+.noseids
 dist/
 PyBBN.egg-info/
