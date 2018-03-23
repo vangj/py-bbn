@@ -1,8 +1,9 @@
-from pybbn.graph.variable import Variable
-from pybbn.graph.node import Node, BbnNode, Clique, SepSet
-from pybbn.graph.edge import JtEdge, EdgeType
-from pybbn.graph.jointree import JoinTree
 from nose import with_setup
+
+from pybbn.graph.edge import JtEdge
+from pybbn.graph.jointree import JoinTree
+from pybbn.graph.node import BbnNode, Clique
+from pybbn.graph.variable import Variable
 
 
 def setup():
@@ -39,4 +40,3 @@ def test_jointree_creation():
     assert len(nodes) == 3
     assert len(edges) == 1
     assert len(g.get_flattened_edges()) == 2
-

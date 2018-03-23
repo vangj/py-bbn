@@ -1,11 +1,12 @@
-from pybbn.graph.dag import BbnUtil
-from pybbn.pptc.potentialinitializer import PotentialInitializer
-from pybbn.pptc.moralizer import Moralizer
-from pybbn.pptc.triangulator import Triangulator
-from pybbn.pptc.transformer import Transformer
-from pybbn.pptc.initializer import Initializer
-from pybbn.pptc.propagator import Propagator
 from nose import with_setup
+
+from pybbn.graph.dag import BbnUtil
+from pybbn.pptc.initializer import Initializer
+from pybbn.pptc.moralizer import Moralizer
+from pybbn.pptc.potentialinitializer import PotentialInitializer
+from pybbn.pptc.propagator import Propagator
+from pybbn.pptc.transformer import Transformer
+from pybbn.pptc.triangulator import Triangulator
 
 
 def setup():
@@ -37,4 +38,3 @@ def test_propagator():
     #     total = sum([entry.value for entry in potential.entries])
     #     print('total {}'.format(total))
     # assert 1 == 2
-

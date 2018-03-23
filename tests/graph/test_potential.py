@@ -1,5 +1,6 @@
-from pybbn.graph.potential import Potential, PotentialEntry
 from nose import with_setup
+
+from pybbn.graph.potential import Potential, PotentialEntry
 
 
 def setup():
@@ -47,10 +48,10 @@ def test_potential_get_matching_entry():
     entry4 = PotentialEntry().add(0, 'off').add(1, 'off')
     entry5 = PotentialEntry().add(3, 'off').add(1, 'off')
 
-    potential = Potential()\
-        .add_entry(entry1)\
-        .add_entry(entry2)\
-        .add_entry(entry3)\
+    potential = Potential() \
+        .add_entry(entry1) \
+        .add_entry(entry2) \
+        .add_entry(entry3) \
         .add_entry(entry4)
 
     assert len(potential.get_matching_entries(entry1)) == 1
@@ -74,4 +75,3 @@ def test_str():
         .add_entry(entry4)
 
     assert potential.__str__() == '0=on,1=on|1.0\n0=on,1=off|1.0\n0=off,1=on|1.0\n0=off,1=off|1.0'
-

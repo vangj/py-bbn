@@ -1,7 +1,8 @@
+from nose import with_setup
+
 from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.node import Node
 from pybbn.graph.pdag import Pdag
-from nose import with_setup
 
 
 def setup():
@@ -63,4 +64,3 @@ def test_pdag_creation():
 
     assert 1 in g.get_out_nodes(0)
     assert 2 in g.get_out_nodes(1)
-

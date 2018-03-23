@@ -1,7 +1,8 @@
-from pybbn.graph.dag import BbnUtil
-from pybbn.pptc.potentialinitializer import PotentialInitializer
-from pybbn.pptc.moralizer import Moralizer
 from nose import with_setup
+
+from pybbn.graph.dag import BbnUtil
+from pybbn.pptc.moralizer import Moralizer
+from pybbn.pptc.potentialinitializer import PotentialInitializer
 
 
 def setup():

@@ -1,7 +1,8 @@
-from pybbn.graph.edge import Edge, EdgeType
-from pybbn.graph.node import Node
-from pybbn.graph.graph import Graph
 from nose import with_setup
+
+from pybbn.graph.edge import Edge, EdgeType
+from pybbn.graph.graph import Graph
+from pybbn.graph.node import Node
 
 
 def setup():
@@ -41,4 +42,3 @@ def test_graph_creation():
     assert g.edge_exists(0, 1) == 1
     assert g.edge_exists(1, 2) == 1
     assert g.edge_exists(0, 2) == 0
-

@@ -1,6 +1,7 @@
+from nose import with_setup
+
 from pybbn.graph.node import BbnNode, Clique
 from pybbn.graph.variable import Variable
-from nose import with_setup
 
 
 def setup():
@@ -127,4 +128,3 @@ def test_str():
     assert abc.__str__() == '(a,b,c)'
     assert bcd.__str__() == '(b,c,d)'
     assert sepset.__str__() == '|b,c|'
-

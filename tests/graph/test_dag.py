@@ -1,7 +1,8 @@
+from nose import with_setup
+
+from pybbn.graph.dag import Dag
 from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.node import Node
-from pybbn.graph.dag import Dag
-from nose import with_setup
 
 
 def setup():
@@ -59,4 +60,3 @@ def test_dag_creation():
 
     assert 1 in g.get_children(0)
     assert 2 in g.get_children(1)
-

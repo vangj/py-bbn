@@ -1,6 +1,7 @@
+from nose import with_setup
+
 from pybbn.graph.dag import BbnUtil
 from pybbn.pptc.potentialinitializer import PotentialInitializer
-from nose import with_setup
 
 
 def setup():

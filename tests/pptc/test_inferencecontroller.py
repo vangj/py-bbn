@@ -1,7 +1,8 @@
+from nose import with_setup
+
 from pybbn.graph.dag import BbnUtil
 from pybbn.graph.jointree import EvidenceBuilder
 from pybbn.pptc.inferencecontroller import InferenceController
-from nose import with_setup
 
 
 def setup():
@@ -20,9 +21,9 @@ def test_inference_controller():
     print('INIT')
     print_potentials(join_tree)
 
-    ev = EvidenceBuilder()\
-        .with_node(join_tree.get_bbn_node(0))\
-        .with_evidence('on', 1.0)\
+    ev = EvidenceBuilder() \
+        .with_node(join_tree.get_bbn_node(0)) \
+        .with_evidence('on', 1.0) \
         .build()
 
     join_tree.set_observation(ev)
