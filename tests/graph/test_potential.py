@@ -59,6 +59,7 @@ def test_potential_get_matching_entry():
     assert len(potential.get_matching_entries(entry4)) == 1
     assert len(potential.get_matching_entries(entry5)) == 0
 
+
 @with_setup(setup, teardown)
 def test_str():
     entry1 = PotentialEntry().add(0, 'on').add(1, 'on')

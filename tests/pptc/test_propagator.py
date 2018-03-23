@@ -37,3 +37,4 @@ def test_propagator():
     #     total = sum([entry.value for entry in potential.entries])
     #     print('total {}'.format(total))
     # assert 1 == 2
+
