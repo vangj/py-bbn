@@ -114,7 +114,18 @@ bbn.clear_evidences()
 
 # Building
 
-To build, you will need Python 2.7+. Type in the following.
+To build, you will need Python 2.7+. Managing environments through [Anaconda](https://www.anaconda.com/download/#linux)
+is highly recommended to be able to build this project (though not absolutely required if you know
+what you are doing). Assuming you have installed Anaconda, you may create an environment as
+follows (make sure you `cd` into the root of this project's location).
+
+```bash
+conda create -n py-bbn python=2.7
+source activate py-bbn
+conda install --yes --file requirements.txt
+```
+
+Then you may build the project as follows.
 
 ```
 make
