@@ -137,6 +137,14 @@ To build the documents, go into the docs sub-directory and type in the following
 make html
 ```
 
+# Installing
+
+Use pip to install the package as it has been published to [PyPi](https://pypi.python.org/pypi/pybbn).
+
+```bash
+pip install pybbn
+```
+
 # Other Python Bayesian Belief Network Inference Libraries
 
 Here is a list of other Python libraries for inference in Bayesian Belief Networks. 
