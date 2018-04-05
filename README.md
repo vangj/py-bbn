@@ -76,7 +76,7 @@ Below is an example to create a linear Gaussian BBN and perform inference.
 
 ```python
 import numpy as np
-from pybbn.lcg.graph import Dag, Parameters, Bbn
+from pybbn.lg.graph import Dag, Parameters, Bbn
 
 # create the directed acylic graph
 dag = Dag()
