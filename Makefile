@@ -1,5 +1,5 @@
 .PHONY: init clean lint test
-.DEFAULT_GOAL := test
+.DEFAULT_GOAL := build
 
 init:
 	pip install -r requirements.txt
