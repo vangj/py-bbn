@@ -8,6 +8,7 @@ Subpackages
 
     pybbn.graph
     pybbn.pptc
+    pybbn.lg
 
 Module contents
 ---------------
