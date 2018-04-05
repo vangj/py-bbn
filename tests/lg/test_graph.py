@@ -1,5 +1,6 @@
 import numpy as np
 from nose import with_setup
+from nose.tools import assert_almost_equal
 
 from pybbn.lg.graph import Dag, Parameters, Bbn
 
@@ -174,17 +175,23 @@ def test_inference():
     ])
     params = Parameters(means, cov)
 
-    bbn = Bbn(dag, params, max_samples=2000, max_iters=10)
+    bbn = Bbn(dag, params, max_samples=9000, max_iters=1)
 
     s = bbn.do_inference()
+    assert_almost_equal(s[0], 0.0, delta=0.01)
+    assert_almost_equal(s[1], 25.0, delta=1.0)
     print(s)
 
     bbn.set_evidence(0, 1)
     s = bbn.do_inference()
+    assert_almost_equal(s[0], 1.0, delta=0.00)
+    assert_almost_equal(s[1], 25.0, delta=1.0)
     print(s)
     bbn.clear_evidences()
 
     bbn.set_evidence(1, 20)
     s = bbn.do_inference()
+    assert_almost_equal(s[0], -2.0, delta=0.5)
+    assert_almost_equal(s[1], 20.0, delta=0.0)
     print(s)
     bbn.clear_evidences()

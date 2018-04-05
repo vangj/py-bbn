@@ -1,3 +1,5 @@
+import math
+
 import networkx as nx
 import numpy as np
 from networkx.algorithms.dag import topological_sort, is_directed_acyclic_graph
@@ -133,13 +135,13 @@ class Bbn(object):
     Bayesian Belief Network.
     """
 
-    def __init__(self, dag, params, max_samples=2000, max_iters=10):
+    def __init__(self, dag, params, max_samples=9000, max_iters=1):
         """
         Ctor. Note that the dimensions of the DAG and parameters must match.
         :param dag: DAG.
         :param params: Parameters (means and covariance).
-        :param max_samples: Max number of samples to use for approximate inference per iteration. Default is 2,000.
-        :param max_iters: Max number of iterations. Default is 10.
+        :param max_samples: Max number of samples to use for approximate inference per iteration. Default is 9,000.
+        :param max_iters: Max number of iterations. Default is 1.
         """
         self.dag = dag
         self.params = params
@@ -227,6 +229,7 @@ class Bbn(object):
         Conducts Gibbs sampling.
         :return: The expected state of every variable.
         """
+
         def get_init_value(bbn, node_id):
             """
             Gets a random initial value for the specified node. If the specified node has evidence set, then that value
@@ -238,7 +241,9 @@ class Bbn(object):
             if bbn.__has_evidence__(node_id):
                 return bbn.get_evidence(node_id)
             else:
-                return list(rnorm(1, 0, 1))[0]
+                m = bbn.params.means[node_id]
+                stdev = math.sqrt(bbn.params.cov[node_id, node_id])
+                return list(rnorm(1, m, stdev))[0]
 
         def get_nodes_selector(node_id, num_nodes):
             """
