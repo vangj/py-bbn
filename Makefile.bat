@@ -5,6 +5,7 @@ if /I %1 == lint goto :lint
 if /I %1 == test goto :test
 if /I %1 == clean goto :clean
 if /I %1 == build goto :build
+if /I %1 == install goto :install
 
 goto :eof ::can be ommited to run the `default` function similarly to makefiles
 
@@ -35,4 +36,8 @@ goto :eof
 
 :build
 python setup.py bdist_egg
+goto :eof
+
+:install
+python setup.py install
 goto :eof

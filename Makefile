@@ -13,6 +13,9 @@ test: clean lint
 build: test
 	python setup.py bdist_egg
 
+install: build
+	python setup.py install
+
 clean:
 	find . -type f -name '*.pyc' -delete
 	rm -fr coverage/
