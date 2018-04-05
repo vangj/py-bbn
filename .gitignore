@@ -6,3 +6,5 @@ coverage/
 .noseids
 dist/
 PyBBN.egg-info/
+pybbn.egg-info/
+build/

@@ -128,7 +128,7 @@ conda install --yes --file requirements.txt
 Then you may build the project as follows.
 
 ```
-make
+make build
 ```
 
 To build the documents, go into the docs sub-directory and type in the following.
