@@ -154,7 +154,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'PyBBN', 'PyBBN Documentation',
-     author, 'PyBBN', 'One line description of project.',
+     author, 'PyBBN', 'Bayesian inference.',
      'Miscellaneous'),
 ]
 
