@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pybbn',
-    version='0.0.1',
+    version='0.0.2',
     author='Jee Vang',
     author_email='vangjee@gmail.com',
     packages=find_packages(),

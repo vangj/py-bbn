@@ -5,6 +5,10 @@ coverage
 flake8
 pep8
 pyflakes
+# LIBS
+numpy
+scipy
+networkx
 # DOCUMENTATION
 sphinx
 sphinx_rtd_theme
