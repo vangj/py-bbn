@@ -16,6 +16,9 @@ build: test
 install: build
 	python setup.py install
 
+publish: build
+	python setup.py sdist upload -r pypi
+
 clean:
 	find . -type f -name '*.pyc' -delete
 	rm -fr coverage/
