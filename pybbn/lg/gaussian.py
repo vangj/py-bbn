@@ -209,3 +209,46 @@ def dmvnorm(data, m, cov):
         y = x.reshape((k, 1))
         e = -0.5 * x.dot(cov_inv).dot(y)
         yield math.exp(e) / d
+
+
+class RandCondMvn(object):
+    """
+    Random conditional multivariate normal.
+    """
+
+    def __init__(self, m, cov, dep, given):
+        """
+        Constructor.
+        :param m: An array of means.
+        :param cov: Covariance matrix.
+        :param dep: Index of dependent variable.
+        :param given: Array of indices of independent variables.
+        :return: None.
+        """
+        # cov.rows should equal cov.cols
+        # |m| should equal cov.rows
+        # dep should be one integer
+        # |given| should equal X.cols
+        # |given| < cov.cols
+
+        col_selector = [x for x in range(cov.shape[1]) if x in given]
+
+        cov_yy = cov[dep, dep]
+        cov_yx = __slice_acov__(cov, dep, given)
+        cov_xx = inv(__slice_scov__(cov, dep, given))
+
+        self.m_x = m[col_selector]
+        self.m_y = m[dep]
+
+        self.cov_yx_dot_cov_xx = cov_yx.dot(cov_xx)
+        self.v_y = cov_yy - cov_yx.dot(cov_xx).dot(cov_yx.transpose())
+
+    def next(self, X):
+        """
+        Samples from the conditional multivariate Gaussian distribution
+        :param X: Values of dependent variables.
+        :return: Sample.
+        """
+        e_y = self.m_y + self.cov_yx_dot_cov_xx * (X - self.m_x)
+        y = list(rnorm(1, e_y, self.v_y))[0][0]
+        return y

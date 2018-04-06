@@ -4,7 +4,7 @@ import networkx as nx
 import numpy as np
 from networkx.algorithms.dag import topological_sort, is_directed_acyclic_graph
 
-from pybbn.lg.gaussian import rnorm, rcmvnorm
+from pybbn.lg.gaussian import rnorm, RandCondMvn
 
 
 class Dag(object):
@@ -254,7 +254,33 @@ class Bbn(object):
             """
             return sorted([i for i in range(num_nodes) if i != node_id])
 
-        def get_sample(num_nodes, sample, max_samples):
+        def get_rcmvnorm_dist(node_id, means, cov):
+            """
+            Gets a conditional multivariate normal distribution.
+            :param node_id: Node id.
+            :param means: Means.
+            :param cov: Covariance.
+            :return: Random conditional multivariate normal distribution.
+            """
+            num_nodes = cov.shape[0]
+            other_nodes = get_nodes_selector(node_id, num_nodes)
+            dist = RandCondMvn(means, cov, node_id, other_nodes)
+            return dist
+
+        def get_rcmvnorm_dists(means, cov):
+            """
+            Gets a dictionary of rcmvnorm distributions keyed by node ID.
+            :param means: Means.
+            :param cov: Covariance.
+            :return: Dictionary of rcmvnorm distributions.
+            """
+            dists = {}
+            for node_id in range(cov.shape[0]):
+                dist = get_rcmvnorm_dist(node_id, means, cov)
+                dists[node_id] = dist
+            return dists
+
+        def get_sample(num_nodes, sample, max_samples, dists):
             """
             Gets a sample.
             :param num_nodes: Number of nodes.
@@ -272,8 +298,7 @@ class Bbn(object):
                     else:
                         other_nodes = get_nodes_selector(node_id, num_nodes)
                         X = i_sample[other_nodes]
-                        x = list(rcmvnorm(1, self.params.means, self.params.cov, node_id, other_nodes, X))[0]
-                        i_sample[node_id] = x
+                        i_sample[node_id] = dists[node_id].next(X)
 
                 sample = (sample + i_sample) / 2.0
             return sample
@@ -281,10 +306,11 @@ class Bbn(object):
         num_nodes = self.dag.number_of_nodes()
         max_iters = self.max_iters
         outcome = np.zeros((1, num_nodes))
+        dists = get_rcmvnorm_dists(self.params.means, self.params.cov)
 
         for i in range(max_iters):
             sample = np.array([get_init_value(self, node_id) for node_id in range(num_nodes)], dtype=float)
-            sample = get_sample(num_nodes, sample, self.max_samples)
+            sample = get_sample(num_nodes, sample, self.max_samples, dists)
             outcome = outcome + sample
 
         outcome = outcome / float(max_iters)
