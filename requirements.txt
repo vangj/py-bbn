@@ -9,6 +9,7 @@ pyflakes
 numpy
 scipy
 networkx
+pandas
 # DOCUMENTATION
 sphinx
 sphinx_rtd_theme
