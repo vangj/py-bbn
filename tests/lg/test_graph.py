@@ -63,6 +63,29 @@ def test_create_dag_with_cycle():
 
 
 @with_setup(setup, teardown)
+def test_markov_blanket():
+    """
+    Test getting Markov blanket.
+    :return: None.
+    """
+    g = Dag()
+    g.add_node(0)
+    g.add_node(1)
+    g.add_node(2)
+    g.add_node(3)
+    g.add_node(4)
+    g.add_edge(0, 1)
+    g.add_edge(1, 2)
+    g.add_edge(3, 2)
+
+    blanket = g.markov_blanket(1)
+    assert 3 == len(blanket)
+    assert 0 in blanket
+    assert 2 in blanket
+    assert 3 in blanket
+
+
+@with_setup(setup, teardown)
 def test_create_parameters():
     """
     Tests creating parameters.

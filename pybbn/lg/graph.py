@@ -86,6 +86,38 @@ class Dag(object):
         """
         return list(self.g.successors(node_id))
 
+    def coparents(self, node_id):
+        """
+        Gets the coparents of the specified node.
+        :param node_id:  Node ID.
+        :return: List of coparent node IDS.
+        """
+        copas = set()
+        for ch in self.children(node_id):
+            pas = self.parents(ch)
+            for pa in pas:
+                copas.add(pa)
+        return list(copas)
+
+    def markov_blanket(self, node_id):
+        """
+        Gets the Markov blanket of the specified node. The Markov blanket of a node is defined as its parents,
+        children, and co-parents.
+        :param node_id: Node ID.
+        :return: List of node IDs in the Markov blanket.
+        """
+        blanket = set()
+
+        for pa in self.parents(node_id):
+            blanket.add(pa)
+        for ch in self.children(node_id):
+            blanket.add(ch)
+        for copa in self.coparents(node_id):
+            blanket.add(copa)
+
+        blanket.remove(node_id)
+        return sorted(list(blanket))
+
     def get_sorted_topology(self):
         """
         Gets the sorted topology of the DAG.
