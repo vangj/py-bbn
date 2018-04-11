@@ -352,7 +352,8 @@ class Bbn(object):
                         x = self.get_evidence(node_id)
                         i_sample[node_id] = x
                     else:
-                        other_nodes = dag.markov_blanket(node_id) if mb is True else get_nodes_selector(node_id, num_nodes)
+                        other_nodes = dag.markov_blanket(node_id) if mb is True else get_nodes_selector(node_id,
+                                                                                                        num_nodes)
                         X = i_sample[other_nodes]
                         i_sample[node_id] = dists[node_id].next(X)
 
@@ -362,7 +363,9 @@ class Bbn(object):
         num_nodes = self.dag.number_of_nodes()
         max_iters = self.max_iters
         outcome = np.zeros((1, num_nodes))
-        dists = get_mb_rcmvnorm_dists(self.dag, self.params.means, self.params.cov) if self.mb is True else get_rcmvnorm_dists(self.params.means, self.params.cov)
+        dists = get_mb_rcmvnorm_dists(self.dag, self.params.means,
+                                      self.params.cov) if self.mb is True else get_rcmvnorm_dists(self.params.means,
+                                                                                                  self.params.cov)
 
         for i in range(max_iters):
             sample = np.array([get_init_value(self, node_id) for node_id in range(num_nodes)], dtype=float)
