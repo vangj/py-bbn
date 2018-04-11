@@ -218,3 +218,43 @@ def test_inference():
     assert_almost_equal(s[1], 20.0, delta=0.0)
     print(s)
     bbn.clear_evidences()
+
+
+@with_setup(setup, teardown)
+def test_local_inference():
+    """
+    Test local inference.
+    :return: None.
+    """
+    dag = Dag()
+    dag.add_node(0)
+    dag.add_node(1)
+    dag.add_edge(0, 1)
+
+    means = np.array([0, 25])
+    cov = np.array([
+        [1.09, 1.95],
+        [1.95, 4.52]
+    ])
+    params = Parameters(means, cov)
+
+    bbn = Bbn(dag, params, max_samples=9000, max_iters=1, mb=True)
+
+    s = bbn.do_inference()
+    assert_almost_equal(s[0], 0.0, delta=0.01)
+    assert_almost_equal(s[1], 25.0, delta=1.0)
+    print(s)
+
+    bbn.set_evidence(0, 1)
+    s = bbn.do_inference()
+    assert_almost_equal(s[0], 1.0, delta=0.00)
+    assert_almost_equal(s[1], 25.0, delta=1.0)
+    print(s)
+    bbn.clear_evidences()
+
+    bbn.set_evidence(1, 20)
+    s = bbn.do_inference()
+    assert_almost_equal(s[0], -2.0, delta=0.5)
+    assert_almost_equal(s[1], 20.0, delta=0.0)
+    print(s)
+    bbn.clear_evidences()

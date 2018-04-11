@@ -115,7 +115,8 @@ class Dag(object):
         for copa in self.coparents(node_id):
             blanket.add(copa)
 
-        blanket.remove(node_id)
+        if node_id in blanket:
+            blanket.remove(node_id)
         return sorted(list(blanket))
 
     def get_sorted_topology(self):
@@ -167,19 +168,21 @@ class Bbn(object):
     Bayesian Belief Network.
     """
 
-    def __init__(self, dag, params, max_samples=9000, max_iters=1):
+    def __init__(self, dag, params, max_samples=9000, max_iters=1, mb=False):
         """
         Ctor. Note that the dimensions of the DAG and parameters must match.
         :param dag: DAG.
         :param params: Parameters (means and covariance).
         :param max_samples: Max number of samples to use for approximate inference per iteration. Default is 9,000.
         :param max_iters: Max number of iterations. Default is 1.
+        :param mb: A boolean indicating if we are only sampling locally based on Markov Blanket. Default is False.
         """
         self.dag = dag
         self.params = params
         self.evidence = np.array([None for _ in range(dag.number_of_nodes())], dtype=float)
         self.max_samples = max_samples
         self.max_iters = max_iters
+        self.mb = mb
 
         # all of these checks are to make sure the DAG and params align
         # check for 1-to-1 correspondence between nodes and variables
@@ -299,6 +302,11 @@ class Bbn(object):
             dist = RandCondMvn(means, cov, node_id, other_nodes)
             return dist
 
+        def get_mb_rcmvnorm_dist(dag, node_id, means, cov):
+            other_nodes = dag.markov_blanket(node_id)
+            dist = RandCondMvn(means, cov, node_id, other_nodes)
+            return dist
+
         def get_rcmvnorm_dists(means, cov):
             """
             Gets a dictionary of rcmvnorm distributions keyed by node ID.
@@ -312,14 +320,30 @@ class Bbn(object):
                 dists[node_id] = dist
             return dists
 
-        def get_sample(num_nodes, sample, max_samples, dists):
+        def get_mb_rcmvnorm_dists(dag, means, cov):
+            """
+
+            :param dag:
+            :param means:
+            :param cov:
+            :return:
+            """
+            dists = {}
+            for node_id in range(cov.shape[0]):
+                dist = get_mb_rcmvnorm_dist(dag, node_id, means, cov)
+                dists[node_id] = dist
+            return dists
+
+        def get_sample(dag, sample, max_samples, dists, mb=False):
             """
             Gets a sample.
-            :param num_nodes: Number of nodes.
+            :param dag: Directed acyclic graph.
             :param sample: Initial sample.
             :param max_samples: Max samples.
             :return: Final sample.
             """
+            num_nodes = dag.number_of_nodes()
+
             for i in range(max_samples):
                 i_sample = np.copy(sample)
 
@@ -328,7 +352,7 @@ class Bbn(object):
                         x = self.get_evidence(node_id)
                         i_sample[node_id] = x
                     else:
-                        other_nodes = get_nodes_selector(node_id, num_nodes)
+                        other_nodes = dag.markov_blanket(node_id) if mb is True else get_nodes_selector(node_id, num_nodes)
                         X = i_sample[other_nodes]
                         i_sample[node_id] = dists[node_id].next(X)
 
@@ -338,11 +362,11 @@ class Bbn(object):
         num_nodes = self.dag.number_of_nodes()
         max_iters = self.max_iters
         outcome = np.zeros((1, num_nodes))
-        dists = get_rcmvnorm_dists(self.params.means, self.params.cov)
+        dists = get_mb_rcmvnorm_dists(self.dag, self.params.means, self.params.cov) if self.mb is True else get_rcmvnorm_dists(self.params.means, self.params.cov)
 
         for i in range(max_iters):
             sample = np.array([get_init_value(self, node_id) for node_id in range(num_nodes)], dtype=float)
-            sample = get_sample(num_nodes, sample, self.max_samples, dists)
+            sample = get_sample(self.dag, sample, self.max_samples, dists, mb=self.mb)
             outcome = outcome + sample
 
         outcome = outcome / float(max_iters)
