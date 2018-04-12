@@ -5,15 +5,27 @@ from pybbn.graph.variable import Variable
 
 
 def setup():
+    """
+    Setup.
+    :return: None.
+    """
     pass
 
 
 def teardown():
+    """
+    Teardown.
+    :return: None.
+    """
     pass
 
 
 @with_setup(setup, teardown)
 def test_bbn_node_creation():
+    """
+    Tests BBN node creation.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
@@ -44,6 +56,10 @@ def test_bbn_node_creation():
 
 @with_setup(setup, teardown)
 def test_clique_creation():
+    """
+    Tests clique creation.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
@@ -60,6 +76,10 @@ def test_clique_creation():
 
 @with_setup(setup, teardown)
 def test_clique_is_superset():
+    """
+    Tests if clique is a superset of another clique.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
@@ -85,6 +105,10 @@ def test_clique_is_superset():
 
 @with_setup(setup, teardown)
 def test_sep_set_creation():
+    """
+    Tests separation set creation.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
@@ -105,6 +129,10 @@ def test_sep_set_creation():
 
 @with_setup(setup, teardown)
 def test_str():
+    """
+    Tests str function.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])

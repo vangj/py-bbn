@@ -7,15 +7,27 @@ from pybbn.graph.variable import Variable
 
 
 def setup():
+    """
+    Setup.
+    :return: None.
+    """
     pass
 
 
 def teardown():
+    """
+    Teardown.
+    :return: None.
+    """
     pass
 
 
 @with_setup(setup, teardown)
 def test_jointree_creation():
+    """
+    Tests join tree creation.
+    :return: None.
+    """
     n0 = BbnNode(Variable(0, 'n0', ['t', 'f']), [])
     n1 = BbnNode(Variable(1, 'n1', ['t', 'f']), [])
     n2 = BbnNode(Variable(2, 'n2', ['t', 'f']), [])

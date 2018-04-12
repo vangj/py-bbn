@@ -6,15 +6,27 @@ from pybbn.graph.pdag import Pdag
 
 
 def setup():
+    """
+    Setup.
+    :return: None.
+    """
     pass
 
 
 def teardown():
+    """
+    Teardown.
+    :return: None.
+    """
     pass
 
 
 @with_setup(setup, teardown)
 def test_pdag_creation():
+    """
+    Tests PDAG creation.
+    :return:
+    """
     n0 = Node(0)
     n1 = Node(1)
     n2 = Node(2)

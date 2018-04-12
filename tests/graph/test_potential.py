@@ -4,15 +4,27 @@ from pybbn.graph.potential import Potential, PotentialEntry
 
 
 def setup():
+    """
+    Setup.
+    :return: None.
+    """
     pass
 
 
 def teardown():
+    """
+    Teardown.
+    :return: None.
+    """
     pass
 
 
 @with_setup(setup, teardown)
 def test_potential_entry_matches():
+    """
+    Tests matching potential entry.
+    :return: None.
+    """
     entry1 = PotentialEntry()
     entry1.add(0, 'on')
     entry1.add(1, 'on')
@@ -31,6 +43,10 @@ def test_potential_entry_matches():
 
 @with_setup(setup, teardown)
 def test_potential_entry_duplicate():
+    """
+    Tests checking for potential duplicates.
+    :return: None.
+    """
     entry1 = PotentialEntry()
     entry1.add(0, 'on')
     entry1.add(1, 'on')
@@ -42,6 +58,10 @@ def test_potential_entry_duplicate():
 
 @with_setup(setup, teardown)
 def test_potential_get_matching_entry():
+    """
+    Tests get matching entry from potential.
+    :return: None.
+    """
     entry1 = PotentialEntry().add(0, 'on').add(1, 'on')
     entry2 = PotentialEntry().add(0, 'on').add(1, 'off')
     entry3 = PotentialEntry().add(0, 'off').add(1, 'on')
@@ -63,6 +83,10 @@ def test_potential_get_matching_entry():
 
 @with_setup(setup, teardown)
 def test_str():
+    """
+    Tests str function.
+    :return: None.
+    """
     entry1 = PotentialEntry().add(0, 'on').add(1, 'on')
     entry2 = PotentialEntry().add(0, 'on').add(1, 'off')
     entry3 = PotentialEntry().add(0, 'off').add(1, 'on')

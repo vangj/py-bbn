@@ -10,15 +10,27 @@ from pybbn.pptc.triangulator import Triangulator
 
 
 def setup():
+    """
+    Setup.
+    :return: None.
+    """
     pass
 
 
 def teardown():
+    """
+    Teardown.
+    :return: None.
+    """
     pass
 
 
 @with_setup(setup, teardown)
 def test_propagator():
+    """
+    Tests propagation.
+    :return: None.
+    """
     bbn = BbnUtil.get_huang_graph()
     PotentialInitializer.init(bbn)
 

@@ -6,15 +6,27 @@ from pybbn.pptc.inferencecontroller import InferenceController
 
 
 def setup():
+    """
+    Setup.
+    :return: None.
+    """
     pass
 
 
 def teardown():
+    """
+    Teardown.
+    :return: None.
+    """
     pass
 
 
 @with_setup(setup, teardown)
 def test_inference_controller():
+    """
+    Tests inference controller.
+    :return: None.
+    """
     bbn = BbnUtil.get_huang_graph()
     join_tree = InferenceController.apply(bbn)
 
@@ -35,6 +47,11 @@ def test_inference_controller():
 
 
 def print_potentials(join_tree):
+    """
+    Prints the potentials.
+    :param join_tree: Join tree.
+    :return: None.
+    """
     for node in join_tree.get_bbn_nodes():
         potential = join_tree.get_bbn_potential(node)
         print(node)

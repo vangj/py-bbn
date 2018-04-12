@@ -6,15 +6,27 @@ from pybbn.graph.node import Node
 
 
 def setup():
+    """
+    Setup.
+    :return: None.
+    """
     pass
 
 
 def teardown():
+    """
+    Teardown.
+    :return: None.
+    """
     pass
 
 
 @with_setup(setup, teardown)
 def test_graph_creation():
+    """
+    Tests graph creation.
+    :return: None.
+    """
     n0 = Node(0)
     n1 = Node(1)
     n2 = Node(2)

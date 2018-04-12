@@ -5,15 +5,27 @@ from pybbn.pptc.potentialinitializer import PotentialInitializer
 
 
 def setup():
+    """
+    Setup.
+    :return: None.
+    """
     pass
 
 
 def teardown():
+    """
+    Teardown.
+    :return: None.
+    """
     pass
 
 
 @with_setup(setup, teardown)
 def test_potential_initializer():
+    """
+    Tests potential initialization.
+    :return: None.
+    """
     bbn = BbnUtil.get_huang_graph()
     PotentialInitializer.init(bbn)
 
