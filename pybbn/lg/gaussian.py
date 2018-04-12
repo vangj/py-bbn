@@ -137,8 +137,8 @@ def rcmvnorm(n, m, cov, dep, given, X):
     v_y = cov_yy - cov_yx.dot(cov_xx).dot(cov_yx.transpose())
 
     for i in range(n):
-        e_y = m_y + cov_yx_dot_cov_xx * (X - m_x)
-        y = list(rnorm(1, e_y, v_y))[0][0]
+        e_y = m_y + cov_yx_dot_cov_xx.dot(X - m_x)
+        y = list(rnorm(1, e_y, v_y))[0]
         yield y
 
 
@@ -173,8 +173,9 @@ def dcmvnorm(data, m, cov, dep, given):
     v_y = cov_yy - cov_yx.dot(cov_xx).dot(cov_yx.transpose())
 
     for i in range(data.shape[0]):
-        e_y = m_y + cov_yx_dot_cov_xx * (X[i] - m_x)
-        p_y = list(dnorm([y[i]], e_y, v_y))[0]
+        e_y = m_y + cov_yx_dot_cov_xx.dot(X[i] - m_x)
+        d = y[i]
+        p_y = list(dnorm([d], e_y, v_y))[0]
         yield p_y
 
 
@@ -249,6 +250,6 @@ class RandCondMvn(object):
         :param X: Values of dependent variables.
         :return: Sample.
         """
-        e_y = self.m_y + self.cov_yx_dot_cov_xx * (X - self.m_x)
-        y = list(rnorm(1, e_y, self.v_y))[0][0]
+        e_y = self.m_y + self.cov_yx_dot_cov_xx.dot(X - self.m_x)
+        y = list(rnorm(1, e_y, self.v_y))[0]
         return y
