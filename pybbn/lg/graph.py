@@ -379,7 +379,7 @@ class Bbn(object):
         num_nodes = self.dag.number_of_nodes()
         sum = 0.0
         for node_id in range(num_nodes):
-            if self.__has_parents__(node_id):
+            if self.__has_parents__(node_id) is False:
                 d = data[:, node_id]
                 m = self.params.means[node_id]
                 s = math.sqrt(self.params.cov[node_id, node_id])
