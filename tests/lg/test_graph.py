@@ -66,7 +66,7 @@ def test_create_dag_with_cycle():
 @with_setup(setup, teardown)
 def test_markov_blanket():
     """
-    Test getting Markov blanket.
+    Tests getting Markov blanket.
     :return: None.
     """
     g = Dag()
@@ -102,9 +102,9 @@ def test_create_parameters():
 @with_setup(setup, teardown)
 def test_create_parameter_means_not_eq_cov():
     """
-        Tests creating parameters where means is not equal to covariance.
-        :return: None.
-        """
+    Tests creating parameters where means is not equal to covariance.
+    :return: None.
+    """
     try:
         Parameters(np.array([0, 0, 0]), np.array([[0, 0], [0, 0]]))
         assert True is False
@@ -115,9 +115,9 @@ def test_create_parameter_means_not_eq_cov():
 @with_setup(setup, teardown)
 def test_create_parameter_cov_not_square():
     """
-        Tests creating parameters where covariance matrix is not square.
-        :return: None.
-        """
+    Tests creating parameters where covariance matrix is not square.
+    :return: None.
+    """
     try:
         Parameters(np.array([0, 0]), np.array([[0, 0], [0, 0, 0]]))
         assert True is False
@@ -184,7 +184,7 @@ def test_create_bbn():
 @with_setup(setup, teardown)
 def test_inference():
     """
-    Test inference.
+    Tests inference.
     :return: None.
     """
     dag = Dag()
@@ -224,7 +224,7 @@ def test_inference():
 @with_setup(setup, teardown)
 def test_local_inference():
     """
-    Test local inference.
+    Tests local inference.
     :return: None.
     """
     dag = Dag()

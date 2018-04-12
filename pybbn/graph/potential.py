@@ -1,7 +1,7 @@
 import itertools
 
 
-class Potential:
+class Potential(object):
     """
     Potential.
     """
@@ -33,7 +33,7 @@ class Potential:
         return str.join('\n', [entry.__str__() for entry in self.entries])
 
 
-class PotentialEntry:
+class PotentialEntry(object):
     """
     Potential entry.
     """
@@ -84,7 +84,7 @@ class PotentialEntry:
         return '{}|{}'.format(s, self.value)
 
 
-class PotentialUtil:
+class PotentialUtil(object):
     """
     Potential util.
     """

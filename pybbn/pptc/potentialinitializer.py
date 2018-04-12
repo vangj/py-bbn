@@ -1,7 +1,7 @@
 from pybbn.graph.potential import PotentialUtil
 
 
-class PotentialInitializer:
+class PotentialInitializer(object):
     """
     Potential initializer.
     """

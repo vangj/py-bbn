@@ -73,7 +73,7 @@ class Pdag(Graph):
         return False
 
 
-class PathDetector:
+class PathDetector(object):
     """
     Detects path between two nodes.
     """

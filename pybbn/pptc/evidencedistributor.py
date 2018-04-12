@@ -1,7 +1,7 @@
 from pybbn.graph.potential import PotentialUtil
 
 
-class EvidenceDistributor:
+class EvidenceDistributor(object):
     """
     Evidence distributor. Passes messages using breadth-first-search (BFS).
     Messages are passed from the start clique to the far remote cliques.

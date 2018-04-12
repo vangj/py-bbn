@@ -1,7 +1,7 @@
 from pybbn.graph.util import IdUtil
 
 
-class Node:
+class Node(object):
     """
     A node.
     """

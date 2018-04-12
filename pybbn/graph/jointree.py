@@ -332,7 +332,7 @@ class JoinTree(Ug):
             self.listener.evidence_updated(self)
 
 
-class PathDetector:
+class PathDetector(object):
     """
     Detects path between two nodes.
     """
@@ -416,7 +416,7 @@ class ChangeType(Enum):
     RETRACTION = 3
 
 
-class EvidenceBuilder:
+class EvidenceBuilder(object):
     """
     Evidence builder.
     """
@@ -468,7 +468,7 @@ class EvidenceBuilder:
         return evidence
 
 
-class Evidence:
+class Evidence(object):
     """
     Evidence.
     """

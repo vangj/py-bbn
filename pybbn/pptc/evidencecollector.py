@@ -1,7 +1,7 @@
 from pybbn.graph.potential import PotentialUtil
 
 
-class EvidenceCollector:
+class EvidenceCollector(object):
     """
     Evidence collector. Passes messages using depth-first-search (DFS).
     Messages are passed from the far remote cliques back to the start clique.

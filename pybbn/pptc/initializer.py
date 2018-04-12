@@ -1,7 +1,7 @@
 from pybbn.graph.potential import PotentialUtil
 
 
-class Initializer:
+class Initializer(object):
     """
     Initializes the join tree.
     """

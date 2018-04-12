@@ -2,7 +2,7 @@ from pybbn.pptc.evidencecollector import EvidenceCollector
 from pybbn.pptc.evidencedistributor import EvidenceDistributor
 
 
-class Propagator:
+class Propagator(object):
     """
     Evidence propagator.
     """

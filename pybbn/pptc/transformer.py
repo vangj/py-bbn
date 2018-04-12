@@ -3,7 +3,7 @@ from pybbn.graph.jointree import JoinTree
 from pybbn.graph.node import SepSet
 
 
-class Transformer:
+class Transformer(object):
     """
     Transformer. Transforms a list of cliques into a join tree.
     """

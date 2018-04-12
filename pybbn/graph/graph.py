@@ -1,7 +1,7 @@
 from pybbn.graph.edge import EdgeType
 
 
-class Graph:
+class Graph(object):
     """
     Graph.
     """

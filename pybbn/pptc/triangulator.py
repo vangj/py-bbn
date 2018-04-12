@@ -3,7 +3,7 @@ from pybbn.graph.graph import Ug
 from pybbn.graph.node import Clique
 
 
-class Triangulator:
+class Triangulator(object):
     """
     Triangulator. Triangulates an undirected moralized graph and produces cliques in the process.
     """

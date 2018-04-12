@@ -84,7 +84,7 @@ class Bbn(Dag):
         return Dag.__shouldadd__(edge)
 
 
-class PathDetector:
+class PathDetector(object):
     """
     Detects path between two nodes.
     """
@@ -128,7 +128,7 @@ class PathDetector:
         return False
 
 
-class BbnUtil:
+class BbnUtil(object):
     """
     BBN utility.
     """

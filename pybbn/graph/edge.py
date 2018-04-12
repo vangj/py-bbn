@@ -9,7 +9,7 @@ class EdgeType(Enum):
     DIRECTED = 2
 
 
-class Edge:
+class Edge(object):
     """
     Edge.
     """

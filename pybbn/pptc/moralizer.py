@@ -2,7 +2,7 @@ from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.graph import Ug
 
 
-class Moralizer:
+class Moralizer(object):
     """
     Graph moralizer for a DAG.
     """

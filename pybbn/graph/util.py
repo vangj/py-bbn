@@ -1,4 +1,4 @@
-class IdUtil:
+class IdUtil(object):
     """
     ID util.
     """
