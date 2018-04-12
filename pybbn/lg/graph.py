@@ -4,7 +4,7 @@ import networkx as nx
 import numpy as np
 from networkx.algorithms.dag import topological_sort, is_directed_acyclic_graph
 
-from pybbn.lg.gaussian import rnorm, RandCondMvn
+from pybbn.lg.gaussian import rnorm, dnorm, dcmvnorm, RandCondMvn
 
 
 class Dag(object):
@@ -374,3 +374,21 @@ class Bbn(object):
 
         outcome = outcome / float(max_iters)
         return outcome[0]
+
+    def log_prob(self, data):
+        num_nodes = self.dag.number_of_nodes()
+        sum = 0.0
+        for node_id in range(num_nodes):
+            if self.__has_parents__(node_id):
+                d = data[:, node_id]
+                m = self.params.means[node_id]
+                s = math.sqrt(self.params.cov[node_id, node_id])
+                logp = np.sum([math.log10(p) for p in dnorm(d, m, s)])
+                sum += logp
+            else:
+                m = self.params.means
+                s = self.params.cov
+                dep = sorted(self.dag.parents(node_id))
+                logp = np.sum([math.log10(p) for p in dcmvnorm(data, m, s, node_id, dep)])
+                sum += logp
+        return sum

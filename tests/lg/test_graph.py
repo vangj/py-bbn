@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from nose import with_setup
 from nose.tools import assert_almost_equal
 
@@ -258,3 +259,45 @@ def test_local_inference():
     assert_almost_equal(s[1], 20.0, delta=0.0)
     print(s)
     bbn.clear_evidences()
+
+
+@with_setup(setup, teardown)
+def test_log_proba():
+    """
+    Tests log probability of data given a BBN.
+    :return: None.
+    """
+
+    num_samples = 10000
+
+    x0 = 2.0 + np.random.standard_normal(num_samples)
+    x1 = 5.0 + 2.0 * x0 + np.random.standard_normal(num_samples)
+    x2 = 2.0 + np.random.standard_normal(num_samples)
+    x3 = 1.0 + 0.3 * x1 + 0.5 * x2 + np.random.standard_normal(num_samples)
+    x4 = 8.0 + 0.9 * x3 + np.random.standard_normal(num_samples)
+
+    df = pd.DataFrame({
+        'x0': x0,
+        'x1': x1,
+        'x2': x2,
+        'x3': x3,
+        'x4': x4})
+
+    means = np.array(df.mean())
+    cov = np.array(df.cov().as_matrix())
+
+    params = Parameters(means, cov)
+
+    dag1 = Dag()
+    dag1.add_node(0)
+    dag1.add_node(1)
+    dag1.add_node(2)
+    dag1.add_node(3)
+    dag1.add_node(4)
+    dag1.add_edge(0, 1)
+    dag1.add_edge(1, 3)
+    dag1.add_edge(2, 3)
+    dag1.add_edge(3, 4)
+
+    bbn1 = Bbn(dag1, params, max_samples=9000, max_iters=1, mb=True)
+    print(bbn1.log_prob(df.as_matrix()))
