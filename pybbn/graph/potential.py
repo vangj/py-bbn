@@ -132,9 +132,12 @@ class PotentialUtil(object):
         :return: Potential.
         """
         total = sum([entry.value for entry in potential.entries])
-        for entry in potential.entries:
-            d = entry.value / total
-            entry.value = d
+
+        if total != 0.0:
+            for entry in potential.entries:
+                d = entry.value / total
+                entry.value = d
+
         return potential
 
     @staticmethod
