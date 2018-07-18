@@ -132,9 +132,12 @@ class PotentialUtil(object):
         :return: Potential.
         """
         total = sum([entry.value for entry in potential.entries])
-        for entry in potential.entries:
-            d = entry.value / total
-            entry.value = d
+
+        if total != 0.0:
+            for entry in potential.entries:
+                d = entry.value / total
+                entry.value = d
+
         return potential
 
     @staticmethod
@@ -146,15 +149,14 @@ class PotentialUtil(object):
         :return: Potential.
         """
         potential = Potential()
-        for entry in numerator.entries:
-            if len(denominator.entries) > 0:
-                e = denominator.entries[0]
-                d = 0.0 \
-                    if PotentialUtil.is_zero(entry.value) or PotentialUtil.is_zero(e.value) \
-                    else (entry.value / e.value)
-                new_entry = entry.duplicate()
-                new_entry.value = d
-                potential.add_entry(new_entry)
+        for i, entry in enumerate(numerator.entries):
+            e = denominator.entries[i]
+            d = 0.0 \
+                if PotentialUtil.is_zero(entry.value) or PotentialUtil.is_zero(e.value) \
+                else (entry.value / e.value)
+            new_entry = entry.duplicate()
+            new_entry.value = d
+            potential.add_entry(new_entry)
         return potential
 
     @staticmethod
