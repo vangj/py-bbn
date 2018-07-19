@@ -133,7 +133,7 @@ def __find_predecessor__(i, j, g):
     return None
 
 
-def generate_multi_connected_structure(n, max_iter=10):
+def __generate_multi_connected_structure__(n, max_iter=10):
     """
     Generates a multi-connected directed acyclic graph.
     :param n: Number of nodes.
@@ -150,7 +150,7 @@ def generate_multi_connected_structure(n, max_iter=10):
     return g
 
 
-def generate_singly_structure(n, max_iter=10):
+def __generate_singly_structure__(n, max_iter=10):
     """
     Generates a singly-connected directed acyclic graph.
     :param n: Number of nodes.
@@ -261,7 +261,7 @@ def __generate_dirichlet_parameters__(i, parents, num_values, max_alpha=10):
     return np.array(cpt)
 
 
-def generate_parameters(g, max_values=2, max_alpha=10):
+def __generate_parameters__(g, max_values=2, max_alpha=10):
     """
     Generates parameters for each node in the graph, g.
     A dictionary indexed by the node's id will give its
@@ -313,8 +313,8 @@ def generate_multi_bbn(n, max_iter=10, max_values=2, max_alpha=10):
     :param max_alpha: Maximum alpha per value (hyperparameters).
     :return: A tuple of structure and parameters.
     """
-    g = generate_multi_connected_structure(n, max_iter)
-    p = generate_parameters(g, max_values, max_alpha)
+    g = __generate_multi_connected_structure__(n, max_iter)
+    p = __generate_parameters__(g, max_values, max_alpha)
     return g, p
 
 
@@ -327,6 +327,6 @@ def generate_singly_bbn(n, max_iter=10, max_values=2, max_alpha=10):
     :param max_alpha: Maximum alpha per value (hyperparameters).
     :return: A tuple of structure and parameters.
     """
-    g = generate_singly_structure(n, max_iter)
-    p = generate_parameters(g, max_values, max_alpha)
+    g = __generate_singly_structure__(n, max_iter)
+    p = __generate_parameters__(g, max_values, max_alpha)
     return g, p
