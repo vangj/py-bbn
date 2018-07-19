@@ -126,9 +126,9 @@ def __find_predecessor__(i, j, g):
     u = __convert_to_undirected_graph__(g)
     for pa in parents:
         try:
-            path = shortest_path(u, pa, i)
+            shortest_path(u, pa, i)
             return pa
-        except:
+        except nx.NetworkXNoPath:
             pass
     return None
 
