@@ -1,5 +1,6 @@
 from nose import with_setup
-from pybbn.generator.bbngenerator import generate_singly_bbn, generate_multi_bbn, convert_for_exact_inference
+
+from pybbn.generator.bbngenerator import generate_singly_bbn, generate_multi_bbn, convert_for_exact_inference, convert_for_drawing
 
 
 def setup():
@@ -54,3 +55,21 @@ def test_convert_for_exact_inference():
 
     assert len(bbn.nodes) == 2
     assert len(bbn.edges) == 1
+
+
+@with_setup(setup, teardown)
+def test_convert_for_drawing():
+    """
+    Tests converting BBN to networkx DAG.
+    :return: None
+    """
+
+    g, p = generate_singly_bbn(2)
+    bbn = convert_for_exact_inference(g, p)
+
+    graph = convert_for_drawing(bbn)
+    nodes = list(graph.nodes)
+    edges = list(graph.edges)
+
+    assert len(nodes) == 2
+    assert len(edges) == 1

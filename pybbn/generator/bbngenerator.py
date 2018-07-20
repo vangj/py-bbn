@@ -363,3 +363,22 @@ def convert_for_exact_inference(g, p):
         bbn.add_edge(Edge(pa, ch, EdgeType.DIRECTED))
 
     return bbn
+
+
+def convert_for_drawing(bbn):
+    """
+    Converts a BBN to a networkx graph for drawing.
+    :param bbn: BBN.
+    :return: Directed acyclic graph.
+    """
+    g = nx.DiGraph()
+
+    for k, v in bbn.nodes.iteritems():
+        g.add_node(v.id)
+
+    for k, e in bbn.edges.iteritems():
+        pa = e.i.id
+        ch = e.j.id
+        g.add_edges_from([(pa, ch, {})])
+
+    return g
