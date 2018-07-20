@@ -9,6 +9,7 @@ Subpackages
     pybbn.graph
     pybbn.pptc
     pybbn.lg
+    pybbn.generator
 
 Module contents
 ---------------
