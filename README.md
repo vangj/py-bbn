@@ -123,6 +123,7 @@ follows (make sure you `cd` into the root of this project's location).
 conda create -n py-bbn python=2.7
 source activate py-bbn
 conda install --yes --file requirements.txt
+python -m ipykernel install --user --name py-bbn --display-name "py-bbn"
 ```
 
 Then you may build the project as follows.

@@ -11,6 +11,7 @@ scipy
 networkx
 pandas
 matplotlib
+ipykernel
 # DOCUMENTATION
 sphinx
 sphinx_rtd_theme
