@@ -1,6 +1,7 @@
 from nose import with_setup
 
-from pybbn.generator.bbngenerator import generate_singly_bbn, generate_multi_bbn, convert_for_exact_inference, convert_for_drawing
+from pybbn.generator.bbngenerator import generate_singly_bbn, generate_multi_bbn, convert_for_exact_inference
+from pybbn.generator.bbngenerator import convert_for_drawing
 
 
 def setup():
