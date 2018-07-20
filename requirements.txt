@@ -11,6 +11,7 @@ scipy
 networkx
 pandas
 matplotlib
+pygraphviz
 ipykernel
 # DOCUMENTATION
 sphinx
