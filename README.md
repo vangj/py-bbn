@@ -8,7 +8,9 @@ pp. 225--263, 1999](http://pages.cs.wisc.edu/~dpage/ijar95.pdf). PyBBN also has 
 inference algorithm using [Gibbs sampling](http://www.mit.edu/~ilkery/papers/GibbsSampling.pdf) for
 linear Gaussian BBN models. The exact inference algorithm is for BBNs that have all variables
 that are discrete, while the approximate inference algorithm is for BBNs that have all variables
-that are continuous (and assume to take a multivariate Gaussian distribution).
+that are continuous (and assume to take a multivariate Gaussian distribution). Additionally, there is
+the ability to generate singly- and multi-connected graphs, which is taken from [JS Ide and FG Cozman, 
+"Random Generation of Bayesian Network," in Advances in Artificial Intelligence, Lecture Notes in Computer Science, vol 2507](https://pdfs.semanticscholar.org/5273/2fb57129443592024b0e7e46c2a1ec36639c.pdf).
 
 # Exact Inference Usage
 
