@@ -6,6 +6,11 @@ from networkx.algorithms.dag import is_directed_acyclic_graph
 from networkx.algorithms.shortest_paths.generic import shortest_path
 from scipy.stats import dirichlet
 
+from pybbn.graph.dag import Bbn
+from pybbn.graph.edge import Edge, EdgeType
+from pybbn.graph.node import BbnNode
+from pybbn.graph.variable import Variable
+
 
 def __get_simple_ordered_tree__(n):
     """
@@ -330,3 +335,31 @@ def generate_singly_bbn(n, max_iter=10, max_values=2, max_alpha=10):
     g = __generate_singly_structure__(n, max_iter)
     p = __generate_parameters__(g, max_values, max_alpha)
     return g, p
+
+
+def convert_for_exact_inference(g, p):
+    """
+    Converts the graph and parameters to a BBN.
+    :param g: Directed acyclic graph (DAG in the form of networkx).
+    :param p: Parameters.
+    :return: BBN.
+    """
+    bbn = Bbn()
+
+    bbn_nodes = {}
+
+    for node in g.nodes:
+        id = node
+        params = p[id]['params'].flatten()
+        states = ['state{}'.format(state) for state in range(p[id]['shape'][1])]
+        v = Variable(id, str(id), states)
+        n = BbnNode(v, params)
+        bbn.add_node(n)
+        bbn_nodes[id] = n
+
+    for e in g.edges:
+        pa = bbn_nodes[e[0]]
+        ch = bbn_nodes[e[1]]
+        bbn.add_edge(Edge(pa, ch, EdgeType.DIRECTED))
+
+    return bbn
