@@ -164,6 +164,7 @@ I found other [packages](https://pypi.python.org/pypi?%3Aaction=search&term=baye
 
 # Citation
 
+```
 @misc{vang_2017, 
 title={PyBBN}, 
 url={https://github.com/vangj/py-bbn/}, 
@@ -171,6 +172,7 @@ journal={GitHub},
 author={Vang, Jee}, 
 year={2017}, 
 month={Jan}}
+```
 
 # Copyright Stuff
 
