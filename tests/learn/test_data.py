@@ -287,3 +287,19 @@ def test_get_cond_mi():
     assert_almost_equal(0.25020121176909393, data.__get_cond_mi__('x4', 'x1', ['x2', 'x3']))
     assert_almost_equal(0.0, data.__get_cond_mi__('x4', 'x2', ['x1', 'x3']))
     assert_almost_equal(0.0, data.__get_cond_mi__('x4', 'x3', ['x1', 'x2']))
+
+
+@with_setup(setup, teardown)
+def test_get_pairwise_mutual_information():
+    """
+    Tests get pairwise mutual information.
+    :return: List of pairwise mutual information.
+    """
+    data = DiscreteData(get_good_df())
+    observed = data.get_pairwise_mutual_information()
+    expected = [('x1', 'x4'), ('x2', 'x3'), ('x3', 'x1'), ('x3', 'x4'), ('x2', 'x1'), ('x2', 'x4')]
+
+    assert len(observed) == len(expected)
+    for o, e in zip(observed, expected):
+        assert o[0] == e[0]
+        assert o[1] == e[1]

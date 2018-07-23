@@ -300,3 +300,21 @@ class DiscreteData(object):
                             mi += p_ijk * weight
 
         return mi
+
+    def get_pairwise_mutual_information(self):
+        """
+        Gets all unique pairwise mutual information.
+        :return: List of tuples where each tuple is (name1, name2, mi).
+        """
+        mis = []
+        variables = self.variable_profiles.keys()
+        for i in range(len(variables)):
+            name1 = variables[i]
+            for j in range(len(variables)):
+                name2 = variables[j]
+                if j > i:
+                    mi = self.__get_mi__(name1, name2)
+                    t = (name1, name2, mi)
+                    mis.append(t)
+        mis = sorted(mis, key=lambda t: t[2], reverse=True)
+        return mis
