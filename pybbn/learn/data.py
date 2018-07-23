@@ -27,7 +27,7 @@ class DiscreteData(object):
         profile = {}
         for col in self.df.columns:
             s = self.df[col].value_counts()
-            profile[col] = list(s.values)
+            profile[col] = list(s.index)
         return profile
 
     def __is_valid__(self):
@@ -51,7 +51,7 @@ class DiscreteData(object):
         :return: List of tuple, where each tuple is a (name, value).
         """
         pairs = [(n, v) for n, v in zip(names, vals)]
-        pairs = sorted(pairs, lambda t: t[0])
+        pairs = sorted(pairs, key=lambda t: t[0])
         return pairs
 
     def __to_query__(self, names, vals):
@@ -200,7 +200,11 @@ class DiscreteData(object):
             self.probs[q_k] = p
             p_k = self.probs[q_k]
 
-        p_i_k = p_ik / p_k
+        try:
+            p_i_k = p_ik / p_k
+        except ZeroDivisionError:
+            p_i_k = 0.0
+
         return p_i_k
 
     def __get_cond_prob_triplet__(self, name1, val1, name2, val2, cond_names, cond_vals):
@@ -230,7 +234,11 @@ class DiscreteData(object):
             self.probs[q_k] = p
             p_k = self.probs[q_k]
 
-        p_ij_k = p_ijk / p_k
+        try:
+            p_ij_k = p_ijk / p_k
+        except ZeroDivisionError:
+            p_ij_k = 0.0
+
         return p_ij_k
 
     def __get_mi__(self, name1, name2):
@@ -250,14 +258,14 @@ class DiscreteData(object):
                 p_j = self.__get_prob__(name2, val2)
                 p_ij = self.__get_joint_prob__(name1, val1, name2, val2)
 
-                try:
-                    weight = np.log(p_ij / p_i / p_j)
-                    if p_i * p_j == 0.0 or np.isinf(weight) or np.isnan(weight):
+                if p_i != 0.0 and p_j != 0.0:
+                    x = p_ij / p_i / p_j
+
+                    if x == 0.0:
                         pass
                     else:
+                        weight = np.log(x)
                         mi += p_ij * weight
-                except ZeroDivisionError:
-                    pass
         return mi
 
     def __get_cond_mi__(self, name1, name2, cond_names):
@@ -282,13 +290,13 @@ class DiscreteData(object):
                     p_i_k = self.__get_cond_prob_set__(name1, val1, cond_names, cond_vals)
                     p_j_k = self.__get_cond_prob_set__(name2, val2, cond_names, cond_vals)
 
-                    try:
-                        weight = np.log(p_ij_k / p_i_k / p_j_k)
-                        if p_i_k * p_j_k == 0.0 or np.isinf(weight) or np.isnan(weight):
+                    if p_i_k != 0.0 and p_j_k != 0.0:
+                        x = p_ij_k / p_i_k / p_j_k
+
+                        if x == 0.0:
                             pass
                         else:
+                            weight = np.log(x)
                             mi += p_ijk * weight
-                    except ZeroDivisionError:
-                        pass
 
         return mi
