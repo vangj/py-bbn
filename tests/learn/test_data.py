@@ -48,6 +48,46 @@ def get_bad_df():
 
 
 @with_setup(setup, teardown)
+def test_count():
+    data = DiscreteData(get_good_df())
+    assert 5 == data.__count__(['x1'], ['t'])
+    assert 5 == data.__count__(['x1'], ['f'])
+
+    assert 5 == data.__count__(['x2'], ['t'])
+    assert 5 == data.__count__(['x2'], ['f'])
+
+    assert 6 == data.__count__(['x3'], ['t'])
+    assert 4 == data.__count__(['x3'], ['f'])
+
+    assert 5 == data.__count__(['x4'], ['t'])
+    assert 5 == data.__count__(['x4'], ['f'])
+
+
+@with_setup(setup, teardown)
+def test_count_parents_child():
+    data = DiscreteData(get_good_df())
+
+    assert 4 == data.__count_parents_child__('x1', 't', ['x2'], ['t'])
+    assert 1 == data.__count_parents_child__('x1', 't', ['x2'], ['f'])
+    assert 1 == data.__count_parents_child__('x1', 'f', ['x2'], ['t'])
+    assert 4 == data.__count_parents_child__('x1', 'f', ['x2'], ['f'])
+
+
+@with_setup(setup, teardown)
+def test_get_local_kutato():
+    data = DiscreteData(get_good_df())
+
+    assert_almost_equal(-1.540639, data.get_local_kutato('x1', ['x2']), places=5)
+    assert_almost_equal(-1.540639, data.get_local_kutato('x2', ['x1']), places=5)
+
+    assert_almost_equal(-1.082607, data.get_local_kutato('x1', ['x3']), places=5)
+    assert_almost_equal(-1.124863, data.get_local_kutato('x3', ['x1']), places=5)
+
+    assert_almost_equal(-0.709086, data.get_local_kutato('x1', ['x4']), places=5)
+    assert_almost_equal(-0.709086, data.get_local_kutato('x4', ['x1']), places=5)
+
+
+@with_setup(setup, teardown)
 def test_is_valid_good():
     """
     Tests if a dataset is valid with a good dataframe.

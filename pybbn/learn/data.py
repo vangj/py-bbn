@@ -17,6 +17,7 @@ class DiscreteData(object):
         self.variable_profiles = self.get_variable_profiles()
         self.N = df.shape[0]
         self.probs = {}
+        self.counts = {}
 
     def get_variables(self, by_name=True):
         """
@@ -80,6 +81,38 @@ class DiscreteData(object):
         pairs = self.__sort__(names, vals)
         pairs = ' and '.join(['{} == "{}"'.format(t[0], t[1]) for t in pairs])
         return pairs
+
+    def __count__(self, names, vals):
+        """
+        Counts the frequency of the combination of the specified values.
+        :param names: Names of variables.
+        :param vals: Values of variables.
+        :return: Count.
+        """
+        q = self.__to_query__(names, vals)
+        if q in self.counts:
+            return self.counts[q]
+        else:
+            n = self.df.query(q).shape[0]
+            self.counts[q] = n
+            return self.counts[q]
+
+    def __count_parents_child__(self, ch_name, ch_val, pa_names, pa_vals):
+        """
+        Counts the frequency of the specified combination of parent and child values.
+        :param ch_name: Child name.
+        :param ch_val: Child value.
+        :param pa_names: Parent name.
+        :param pa_vals: Parent value.
+        :return: Count.
+        """
+        names = [ch_name]
+        names.extend(pa_names)
+
+        vals = [ch_val]
+        vals.extend(pa_vals)
+
+        return self.__count__(names, vals)
 
     def __get_prob__(self, name, val):
         """
@@ -315,6 +348,19 @@ class DiscreteData(object):
 
         return mi
 
+    def __factorial__(self, x):
+        if x <= 0.0:
+            return 1
+
+        # typically stirling's approximation would be (x / e)^x
+        # for large values of x, this creates an overflow
+        # we use 1 here, which doesn't seem to affect the sampling or probability estimations
+        g = np.sqrt(2 * np.pi * x) * np.power(x / 2.718281, 1)
+        return g
+
+    def __gamma__(self, n):
+        return self.__factorial__(n - 1)
+
     def is_cond_dep(self, name1, name2, names):
         """
         Checks if two variables are conditionally dependent give a third set of variables.
@@ -347,3 +393,36 @@ class DiscreteData(object):
                     mis.append(t)
         mis = sorted(mis, key=lambda t: t[2], reverse=True)
         return mis
+
+    def get_local_kutato(self, child, parents):
+        """
+        Computes the local K2 (Kutato) score of a child and its parents.
+        See https://www.cs.waikato.ac.nz/~remco/weka.bn.pdf. The score is converted
+        to its log form to avoid numerical overflow. All scores should be negative,
+        with scores closer to zero indicating better likelihood (higher scores
+        indicate the parent-child relationship is more likely).
+        :param child: Child.
+        :param parents: Parent.
+        :return: Log of the K2 score.
+        """
+        r_i = len(self.variable_profiles[child])
+        gamma_r_i = self.__gamma__(r_i)
+
+        q_i = list(itertools.product(*[self.variable_profiles[parent] for parent in parents]))
+
+        log_score = 0.0
+
+        for vals in q_i:
+            N_ij = self.__count__(parents, vals)
+            gamma_N_ij = self.__gamma__(r_i + N_ij)
+
+            log_sum = np.log(gamma_r_i) - np.log(gamma_N_ij)
+
+            for val in self.variable_profiles[child]:
+                N_ijk = self.__count_parents_child__(child, val, parents, vals)
+                factorial_N_ijk = self.__factorial__(N_ijk)
+                log_sum += np.log(factorial_N_ijk)
+
+            log_score += log_sum
+
+        return log_score
