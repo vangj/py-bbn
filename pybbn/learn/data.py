@@ -14,11 +14,25 @@ class DiscreteData(object):
         self.df = df
         if self.__is_valid__() is False:
             raise Exception('Data is not valid.')
-        self.variable_profiles = self.__get_variable_profiles__()
+        self.variable_profiles = self.get_variable_profiles()
         self.N = df.shape[0]
         self.probs = {}
 
-    def __get_variable_profiles__(self):
+    def get_variables(self, by_name=True):
+        """
+        Gets a dictionary of variables. Keys could be the name or numeric id.
+        :param by_name: A boolean indicating if keys should be names or not. True by default.
+        :return: Dictionary.
+        """
+        variables = {}
+        for i, col in enumerate(self.df.columns):
+            if by_name is True:
+                variables[col] = i
+            else:
+                variables[i] = col
+        return variables
+
+    def get_variable_profiles(self):
         """
         Gets a dictionary of values for each variable. Keys are variable/column names and values are list
         of the domain/values of the variable.
@@ -300,6 +314,21 @@ class DiscreteData(object):
                             mi += p_ijk * weight
 
         return mi
+
+    def is_cond_dep(self, name1, name2, names):
+        """
+        Checks if two variables are conditionally dependent give a third set of variables.
+        :param name1: Name of variable/column.
+        :param name2: Name of variable/column.
+        :param names: List of names of variables/columns.
+        :return: A tuple, (conditional mutual information, boolean), to signal if two variables are
+        conditionally dependent.
+        """
+        mi = self.__get_mi__(name1, name2)
+        cmi = self.__get_cond_mi__(name1, name2, names)
+        if cmi > mi:
+            return cmi, True
+        return cmi, False
 
     def get_pairwise_mutual_information(self):
         """

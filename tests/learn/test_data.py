@@ -36,7 +36,7 @@ def get_good_df():
 
 def get_bad_df():
     """
-    Gets a bad dataframe.
+    Tests a bad dataframe.
     :return: Dataframe
     """
     return pd.DataFrame({
@@ -82,7 +82,7 @@ def test_get_variable_profiles():
     :return: None.
     """
     data = DiscreteData(get_good_df())
-    profiles = data.__get_variable_profiles__()
+    profiles = data.get_variable_profiles()
 
     print(data)
     assert 4 == len(profiles)
