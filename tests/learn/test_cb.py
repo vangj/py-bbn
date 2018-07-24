@@ -1,5 +1,6 @@
 import networkx as nx
 import pandas as pd
+import numpy as np
 from nose import with_setup
 
 from pybbn.learn.cb import get_mwst_skeleton, get_v_structures, MwstAlgo
@@ -11,7 +12,7 @@ def setup():
     Setup.
     :return: None.
     """
-    pass
+    np.random.seed(37)
 
 
 def teardown():

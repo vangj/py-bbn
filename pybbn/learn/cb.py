@@ -1,5 +1,7 @@
 import networkx as nx
+import numpy as np
 from networkx.algorithms.dag import is_directed_acyclic_graph
+import itertools
 
 
 class MwstAlgo(object):
@@ -17,6 +19,47 @@ class MwstAlgo(object):
         Learns the structure and parameter of a Bayesian belief network from the data.
         :param data: Data.
         :return: BBN.
+        """
+        g = self.learn_structure(data)
+        p = self.learn_parameters(data, g)
+
+        return g, p
+
+    def learn_parameters(self, data, g):
+        """
+        Learns the parameters (conditional probability tables, local probability models).
+        :param data: Data.
+        :param g: DAG.
+        :return: A dictionary associated with nodes/variables and their parameters.
+        """
+        cpts = {}
+        variable_profiles = data.variable_profiles
+        nodes = list(g.nodes)
+        for idx in nodes:
+            child = g.nodes[idx]['name']
+            c_values = variable_profiles[child]
+
+            parents = list(g.predecessors(idx))
+            parents = [g.nodes[pa_id]['name'] for pa_id in parents]
+            p_values = list(itertools.product(*[variable_profiles[name] for name in parents]))
+
+            if len(parents) == 0:
+                cpt = [data.__get_prob__(child, value) for value in c_values]
+            else:
+                cpt = []
+                for values in p_values:
+                    for value in c_values:
+                        p = data.__get_cond_prob_set__(child, value, parents, values)
+                        cpt.append(p)
+            cpts[idx] = cpt
+
+        return cpts
+
+    def learn_structure(self, data):
+        """
+        Learns the BBN structure.
+        :param data: Data.
+        :return: DAG.
         """
         # gets the skeleton, which is a tree, undirected graph
         u = get_mwst_skeleton(data)
@@ -54,17 +97,70 @@ class MwstAlgo(object):
                 g.remove_edges_from([edge1, edge2])
 
         # attempt to orient by likelihood
+        # FIXME: note this can create v-structures
         missing_edges = get_missing_edges(u, g)
+        directed_edges = get_likely_directed_edges(missing_edges, data)
+        for edge in directed_edges:
+            pa_node = edge[0]
+            ch_node = edge[1]
+            dedge = (pa_node, ch_node, {})
+            g.add_edges_from([dedge])
+
+            if is_directed_acyclic_graph(g) is False:
+                g.remove_edges_from([dedge])
+
+        # now just orient randomly, so long as the graph is a dag
+        missing_edges = get_missing_edges(u, g)
+        while len(missing_edges) != 0:
+            for edge in missing_edges:
+                pa_id = np.random.randint(0, 2)
+                ch_id = 1 if pa_id == 0 else 0
+
+                pa_node = edge[pa_id]
+                ch_node = edge[ch_id]
+
+                dedge = (pa_node, ch_node, {})
+                g.add_edges_from([dedge])
+
+                if is_directed_acyclic_graph(g) is False:
+                    g.remove_edges_from([dedge])
+
+            missing_edges = get_missing_edges(u, g)
+
+        return g
 
 
-        return u
+def get_likely_directed_edges(edges, data):
+    """
+    Gets directed edged based on likelihood for each undirected edge.
+    :param edges: List of edges.
+    :param data: Data.
+    :return: List of directed edge.
+    """
+    directed_edges = []
+    variables = data.get_variables(by_name=False)
+    for edge in edges:
+        v1 = variables[edge[0]]
+        v2 = variables[edge[1]]
 
-
-def get_directed_edges(edges, data):
-    pass
+        v1_v2 = data.get_local_kutato(v1, [v2])
+        v2_v1 = data.get_local_kutato(v2, [v1])
+        if v1_v2 > v2_v1:
+            t = (edge[0], edge[1])
+            directed_edges.append(t)
+        elif v1_v2 < v2_v1:
+            t = (edge[1], edge[0])
+            directed_edges.append(t)
+    return directed_edges
 
 
 def get_missing_edges(u, g):
+    """
+    Gets the missing edges in g that is in u.
+    :param u: Undirected graph.
+    :param g: Directed acyclic graph.
+    :return: List of tuples, where each tuple is a pair of nodes designating an edge.
+    """
     edges = []
     for edge in list(u.edges):
         n1 = edge[0]
@@ -106,8 +202,8 @@ def get_mwst_skeleton(data):
     """
     g = nx.Graph()
     variables = data.get_variables()
-    for idx, name in enumerate(variables.keys()):
-        g.add_node(idx, name=name)
+    for k, v in variables.iteritems():
+        g.add_node(v, name=k)
 
     mis = data.get_pairwise_mutual_information()
     for mi in mis:
