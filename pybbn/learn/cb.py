@@ -3,6 +3,11 @@ import numpy as np
 from networkx.algorithms.dag import is_directed_acyclic_graph
 import itertools
 
+from pybbn.graph.dag import Bbn
+from pybbn.graph.edge import EdgeType, Edge
+from pybbn.graph.node import BbnNode
+from pybbn.graph.variable import Variable
+
 
 class MwstAlgo(object):
     """
@@ -12,7 +17,8 @@ class MwstAlgo(object):
         """
         Ctor.
         """
-        pass
+        self.data = None
+        self.bbn = None
 
     def fit(self, data):
         """
@@ -23,7 +29,28 @@ class MwstAlgo(object):
         g = self.learn_structure(data)
         p = self.learn_parameters(data, g)
 
-        return g, p
+        bbn = Bbn()
+        variable_profiles = data.variable_profiles
+        nodes = list(g.nodes)
+        bbn_node_dict = {}
+        for idx in nodes:
+            name = g.nodes[idx]['name']
+            domain = variable_profiles[name]
+            cpt = p[idx]
+            v = Variable(idx, name, domain)
+            n = BbnNode(v, cpt)
+            bbn.add_node(n)
+            bbn_node_dict[idx] = n
+
+        edges = list(g.edges)
+        for edge in edges:
+            pa = bbn_node_dict[edge[0]]
+            ch = bbn_node_dict[edge[1]]
+            e = Edge(pa, ch, EdgeType.DIRECTED)
+            bbn.add_edge(e)
+
+        self.data = data
+        self.bbn = bbn
 
     def learn_parameters(self, data, g):
         """

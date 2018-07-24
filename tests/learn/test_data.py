@@ -49,6 +49,10 @@ def get_bad_df():
 
 @with_setup(setup, teardown)
 def test_count():
+    """
+    Tests simple counting.
+    :return: None.
+    """
     data = DiscreteData(get_good_df())
     assert 5 == data.__count__(['x1'], ['t'])
     assert 5 == data.__count__(['x1'], ['f'])
@@ -65,6 +69,10 @@ def test_count():
 
 @with_setup(setup, teardown)
 def test_count_parents_child():
+    """
+    Tests counting parent-child values.
+    :return: None.
+    """
     data = DiscreteData(get_good_df())
 
     assert 4 == data.__count_parents_child__('x1', 't', ['x2'], ['t'])
@@ -75,6 +83,10 @@ def test_count_parents_child():
 
 @with_setup(setup, teardown)
 def test_get_local_kutato():
+    """
+    Tests computing local Kutato score.
+    :return: None.
+    """
     data = DiscreteData(get_good_df())
 
     assert_almost_equal(-1.540639, data.get_local_kutato('x1', ['x2']), places=5)
