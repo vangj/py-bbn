@@ -29,25 +29,7 @@ class MwstAlgo(object):
         g = self.learn_structure(data)
         p = self.learn_parameters(data, g)
 
-        bbn = Bbn()
-        variable_profiles = data.variable_profiles
-        nodes = list(g.nodes)
-        bbn_node_dict = {}
-        for idx in nodes:
-            name = g.nodes[idx]['name']
-            domain = variable_profiles[name]
-            cpt = p[idx]
-            v = Variable(idx, name, domain)
-            n = BbnNode(v, cpt)
-            bbn.add_node(n)
-            bbn_node_dict[idx] = n
-
-        edges = list(g.edges)
-        for edge in edges:
-            pa = bbn_node_dict[edge[0]]
-            ch = bbn_node_dict[edge[1]]
-            e = Edge(pa, ch, EdgeType.DIRECTED)
-            bbn.add_edge(e)
+        bbn = build_bbn(data.variable_profiles, g, p)
 
         self.data = data
         self.bbn = bbn
@@ -155,6 +137,37 @@ class MwstAlgo(object):
             missing_edges = get_missing_edges(u, g)
 
         return g
+
+
+def build_bbn(variable_profiles, g, p):
+    """
+    Builds a BBN from a DAG, g, and paremeters, p.
+    :param variable_profiles: Variable profiles.
+    :param g: DAG.
+    :param p: Parameters.
+    :return: BBN.
+    """
+    bbn = Bbn()
+    nodes = list(g.nodes)
+    bbn_node_dict = {}
+    for idx in nodes:
+        name = g.nodes[idx]['name']
+        domain = variable_profiles[name]
+        cpt = p[idx]
+
+        v = Variable(idx, name, domain)
+        n = BbnNode(v, cpt)
+        bbn.add_node(n)
+        bbn_node_dict[idx] = n
+
+    edges = list(g.edges)
+    for edge in edges:
+        pa = bbn_node_dict[edge[0]]
+        ch = bbn_node_dict[edge[1]]
+        e = Edge(pa, ch, EdgeType.DIRECTED)
+        bbn.add_edge(e)
+
+    return bbn
 
 
 def get_likely_directed_edges(edges, data):

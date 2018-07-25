@@ -76,3 +76,7 @@ def test_fit():
     data = DiscreteData(get_good_df())
     mwst = MwstAlgo()
     mwst.fit(data)
+
+    bbn = mwst.bbn
+    assert 4 == len(bbn.nodes)
+    assert 3 == len(bbn.edges)
