@@ -1,7 +1,8 @@
+import itertools
+
 import networkx as nx
 import numpy as np
 from networkx.algorithms.dag import is_directed_acyclic_graph
-import itertools
 
 from pybbn.graph.dag import Bbn
 from pybbn.graph.edge import EdgeType, Edge

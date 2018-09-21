@@ -1,9 +1,11 @@
-from nose import with_setup
 import json
-from pybbn.graph.factory import Factory
+
 from libpgm.discretebayesiannetwork import DiscreteBayesianNetwork
 from libpgm.graphskeleton import GraphSkeleton
 from libpgm.nodedata import NodeData
+from nose import with_setup
+
+from pybbn.graph.factory import Factory
 
 
 def setup():
