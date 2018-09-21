@@ -20,6 +20,14 @@ pybbn.graph.edge module
     :undoc-members:
     :show-inheritance:
 
+pybbn.graph.factory module
+---------------------------
+
+.. automodule:: pybbn.graph.factory
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pybbn.graph.graph module
 ------------------------
 
