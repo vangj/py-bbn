@@ -1,9 +1,9 @@
 import json
-from pybbn.pptc.inferencecontroller import InferenceController
 
 from nose import with_setup
 
 from pybbn.graph.factory import Factory
+from pybbn.pptc.inferencecontroller import InferenceController
 
 
 def setup():
