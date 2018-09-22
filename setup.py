@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='pybbn',
-    version='0.0.8',
+    version='0.0.9',
     author='Jee Vang',
     author_email='vangjee@gmail.com',
     packages=find_packages(),
