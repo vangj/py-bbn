@@ -103,11 +103,13 @@ class Factory(object):
 
         def get_edges(bn, nodes):
             edges = []
-            for e in bn.E:
-                pa = nodes[e[0]]
-                ch = nodes[e[1]]
-                edge = Edge(pa, ch, EdgeType.DIRECTED)
-                edges.append(edge)
+            for k, v in bn.Vdata.items():
+                ch = nodes[k]
+                if v['parents'] is not None and len(v['parents']) > 0:
+                    parents = [nodes[pa] for pa in v['parents']]
+                    for pa in parents:
+                        edge = Edge(pa, ch, EdgeType.DIRECTED)
+                        edges.append(edge)
             return edges
 
         nodes = get_nodes(bn)
