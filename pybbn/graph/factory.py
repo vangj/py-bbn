@@ -1,10 +1,6 @@
 import itertools
 import json
 
-from libpgm.discretebayesiannetwork import DiscreteBayesianNetwork
-from libpgm.graphskeleton import GraphSkeleton
-from libpgm.nodedata import NodeData
-
 from pybbn.graph.dag import Bbn
 from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.node import BbnNode
@@ -34,15 +30,14 @@ class Factory(object):
         :param d: A dictionary representing a libpgm discrete network.
         :return: py-bbn BBN.
         """
-        nd = NodeData()
-        nd.Vdata = d['Vdata']
 
-        skel = GraphSkeleton()
-        skel.V = d['V']
-        skel.E = d['E']
-        skel.toporder()
+        class LibpgmBBN(object):
+            def __init__(self, V, E, Vdata):
+                self.V = V
+                self.E = E
+                self.Vdata = Vdata
 
-        bn = DiscreteBayesianNetwork(skel, nd)
+        bn = LibpgmBBN(d['V'], d['E'], d['Vdata'])
         return Factory.from_libpgm_discrete_object(bn)
 
     @staticmethod
@@ -92,8 +87,7 @@ class Factory(object):
                 else:
                     for pa_domain in pa_domains:
                         cprob = bn.Vdata[name]['cprob'][pa_domain]
-                        for p in cprob:
-                            probs.append(p)
+                        probs.extend(cprob)
 
                 return probs
 
@@ -121,7 +115,7 @@ class Factory(object):
 
         bbn = Bbn()
 
-        for k, v in nodes.iteritems():
+        for k, v in nodes.items():
             bbn.add_node(v)
 
         for e in edges:

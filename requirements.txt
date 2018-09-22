@@ -13,7 +13,6 @@ pandas
 matplotlib
 pygraphviz
 ipykernel
-libpgm
 # DOCUMENTATION
 sphinx
 sphinx_rtd_theme

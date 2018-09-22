@@ -373,10 +373,10 @@ def convert_for_drawing(bbn):
     """
     g = nx.DiGraph()
 
-    for k, v in bbn.nodes.iteritems():
+    for k, v in bbn.nodes.items():
         g.add_node(v.id)
 
-    for k, e in bbn.edges.iteritems():
+    for k, e in bbn.edges.items():
         pa = e.i.id
         ch = e.j.id
         g.add_edges_from([(pa, ch, {})])

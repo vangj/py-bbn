@@ -1,8 +1,6 @@
 import json
+from pybbn.pptc.inferencecontroller import InferenceController
 
-from libpgm.discretebayesiannetwork import DiscreteBayesianNetwork
-from libpgm.graphskeleton import GraphSkeleton
-from libpgm.nodedata import NodeData
 from nose import with_setup
 
 from pybbn.graph.factory import Factory
@@ -117,25 +115,12 @@ def test_from_libpgm_discrete_dictionary():
     assert len(bbn.nodes) == 5
     assert len(bbn.edges) == 4
 
+    # FIXME this is not working right somehow
+    join_tree = InferenceController.apply(bbn)
 
-@with_setup(setup, teardown)
-def test_from_libpgm_discrete_object():
-    """
-    Tests create py-bbn BBN from lipgm BBN.
-    :return: None.
-    """
-    json_data = get_dict()
+    for node in join_tree.get_bbn_nodes():
+        potential = join_tree.get_bbn_potential(node)
+        print(node)
+        print(potential)
+        print('>')
 
-    nd = NodeData()
-    nd.Vdata = json_data["Vdata"]
-
-    skel = GraphSkeleton()
-    skel.V = json_data["V"]
-    skel.E = json_data["E"]
-    skel.toporder()
-
-    bn = DiscreteBayesianNetwork(skel, nd)
-    bbn = Factory.from_libpgm_discrete_object(bn)
-
-    assert len(bbn.nodes) == 5
-    assert len(bbn.edges) == 4

@@ -348,8 +348,12 @@ def test_get_pairwise_mutual_information():
     :return: List of pairwise mutual information.
     """
     data = DiscreteData(get_good_df())
-    observed = data.get_pairwise_mutual_information()
-    expected = [('x1', 'x4'), ('x2', 'x3'), ('x3', 'x1'), ('x3', 'x4'), ('x2', 'x1'), ('x2', 'x4')]
+    observed = sorted(data.get_pairwise_mutual_information(), key=lambda tup: (-tup[2], tup[0], tup[1]))
+    expected = [('x1', 'x4'), ('x1', 'x3'), ('x2', 'x3'), ('x3', 'x4'), ('x1', 'x2'), ('x2', 'x4')]
+
+    print(observed)
+    print('--')
+    print(expected)
 
     assert len(observed) == len(expected)
     for o, e in zip(observed, expected):

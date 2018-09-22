@@ -243,7 +243,7 @@ def get_mwst_skeleton(data):
     """
     g = nx.Graph()
     variables = data.get_variables()
-    for k, v in variables.iteritems():
+    for k, v in variables.items():
         g.add_node(v, name=k)
 
     mis = data.get_pairwise_mutual_information()

@@ -37,6 +37,7 @@ class Edge(object):
         edge = '--'
         if EdgeType.DIRECTED == self.type:
             edge = '->'
+            return '{}{}{}'.format(self.i.id, edge, self.j.id)
 
         return "{}{}{}".format(a, edge, b)
 

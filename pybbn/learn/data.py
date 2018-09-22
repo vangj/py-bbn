@@ -383,7 +383,7 @@ class DiscreteData(object):
         :return: List of tuples where each tuple is (name1, name2, mi).
         """
         mis = []
-        variables = self.variable_profiles.keys()
+        variables = sorted(list(self.variable_profiles.keys()))
         for i in range(len(variables)):
             name1 = variables[i]
             for j in range(len(variables)):
