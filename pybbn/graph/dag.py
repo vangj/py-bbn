@@ -3,6 +3,8 @@ from pybbn.graph.graph import Graph
 from pybbn.graph.node import BbnNode
 from pybbn.graph.variable import Variable
 
+import networkx as nx
+
 
 class Dag(Graph):
     """
@@ -62,6 +64,26 @@ class Dag(Graph):
         if id2 in self.map[id1] and id1 not in self.map[id2]:
             return True
         return False
+
+    def to_nx_graph(self):
+        """
+        Converts this DAG to a NX DiGraph for visualization.
+        :return: A tuple, where the first item is the NX DiGraph and the second items are the node labels.
+        """
+        g = nx.DiGraph()
+        labels = []
+
+        for k, node in self.nodes.items():
+            g.add_node(node.id)
+            t = (node.id, node.variable.name)
+            labels.append(t)
+
+        for k, edge in self.edges.items():
+            pa = edge.i.id
+            ch = edge.j.id
+            g.add_edges_from([(pa, ch, {})])
+
+        return g, dict(labels)
 
 
 class Bbn(Dag):
