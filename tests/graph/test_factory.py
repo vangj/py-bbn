@@ -29,8 +29,8 @@ def get_json_string():
 def get_dict():
     return {
         "V": ["Letter", "Grade", "Intelligence", "SAT", "Difficulty"],
-        "E": [["Intelligence", "Grade"],
-              ["Difficulty", "Grade"],
+        "E": [["Difficulty", "Grade"],
+              ["Intelligence", "Grade"],
               ["Intelligence", "SAT"],
               ["Grade", "Letter"]],
         "Vdata": {

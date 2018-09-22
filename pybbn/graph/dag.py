@@ -72,6 +72,17 @@ class Bbn(Dag):
     def __init__(self):
         """Ctor."""
         Dag.__init__(self)
+        self.parents = {}
+
+    def get_parents_ordered(self, id):
+        return self.parents[id] if id in self.parents else []
+
+    def __edge_added__(self, edge):
+        if edge.j.id not in self.parents:
+            self.parents[edge.j.id] = []
+
+        if edge.i.id not in self.parents[edge.j.id]:
+            self.parents[edge.j.id].append(edge.i.id)
 
     def __shouldadd__(self, edge):
         """

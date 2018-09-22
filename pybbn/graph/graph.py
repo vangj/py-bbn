@@ -74,8 +74,17 @@ class Graph(object):
             self.map[edge.i.id].add(edge.j.id)
             if EdgeType.UNDIRECTED == edge.type:
                 self.map[edge.j.id].add(edge.i.id)
+            self.__edge_added__(edge)
 
         return self
+
+    def __edge_added__(self, edge):
+        """
+        Callback listener for sub-classes when an edge has been added.
+        :param edge: Edge.
+        :return: None.
+        """
+        pass
 
     def __shouldadd__(self, edge):
         """
