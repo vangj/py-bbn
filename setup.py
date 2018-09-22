@@ -1,17 +1,16 @@
 from setuptools import setup, find_packages
 
-with open('README.md', 'r') as fh:
+with open('README.rst', 'r') as fh:
     long_desc = fh.read()
 
 setup(
     name='pybbn',
-    version='0.0.9',
+    version='0.1.0',
     author='Jee Vang',
     author_email='vangjee@gmail.com',
     packages=find_packages(),
     description='Learning and Inference in Bayesian Belief Networks',
     long_description=long_desc,
-    long_description_content_type='text/markdown',
     url='https://github.com/vangj/py-bbn',
     keywords=['bayesian', 'belief', 'network', 'exact', 'approximate', 'inference', 'junction', 'tree', 'algorithm',
               'pptc', 'dag', 'gibbs', 'sampling', 'multivariate', 'conditional', 'gaussian', 'linear', 'causal',
