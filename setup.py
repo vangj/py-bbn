@@ -12,7 +12,6 @@ setup(
     description='Learning and Inference in Bayesian Belief Networks',
     long_description=long_desc,
     url='https://github.com/vangj/py-bbn',
-    python_requires='>=2.7.0, >=3.0.0',
     keywords=' '.join(['bayesian', 'belief', 'network', 'exact', 'approximate', 'inference', 'junction', 'tree',
                        'algorithm', 'pptc', 'dag', 'gibbs', 'sampling', 'multivariate', 'conditional', 'gaussian',
                        'linear', 'causal', 'causality', 'structure', 'parameter']),
