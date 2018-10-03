@@ -262,8 +262,9 @@ class JoinTree(Ug):
         :param evidence: Evidence.
         :return: This join tree.
         """
-        if EvidenceType.OBSERVATION != evidence.type:
-            return self
+        # FIXME: remove this line below? was this just for debugging?
+        # if EvidenceType.OBSERVATION != evidence.type:
+        #     return self
 
         potentials = self.evidences[evidence.node.id]
 
@@ -575,11 +576,39 @@ class Evidence(object):
         strs = [k for k in values if 1.0 == values[k]]
         return strs[0]
 
+    @staticmethod
+    def __normalize_value_between_zero_one__(val):
+        """
+        Normalizes the specified value to the range [0.0, 1.0]. If the specified value is less than 0.0 then
+        0.0 is returned; if the specified value is greater than 1.0 then 1.0 is returned.
+        :param val: Value.
+        :return: A value in the range [0.0, 1.0].
+        """
+        if 0.0 <= val <= 1.0:
+            return val
+        elif val < 0.0:
+            return 0.0
+        else:
+            return 1.0
+
+    @staticmethod
+    def __normalize_value_zero_or_one__(val):
+        """
+        Normalizes the specified value to either 0.0 or 1.0 (and nothing else). If the specified value is anything
+        greater than 0.0, then a 1.0 is returned, else a 0.0 is returned.
+        :param val: Value.
+        :return: 0.0 or 1.0.
+        """
+        if val > 0.0:
+            return 1.0
+        else:
+            return 0.0
+
     def validate(self):
         """
         Validates this evidence.
 
-        * virtual evidence: sum of likelihoods must equal to 1.0
+        * virtual evidence: each likelihood must be in the range [0, 1].
         * finding evidence: all likelihoods must be exactly 1.0 or 0.0.
         * observation evidence: exactly one likelihood is 1.0 and all others must be 0.0.
         """
@@ -588,14 +617,11 @@ class Evidence(object):
                 self.values[value] = 0.0
 
         if EvidenceType.VIRTUAL == self.type:
-            total = sum([x for x in self.values.values()])
             for value in self.node.variable.values:
-                d = self.values[value] / total
-                self.values[value] = d
+                self.values[value] = Evidence.__normalize_value_between_zero_one__(self.values[value])
         elif EvidenceType.FINDING == self.type:
             for value in self.node.variable.values:
-                d = 1.0 if self.values[value] > 0.0 else 0.0
-                self.values[value] = d
+                self.values[value] = Evidence.__normalize_value_zero_or_one__(self.values[value])
 
             count = sum([x for x in self.values.values()])
             if 0.0 == count:
