@@ -154,6 +154,11 @@ class SepSet(Clique):
         Clique.__init__(self, nodes)
         self.left = left
         self.right = right
+        self.is_empty_intersection = False if len(nodes) > 0 else True
+
+    @property
+    def is_empty(self):
+        return self.is_empty_intersection
 
     @property
     def cost(self):
