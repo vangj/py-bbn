@@ -212,15 +212,13 @@ def test_inference_libpgm():
 
     join_tree = InferenceController.apply(bbn)
 
-    expected = {
+    __validate_posterior__({
         'difficulty': [0.6, 0.4],
         'intelligence': [0.7, 0.3],
         'grade': [0.362, 0.288, 0.350],
         'sat': [0.725, 0.275],
         'letter': [0.498, 0.502]
-    }
-
-    __validate_posterior__(expected, join_tree)
+    }, join_tree)
 
     ev = EvidenceBuilder() \
         .with_node(join_tree.get_bbn_node_by_name('sat')) \
