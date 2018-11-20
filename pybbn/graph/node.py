@@ -150,11 +150,21 @@ class SepSet(Clique):
         lhs = [x.id for x in left.nodes]
         rhs = [x.id for x in right.nodes]
         intersection = [x for x in lhs if x in rhs]
-        nodes = [x for x in left.nodes if x.id in intersection]
-        Clique.__init__(self, nodes)
+
+        nodes = []
+        nodes.extend(lhs)
+        nodes.extend(intersection)
+        nodes.extend(rhs)
+
+        sid = str.join('-', [str(x) for x in nodes])
+        id = IdUtil.hash_string(sid)
+        Node.__init__(self, id)
+        self.nodes = [x for x in left.nodes if x.id in intersection]
+        self.marked = False
+
         self.left = left
         self.right = right
-        self.is_empty_intersection = False if len(nodes) > 0 else True
+        self.is_empty_intersection = False if len(intersection) > 0 else True
 
     @property
     def is_empty(self):
@@ -189,4 +199,6 @@ class SepSet(Clique):
         return len(self.nodes)
 
     def __str__(self):
-        return '|{}|'.format(str.join(',', [node.variable.name for node in self.nodes]))
+        s = '{}'.format(str.join(',', [node.variable.name for node in self.nodes]))
+        s = '|{} -- {} -- {}|'.format(self.left, s, self.right)
+        return s

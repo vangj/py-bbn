@@ -99,12 +99,12 @@ class PotentialUtil(object):
         :param y: Clique.
         """
         old_sep_set_potential = join_tree.potentials[s.id]
-        y_potential = join_tree.potentials[y.id]
-
         new_sep_set_potential = PotentialUtil.marginalize_for(join_tree, x, s.nodes)
         join_tree.potentials[s.id] = new_sep_set_potential
+        y_potential = join_tree.potentials[y.id]
 
-        PotentialUtil.multiply(y_potential, PotentialUtil.divide(new_sep_set_potential, old_sep_set_potential))
+        ratio = PotentialUtil.divide(new_sep_set_potential, old_sep_set_potential)
+        PotentialUtil.multiply(y_potential, ratio)
 
     @staticmethod
     def marginalize_for(join_tree, clique, nodes):

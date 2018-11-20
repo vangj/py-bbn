@@ -155,4 +155,4 @@ def test_str():
     assert d.__str__() == '3|d|on,off'
     assert abc.__str__() == '(a,b,c)'
     assert bcd.__str__() == '(b,c,d)'
-    assert sepset.__str__() == '|b,c|'
+    assert sepset.__str__() == '|(a,b,c) -- b,c -- (b,c,d)|'

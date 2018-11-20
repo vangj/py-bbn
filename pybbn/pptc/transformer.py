@@ -19,7 +19,8 @@ class Transformer(object):
         sep_sets = Transformer.get_sep_sets(cliques)
 
         for i in range(len(sep_sets)):
-            join_tree.add_edge(JtEdge(sep_sets[i]))
+            jtEdge = JtEdge(sep_sets[i])
+            join_tree.add_edge(jtEdge)
 
         return join_tree
 

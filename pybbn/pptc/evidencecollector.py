@@ -16,17 +16,36 @@ class EvidenceCollector(object):
         self.join_tree = join_tree
         self.start_clique = start_clique
 
+    @staticmethod
+    def __get_neighboring_cliques__(join_tree, clique):
+        sepsets = []
+        cliques = []
+
+        sep_set_ids = join_tree.get_neighbors(clique.id)
+        for sep_set_id in sep_set_ids:
+            clique_ids = join_tree.get_neighbors(sep_set_id)
+            for clique_id in clique_ids:
+                t1 = (sep_set_id, join_tree.get_node(sep_set_id))
+                t2 = (clique_id, join_tree.get_node(clique_id))
+                if clique_id != clique.id:
+                    sepsets.append(t1)
+                    cliques.append(t2)
+
+        return sepsets, cliques
+
     def start(self):
         """
         Starts the evidence collection.
         """
         self.start_clique.mark()
-        for sep_set_id in self.join_tree.get_neighbors(self.start_clique.id):
-            sep_set = self.join_tree.get_node(sep_set_id)
-            for clique_id in self.join_tree.get_neighbors(sep_set_id):
-                y = self.join_tree.get_node(clique_id)
-                if not y.is_marked():
-                    self.__walk__(self.start_clique, sep_set, y)
+
+        sepsets, cliques = self.__get_neighboring_cliques__(self.join_tree, self.start_clique)
+
+        for clique in cliques:
+            clique[1].mark()
+
+        for s, c in zip(sepsets, cliques):
+            self.__walk__(self.start_clique, s[1], c[1])
 
     def __walk__(self, x, s, y):
         """
@@ -35,11 +54,18 @@ class EvidenceCollector(object):
         :param s: Separation-set.
         :param y: Clique.
         """
-        y.mark()
-        for sep_set_id in self.join_tree.get_neighbors(y.id):
-            sep_set = self.join_tree.get_node(sep_set_id)
-            for clique_id in self.join_tree.get_neighbors(sep_set_id):
-                clique = self.join_tree.get_node(clique_id)
-                if not clique.is_marked():
-                    self.__walk__(y, sep_set, clique)
+
+        sepsets, cliques = self.__get_neighboring_cliques__(self.join_tree, y)
+
+        s_arr = []
+        c_arr = []
+        for sep, cli in zip(sepsets, cliques):
+            if not cli[1].is_marked():
+                cli[1].mark()
+                s_arr.append(sep)
+                c_arr.append(cli)
+
+        for sep, cli in zip(s_arr, c_arr):
+            self.__walk__(self.start_clique, sep[1], cli[1])
+
         PotentialUtil.pass_single_message(self.join_tree, y, s, x)

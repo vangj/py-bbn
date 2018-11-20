@@ -118,18 +118,18 @@ class JoinTree(Ug):
         lhs = edge.i
         rhs = edge.j
 
-        self.add_node(sep_set)
-        self.add_node(lhs)
-        self.add_node(rhs)
-
-        if sep_set.id not in self.map:
-            self.map[sep_set.id] = set()
-        if lhs.id not in self.map:
-            self.map[lhs.id] = set()
-        if rhs.id not in self.map:
-            self.map[rhs.id] = set()
-
         if self.__shouldadd__(edge):
+            self.add_node(sep_set)
+            self.add_node(lhs)
+            self.add_node(rhs)
+
+            if sep_set.id not in self.map:
+                self.map[sep_set.id] = set()
+            if lhs.id not in self.map:
+                self.map[lhs.id] = set()
+            if rhs.id not in self.map:
+                self.map[rhs.id] = set()
+
             self.map[lhs.id].add(sep_set.id)
             self.map[rhs.id].add(sep_set.id)
 
@@ -366,7 +366,13 @@ class PathDetector(object):
         :param i: Node id.
         :return: True if a path exists, otherwise, false.
         """
-        neighbors = self.graph.get_neighbors(i)
+        neighbors = set()
+
+        try:
+            neighbors = self.graph.get_neighbors(i)
+        except KeyError:
+            pass
+
         if self.stop in neighbors:
             return True
 
