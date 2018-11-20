@@ -124,3 +124,28 @@ def test_from_libpgm_discrete_dictionary():
         print(potential)
         print('>')
 
+    __validate_posterior__({
+        'Difficulty': [0.6, 0.4],
+        'Intelligence': [0.7, 0.3],
+        'Grade': [0.362, 0.288, 0.350],
+        'SAT': [0.725, 0.275],
+        'Letter': [0.498, 0.502]
+    }, join_tree, debug=True)
+
+
+def __validate_posterior__(expected, join_tree, debug=False):
+    for node in join_tree.get_bbn_nodes():
+        potential = join_tree.get_bbn_potential(node)
+        if debug is True:
+            print(node)
+            print(potential)
+
+        o = [e.value for e in potential.entries]
+        e = expected[node.variable.name]
+
+        assert len(o) == len(e)
+        for ob, ex in zip(o, e):
+            diff = abs(ob - ex)
+            # assert diff < 0.001
+            if diff > 0.001:
+                print('\t**observed={}, expected={}'.format(ob, ex))
