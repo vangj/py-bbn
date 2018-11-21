@@ -92,13 +92,12 @@ class Factory(object):
                 return probs
 
             nodes = {}
-            idx = 0
             for name in bn.V:
                 domain = bn.Vdata[name]['vals'][:]
+                order = bn.Vdata[name]['ord']
                 probs = get_cond_probs(name, bn, domain_spaces)
-                node = BbnNode(Variable(idx, name, domain), probs)
+                node = BbnNode(Variable(order, name, domain), probs)
                 nodes[name] = node
-                idx += 1
             return nodes
 
         def get_edges(bn, nodes):
@@ -117,8 +116,8 @@ class Factory(object):
 
         bbn = Bbn()
 
-        for k, v in nodes.items():
-            bbn.add_node(v)
+        for node in sorted(nodes.values(), key=lambda n: n.id):
+            bbn.add_node(node)
 
         for e in edges:
             bbn.add_edge(e)

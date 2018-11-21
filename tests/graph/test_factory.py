@@ -115,14 +115,7 @@ def test_from_libpgm_discrete_dictionary():
     assert len(bbn.nodes) == 5
     assert len(bbn.edges) == 4
 
-    # FIXME this is not working right somehow
     join_tree = InferenceController.apply(bbn)
-
-    for node in join_tree.get_bbn_nodes():
-        potential = join_tree.get_bbn_potential(node)
-        print(node)
-        print(potential)
-        print('>')
 
     __validate_posterior__({
         'Difficulty': [0.6, 0.4],
