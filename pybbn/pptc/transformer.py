@@ -16,6 +16,9 @@ class Transformer(object):
         :return: Join tree.
         """
         join_tree = JoinTree()
+        for clique in cliques:
+            join_tree.add_node(clique)
+
         sep_sets = Transformer.get_sep_sets(cliques)
 
         for i in range(len(sep_sets)):

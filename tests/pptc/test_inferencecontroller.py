@@ -34,7 +34,7 @@ def test_inference_controller():
     join_tree = InferenceController.apply(bbn)
 
     print('INIT')
-    print_potentials(join_tree)
+    __print_potentials__(join_tree)
 
     ev = EvidenceBuilder() \
         .with_node(join_tree.get_bbn_node(0)) \
@@ -44,7 +44,7 @@ def test_inference_controller():
     join_tree.set_observation(ev)
 
     print('FIRST')
-    print_potentials(join_tree)
+    __print_potentials__(join_tree)
 
     # assert 1 == 2
 
@@ -297,7 +297,40 @@ def test_inference_libpgm2():
         'Grade': [0.362, 0.288, 0.350],
         'SAT': [0.725, 0.275],
         'Letter': [0.498, 0.502]
-    }, join_tree, debug=True)
+    }, join_tree, debug=False)
+
+
+@with_setup(setup, teardown)
+def test_trivial_inference():
+    a1 = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
+    b1 = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
+    bbn1 = Bbn().add_node(a1).add_node(b1).add_edge(Edge(a1, b1, EdgeType.DIRECTED))
+    jt1 = InferenceController.apply(bbn1)
+
+    a2 = BbnNode(Variable(1, 'a', ['t', 'f']), [0.2, 0.8])
+    b2 = BbnNode(Variable(0, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
+    bbn2 = Bbn().add_node(a2).add_node(b2).add_edge(Edge(a2, b2, EdgeType.DIRECTED))
+    jt2 = InferenceController.apply(bbn2)
+
+    a3 = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
+    b3 = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9])
+    bbn3 = Bbn().add_node(a3).add_node(b3)
+    jt3 = InferenceController.apply(bbn3)
+
+    __validate_posterior__({
+        'a': [0.2, 0.8],
+        'b': [0.74, 0.26]
+    }, jt1, debug=False)
+
+    __validate_posterior__({
+        'a': [0.2, 0.8],
+        'b': [0.74, 0.26]
+    }, jt2, debug=False)
+
+    __validate_posterior__({
+        'a': [0.2, 0.8],
+        'b': [0.1, 0.9]
+    }, jt3, debug=False)
 
 
 def __validate_posterior__(expected, join_tree, debug=False):
@@ -320,7 +353,7 @@ def __validate_posterior__(expected, join_tree, debug=False):
                 assert diff < 0.001
 
 
-def print_potentials(join_tree):
+def __print_potentials__(join_tree):
     """
     Prints the potentials.
     :param join_tree: Join tree.
