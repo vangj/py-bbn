@@ -18,7 +18,6 @@ class Propagator(object):
         cliques = sorted(cliques, key=lambda c: c.id)
         # cliques = sorted(cliques, key=lambda c: c.get_sid())
         x = cliques[0]
-        # print(x)
 
         join_tree.unmark_cliques()
         Propagator.collect_evidence(join_tree, x)
