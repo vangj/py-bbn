@@ -9,11 +9,9 @@ pip install py-bbn
 python -m ipykernel install --user --name py-bbn --display-name "py-bbn"
 ```
 
-Make sure you install [graphviz](http://www.graphviz.org/). On Mac, you may [type in](https://brewformulas.org/Graphviz) the following.
-
-```bash
-brew install graphviz
-```
+Make sure you install [graphviz](http://www.graphviz.org/). 
+On Mac, you may [type in](https://brewformulas.org/Graphviz) `brew install graphviz`.
+On Ubuntu you may type in `sudo apt install python-pydot python-pydot-ng graphviz`.
 
 Then you can start Jupyter as follows.
 
