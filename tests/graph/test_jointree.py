@@ -251,12 +251,69 @@ def test_inference_libpgm():
     }, join_tree)
 
 
+@with_setup(setup, teardown)
+def test_inference_libpgm2():
+    # letter = BbnNode(
+    #     Variable(0, 'letter', ['weak', 'strong']),
+    #     [0.1, 0.9, 0.4, 0.6, 0.99, 0.01])
+    # grade = BbnNode(
+    #     Variable(1, 'grade', ['a', 'b', 'c']),
+    #     [0.3, 0.4, 0.3, 0.9, 0.08, 0.02, 0.05, 0.25, 0.7, 0.5, 0.3, 0.2])
+    # intelligence = BbnNode(
+    #     Variable(2, 'intelligence', ['low', 'high']),
+    #     [0.7, 0.3])
+    # sat = BbnNode(
+    #     Variable(3, 'sat', ['low', 'high']),
+    #     [0.95, 0.05, 0.2, 0.8])
+    # difficulty = BbnNode(
+    #     Variable(4, 'difficulty', ['easy', 'hard']),
+    #     [0.6, 0.4])
+
+    letter = BbnNode(
+        Variable(2, 'Letter', ['weak', 'strong']),
+        [0.1, 0.9, 0.4, 0.6, 0.99, 0.01])
+    grade = BbnNode(
+        Variable(4, 'Grade', ['a', 'b', 'c']),
+        [0.3, 0.4, 0.3, 0.9, 0.08, 0.02, 0.05, 0.25, 0.7, 0.5, 0.3, 0.2])
+    intelligence = BbnNode(
+        Variable(1, 'Intelligence', ['low', 'high']),
+        [0.7, 0.3])
+    sat = BbnNode(
+        Variable(0, 'SAT', ['low', 'high']),
+        [0.95, 0.05, 0.2, 0.8])
+    difficulty = BbnNode(
+        Variable(3, 'Difficulty', ['easy', 'hard']),
+        [0.6, 0.4])
+
+    bbn = Bbn() \
+        .add_node(grade) \
+        .add_node(intelligence) \
+        .add_node(difficulty) \
+        .add_node(letter) \
+        .add_node(sat) \
+        .add_edge(Edge(difficulty, grade, EdgeType.DIRECTED)) \
+        .add_edge(Edge(intelligence, grade, EdgeType.DIRECTED)) \
+        .add_edge(Edge(grade, letter, EdgeType.DIRECTED)) \
+        .add_edge(Edge(intelligence, sat, EdgeType.DIRECTED))
+
+    join_tree = InferenceController.apply(bbn)
+
+    __validate_posterior__({
+        'Difficulty': [0.6, 0.4],
+        'Intelligence': [0.7, 0.3],
+        'Grade': [0.362, 0.288, 0.350],
+        'SAT': [0.725, 0.275],
+        'Letter': [0.498, 0.502]
+    }, join_tree, debug=True)
+
+
 def __validate_posterior__(expected, join_tree, debug=False):
     for node in join_tree.get_bbn_nodes():
         potential = join_tree.get_bbn_potential(node)
         if debug is True:
-            print(node)
-            print(potential)
+            p = ', '.join(['{}'.format(e) for e in potential.entries])
+            s = '{} : {}'.format(node.variable.name, p)
+            print(s)
 
         o = [e.value for e in potential.entries]
         e = expected[node.variable.name]
@@ -264,6 +321,7 @@ def __validate_posterior__(expected, join_tree, debug=False):
         assert len(o) == len(e)
         for ob, ex in zip(o, e):
             diff = abs(ob - ex)
-            assert diff < 0.001
-            # if diff > 0.001:
-            #     print('\t**observed={}, expected={}'.format(ob, ex))
+            if diff > 0.001 and debug:
+                print('\t**observed={}, expected={}'.format(ob, ex))
+            elif debug is False:
+                assert diff < 0.001

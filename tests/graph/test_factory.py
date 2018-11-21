@@ -137,8 +137,9 @@ def __validate_posterior__(expected, join_tree, debug=False):
     for node in join_tree.get_bbn_nodes():
         potential = join_tree.get_bbn_potential(node)
         if debug is True:
-            print(node)
-            print(potential)
+            p = ', '.join(['{}'.format(e) for e in potential.entries])
+            s = '{} : {}'.format(node.variable.name, p)
+            print(s)
 
         o = [e.value for e in potential.entries]
         e = expected[node.variable.name]
@@ -146,6 +147,7 @@ def __validate_posterior__(expected, join_tree, debug=False):
         assert len(o) == len(e)
         for ob, ex in zip(o, e):
             diff = abs(ob - ex)
-            # assert diff < 0.001
-            if diff > 0.001:
+            if diff > 0.001 and debug:
                 print('\t**observed={}, expected={}'.format(ob, ex))
+            elif debug is False:
+                assert diff < 0.001

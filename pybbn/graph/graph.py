@@ -52,7 +52,8 @@ class Graph(object):
         :param node: Node.
         :return: This graph.
         """
-        self.nodes[node.id] = node
+        if node.id not in self.nodes:
+            self.nodes[node.id] = node
         return self
 
     def add_edge(self, edge):

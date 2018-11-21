@@ -14,7 +14,9 @@ class Propagator(object):
         :param join_tree: Join tree.
         :return: Join tree.
         """
-        cliques = sorted(join_tree.get_cliques(), key=lambda c: c.id)
+        cliques = join_tree.get_cliques()
+        cliques = sorted(cliques, key=lambda c: c.id)
+        # cliques = sorted(cliques, key=lambda c: c.get_sid())
         x = cliques[0]
         # print(x)
 

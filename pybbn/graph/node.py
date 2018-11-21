@@ -68,6 +68,11 @@ class Clique(Node):
         self.nodes = nodes
         self.marked = False
 
+    def get_sid(self):
+        sids = '-'.join(sorted([n.variable.name for n in self.nodes]))
+        sids = IdUtil.hash_string(sids)
+        return sids
+
     def is_marked(self):
         """
         :return: A boolean indicating if the clique is marked.
