@@ -14,6 +14,7 @@ class MwstAlgo(object):
     """
     Maximum weight spanning tree algorithm. Also known as Chow-Liu algorithm.
     """
+
     def __init__(self):
         """
         Ctor.

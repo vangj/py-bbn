@@ -47,6 +47,7 @@ class Factory(object):
         :param bn: libpgm discrete BBN.
         :return: py-bbn BBN.
         """
+
         def get_nodes(bn, domain_spaces=True):
             def get_parent_domains(name, bn):
                 parents = bn.Vdata[name]['parents']

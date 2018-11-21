@@ -7,6 +7,7 @@ class DiscreteData(object):
     """
     A discrete dataset.
     """
+
     def __init__(self, df):
         """
         Ctor.

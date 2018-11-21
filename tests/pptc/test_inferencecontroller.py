@@ -1,8 +1,7 @@
 from nose import with_setup
 
-from pybbn.graph.edge import EdgeType, Edge
-
 from pybbn.graph.dag import BbnUtil, Bbn
+from pybbn.graph.edge import EdgeType, Edge
 from pybbn.graph.jointree import EvidenceBuilder
 from pybbn.graph.node import BbnNode
 from pybbn.graph.variable import Variable
@@ -170,7 +169,7 @@ def test_inference_4():
         .add_node(e) \
         .add_edge(Edge(a, c, EdgeType.DIRECTED)) \
         .add_edge(Edge(b, c, EdgeType.DIRECTED)) \
-        .add_edge(Edge(c, e, EdgeType.DIRECTED)) \
+        .add_edge(Edge(c, e, EdgeType.DIRECTED))
 
     join_tree = InferenceController.apply(bbn)
 

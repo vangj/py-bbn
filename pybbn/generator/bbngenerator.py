@@ -301,9 +301,9 @@ def to_json(g, params, pretty=False):
         'nodes': list(g.nodes),
         'edges': [{'pa': e[0], 'ch': e[1]} for e in g.edges],
         'parameters': [{
-                'node': k,
-                'params': list(v['params'].flatten()),
-                'shape': v['shape']} for k, v in params.items()
+            'node': k,
+            'params': list(v['params'].flatten()),
+            'shape': v['shape']} for k, v in params.items()
         ]}
 
     return json.dumps(j, indent=2, sort_keys=False) if pretty is True else json.dumps(j)

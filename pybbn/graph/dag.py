@@ -1,9 +1,9 @@
+import networkx as nx
+
 from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.graph import Graph
 from pybbn.graph.node import BbnNode
 from pybbn.graph.variable import Variable
-
-import networkx as nx
 
 
 class Dag(Graph):
