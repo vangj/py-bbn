@@ -284,7 +284,7 @@ def test_log_proba():
         'x4': x4})
 
     means = np.array(df.mean())
-    cov = np.array(df.cov().as_matrix())
+    cov = np.array(df.cov().values)
 
     params = Parameters(means, cov)
 

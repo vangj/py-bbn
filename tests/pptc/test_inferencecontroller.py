@@ -51,6 +51,10 @@ def test_inference_controller():
 
 @with_setup(setup, teardown)
 def test_huang_inference():
+    """
+    Tests inference on the Huang graph.
+    :return: None.
+    """
     bbn = BbnUtil.get_huang_graph()
 
     join_tree = InferenceController.apply(bbn)
@@ -71,6 +75,10 @@ def test_huang_inference():
 
 @with_setup(setup, teardown)
 def test_inference_1():
+    """
+    Tests inference on the Huang graph with manual construction.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
@@ -117,6 +125,10 @@ def test_inference_1():
 
 @with_setup(setup, teardown)
 def test_inference_2():
+    """
+    Tests inference on customized graph.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.7, 0.3])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.4, 0.6])
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.9, 0.1, 0.3, 0.7, 0.5, 0.5, 0.1, 0.9])
@@ -157,6 +169,10 @@ def test_inference_2():
 
 @with_setup(setup, teardown)
 def test_inference_4():
+    """
+    Tests inference on simple customized graph.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.7, 0.3])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.4, 0.6])
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.9, 0.1, 0.3, 0.7, 0.5, 0.5, 0.1, 0.9])
@@ -185,6 +201,10 @@ def test_inference_4():
 
 @with_setup(setup, teardown)
 def test_inference_libpgm():
+    """
+    Tests inference with evidence on libpgm graph.
+    :return: None.
+    """
     difficulty = BbnNode(Variable(0, 'difficulty', ['easy', 'hard']), [0.6, 0.4])
     intelligence = BbnNode(Variable(1, 'intelligence', ['low', 'high']), [0.7, 0.3])
     grade = BbnNode(Variable(2, 'grade', ['a', 'b', 'c']),
@@ -246,6 +266,10 @@ def test_inference_libpgm():
 
 @with_setup(setup, teardown)
 def test_inference_libpgm2():
+    """
+    Tests libpgm graph where ordering messes up computation. FIXME: passing b/c we made it so
+    :return: None.
+    """
     # letter = BbnNode(
     #     Variable(0, 'letter', ['weak', 'strong']),
     #     [0.1, 0.9, 0.4, 0.6, 0.99, 0.01])
@@ -302,6 +326,10 @@ def test_inference_libpgm2():
 
 @with_setup(setup, teardown)
 def test_trivial_inference():
+    """
+    Tests inference on trivial graphs.
+    :return: None.
+    """
     a1 = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
     b1 = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
     bbn1 = Bbn().add_node(a1).add_node(b1).add_edge(Edge(a1, b1, EdgeType.DIRECTED))
@@ -333,7 +361,40 @@ def test_trivial_inference():
     }, jt3, debug=False)
 
 
+@with_setup(setup, teardown)
+def test_inference_var_permutation():
+    """
+    Tests inference on graphs where id are reversed.
+    :return: None.
+    """
+    a1 = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
+    b1 = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
+    c1 = BbnNode(Variable(2, 'c', ['t', 'f']), [0.2, 0.8, 0.7, 0.3])
+    bbn1 = Bbn().add_node(a1).add_node(b1).add_node(c1)\
+        .add_edge(Edge(a1, b1, EdgeType.DIRECTED))\
+        .add_edge(Edge(b1, c1, EdgeType.DIRECTED))
+    jt1 = InferenceController.apply(bbn1)
+
+    a2 = BbnNode(Variable(2, 'a', ['t', 'f']), [0.2, 0.8])
+    b2 = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
+    c2 = BbnNode(Variable(0, 'c', ['t', 'f']), [0.2, 0.8, 0.7, 0.3])
+    bbn2 = Bbn().add_node(a2).add_node(b2).add_node(c2)\
+        .add_edge(Edge(a2, b2, EdgeType.DIRECTED)) \
+        .add_edge(Edge(b2, c2, EdgeType.DIRECTED))
+    jt2 = InferenceController.apply(bbn2)
+
+    __print_potentials__(jt1)
+    __print_potentials__(jt2)
+
+
 def __validate_posterior__(expected, join_tree, debug=False):
+    """
+    Validates the posterior probabilities of a join tree.
+    :param expected: Expected posteriors.
+    :param join_tree: Join tree.
+    :param debug: Flag indicating if we should debug.
+    :return: None.
+    """
     for node in join_tree.get_bbn_nodes():
         potential = join_tree.get_bbn_potential(node)
         if debug is True:
