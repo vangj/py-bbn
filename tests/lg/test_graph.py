@@ -299,7 +299,7 @@ def test_log_proba():
     dag1.add_edge(2, 3)
     dag1.add_edge(3, 4)
     bbn1 = Bbn(dag1, params, max_samples=9000, max_iters=1, mb=True)
-    lp1 = bbn1.log_prob(df.as_matrix())
+    lp1 = bbn1.log_prob(df.values)
 
     dag2 = Dag()
     dag2.add_node(0)
@@ -312,7 +312,7 @@ def test_log_proba():
     dag2.add_edge(1, 4)
     dag2.add_edge(2, 3)
     bbn2 = Bbn(dag2, params, max_samples=9000, max_iters=1, mb=True)
-    lp2 = bbn2.log_prob(df.as_matrix())
+    lp2 = bbn2.log_prob(df.values)
 
     dag3 = Dag()
     dag3.add_node(0)
@@ -325,7 +325,7 @@ def test_log_proba():
     dag3.add_edge(3, 4)
     dag3.add_edge(3, 2)
     bbn3 = Bbn(dag3, params, max_samples=9000, max_iters=1, mb=True)
-    lp3 = bbn3.log_prob(df.as_matrix())
+    lp3 = bbn3.log_prob(df.values)
 
     dag4 = Dag()
     dag4.add_node(0)
@@ -337,7 +337,7 @@ def test_log_proba():
     dag4.add_edge(2, 3)
     dag4.add_edge(3, 4)
     bbn4 = Bbn(dag4, params, max_samples=9000, max_iters=1, mb=True)
-    lp4 = bbn4.log_prob(df.as_matrix())
+    lp4 = bbn4.log_prob(df.values)
 
     print('lp1 {}'.format(lp1))
     print('lp2 {}'.format(lp2))
