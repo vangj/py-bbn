@@ -267,51 +267,35 @@ def test_inference_libpgm():
 @with_setup(setup, teardown)
 def test_inference_libpgm2():
     """
-    Tests libpgm graph where ordering messes up computation. FIXME: passing b/c we made it so
+    Tests libpgm graph where ordering messes up computation.
     :return: None.
     """
-    # letter = BbnNode(
-    #     Variable(0, 'letter', ['weak', 'strong']),
-    #     [0.1, 0.9, 0.4, 0.6, 0.99, 0.01])
-    # grade = BbnNode(
-    #     Variable(1, 'grade', ['a', 'b', 'c']),
-    #     [0.3, 0.4, 0.3, 0.9, 0.08, 0.02, 0.05, 0.25, 0.7, 0.5, 0.3, 0.2])
-    # intelligence = BbnNode(
-    #     Variable(2, 'intelligence', ['low', 'high']),
-    #     [0.7, 0.3])
-    # sat = BbnNode(
-    #     Variable(3, 'sat', ['low', 'high']),
-    #     [0.95, 0.05, 0.2, 0.8])
-    # difficulty = BbnNode(
-    #     Variable(4, 'difficulty', ['easy', 'hard']),
-    #     [0.6, 0.4])
-
     letter = BbnNode(
-        Variable(2, 'Letter', ['weak', 'strong']),
+        Variable(4, 'Letter', ['weak', 'strong']),
         [0.1, 0.9, 0.4, 0.6, 0.99, 0.01])
     grade = BbnNode(
-        Variable(4, 'Grade', ['a', 'b', 'c']),
+        Variable(2, 'Grade', ['a', 'b', 'c']),
         [0.3, 0.4, 0.3, 0.9, 0.08, 0.02, 0.05, 0.25, 0.7, 0.5, 0.3, 0.2])
     intelligence = BbnNode(
-        Variable(1, 'Intelligence', ['low', 'high']),
+        Variable(3, 'Intelligence', ['low', 'high']),
         [0.7, 0.3])
     sat = BbnNode(
-        Variable(0, 'SAT', ['low', 'high']),
+        Variable(1, 'SAT', ['low', 'high']),
         [0.95, 0.05, 0.2, 0.8])
     difficulty = BbnNode(
-        Variable(3, 'Difficulty', ['easy', 'hard']),
+        Variable(0, 'Difficulty', ['easy', 'hard']),
         [0.6, 0.4])
 
     bbn = Bbn() \
+        .add_node(letter) \
         .add_node(grade) \
         .add_node(intelligence) \
-        .add_node(difficulty) \
-        .add_node(letter) \
         .add_node(sat) \
+        .add_node(difficulty) \
         .add_edge(Edge(difficulty, grade, EdgeType.DIRECTED)) \
         .add_edge(Edge(intelligence, grade, EdgeType.DIRECTED)) \
-        .add_edge(Edge(grade, letter, EdgeType.DIRECTED)) \
-        .add_edge(Edge(intelligence, sat, EdgeType.DIRECTED))
+        .add_edge(Edge(intelligence, sat, EdgeType.DIRECTED)) \
+        .add_edge(Edge(grade, letter, EdgeType.DIRECTED))
 
     join_tree = InferenceController.apply(bbn)
 

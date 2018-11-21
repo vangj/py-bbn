@@ -97,7 +97,7 @@ class Bbn(Dag):
         self.parents = {}
 
     def get_parents_ordered(self, id):
-        return self.parents[id] if id in self.parents else []
+        return sorted(self.parents[id]) if id in self.parents else []
 
     def __edge_added__(self, edge):
         if edge.j.id not in self.parents:
