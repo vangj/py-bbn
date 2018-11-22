@@ -367,8 +367,17 @@ def test_inference_var_permutation():
         .add_edge(Edge(b2, c2, EdgeType.DIRECTED))
     jt2 = InferenceController.apply(bbn2)
 
-    __print_potentials__(jt1)
-    __print_potentials__(jt2)
+    __validate_posterior__({
+        'a': [0.2, 0.8],
+        'b': [0.74, 0.26],
+        'c': [0.33, 0.67]
+    }, jt1, debug=False)
+
+    __validate_posterior__({
+        'a': [0.2, 0.8],
+        'b': [0.74, 0.26],
+        'c': [0.33, 0.67]
+    }, jt2, debug=False)
 
 
 def __validate_posterior__(expected, join_tree, debug=False):
