@@ -8,5 +8,7 @@ COPY . /py-bbn
 RUN conda install --file /py-bbn/requirements.txt -y
 RUN cd /py-bbn \
     && make \
+    && python setup.py sdist bdist bdist_wheel \
+    && twine check dist/* \
     && cd /py-bbn/docs \
     && make html

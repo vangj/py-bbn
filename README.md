@@ -137,15 +137,26 @@ python -m ipykernel install --user --name pybbn37 --display-name "pybbn37"
 
 Then you may build the project as follows. (Note that in Python 3.6 you will get some warnings).
 
-```
+```bash
 make build
 ```
 
 To build the documents, go into the docs sub-directory and type in the following.
 
-```
+```bash
 make html
 ```
+
+# Publishing
+
+```bash
+python setup.py sdist bdist bdist_wheel
+twine check dist/*
+twine upload --repository-url https://test.pypi.org/legacy/ dist/pybbn-*-py2-*.whl
+twine upload --repository-url https://test.pypi.org/legacy/ dist/pybbn-*-py3-*.whl
+twine upload --repository-url https://test.pypi.org/legacy/ dist/pybbn-*.tar.gz
+```
+
 # Docker
 
 You may also build the code as follows using Docker.

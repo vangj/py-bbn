@@ -16,3 +16,5 @@ ipykernel
 # DOCUMENTATION
 sphinx
 sphinx_rtd_theme
+# PUBLISHING
+twine
