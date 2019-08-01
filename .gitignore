@@ -9,3 +9,4 @@ PyBBN.egg-info/
 pybbn.egg-info/
 build/
 .ipynb_checkpoints/
+.pypirc
