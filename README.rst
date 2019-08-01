@@ -120,18 +120,29 @@ Below is an example to create a linear Gaussian BBN and perform inference.
 Building
 --------
 
-To build, you will need Python 2.7+. Managing environments through `Anaconda <https://www.anaconda.com/download/#linux>`_
+To build, you will need Python 2.7 or 3.7. Managing environments through `Anaconda <https://www.anaconda.com/download/#linux>`_
 is highly recommended to be able to build this project (though not absolutely required if you know
 what you are doing). Assuming you have installed Anaconda, you may create an environment as
-follows (make sure you `cd` into the root of this project's location). Note that you may change the conda environment
-to be 3.6 as well.
+follows (make sure you `cd` into the root of this project's location).
+
+For Python 2.7.
+
 
 .. code:: bash
 
-    conda create -n py-bbn python=2.7
-    source activate py-bbn
-    conda install --yes --file requirements.txt
-    python -m ipykernel install --user --name py-bbn --display-name "py-bbn"
+    conda env create -f environment-py27.yml
+    conda activate pybbn27
+    python -m ipykernel install --user --name pybbn27 --display-name "pybbn27"
+
+
+For Python 3.7.
+
+
+.. code:: bash
+
+    conda env create -f environment-py37.yml
+    conda activate pybbn37
+    python -m ipykernel install --user --name pybbn37 --display-name "pybbn37"
 
 
 Then you may build the project as follows. (Note that in Python 3.6 you will get some warnings).
