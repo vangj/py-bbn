@@ -116,17 +116,27 @@ bbn.clear_evidences()
 
 # Building
 
-To build, you will need Python 2.7+. Managing environments through [Anaconda](https://www.anaconda.com/download/#linux)
-is highly recommended to be able to build this project (though not absolutely required if you know
-what you are doing). Assuming you have installed Anaconda, you may create an environment as
-follows (make sure you `cd` into the root of this project's location). Note that you may change the conda environment 
-to be 3.6 as well.
+To build, you will need Python 2.7 or 3.7. Managing environments through [Anaconda](https://www.anaconda.com/download/#linux) is highly recommended to be able to build this project (though not absolutely required if you know what you are doing). Assuming you have installed Anaconda, you may create an environment as follows (make sure you `cd` into the root of this project's location).
+
+To create the environment, use one of the following commands.
 
 ```bash
-conda create -n py-bbn python=2.7
-source activate py-bbn
-conda install --yes --file requirements.txt
-python -m ipykernel install --user --name py-bbn --display-name "py-bbn"
+conda env create -f environment-py27.yml
+conda env create -f environment-py37.yml
+```
+
+If you want to use the environments with Jupyter, install the kernel.
+
+```bash
+python -m ipykernel install --user --name pybbn27 --display-name "pybbn27"
+python -m ipykernel install --user --name pybbn27 --display-name "pybbn37"
+```
+
+Activate the environment as follows.
+
+```bash
+conda activate pybbn27
+conda activate pybbn37
 ```
 
 Then you may build the project as follows. (Note that in Python 3.6 you will get some warnings).

@@ -1,0 +1,16 @@
+name: pybbn27
+dependencies:
+  - python=2.7
+  - nose
+  - coverage
+  - flake8
+  - pep8
+  - pyflakes
+  - numpy
+  - scipy
+  - networkx
+  - pandas
+  - matplotlib
+  - pygraphviz
+  - sphinx
+  - sphinx_rtd_theme
