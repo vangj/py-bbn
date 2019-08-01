@@ -1,0 +1,12 @@
+FROM continuumio/anaconda2
+LABEL Jee Vang, Ph.D. "vangjee@gmail.com"
+ENV PATH /opt/conda/bin:$PATH
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install build-essential -y
+COPY . /py-bbn
+RUN conda install --file /py-bbn/requirements.txt -y
+RUN cd /py-bbn \
+    && make \
+    && cd /py-bbn/docs \
+    && make html

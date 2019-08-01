@@ -146,6 +146,14 @@ To build the documents, go into the docs sub-directory and type in the following
 ```
 make html
 ```
+# Docker
+
+You may also build the code as follows using Docker.
+
+```bash
+./build27.sh
+./build37.sh
+```
 
 # Installing
 

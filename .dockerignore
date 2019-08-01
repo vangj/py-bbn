@@ -1,0 +1,8 @@
+build/
+coverage/
+dist/
+pybbn.egg-info/
+docs/build/
+.coverage
+.noseids
+.ipynb_checkpoints/
