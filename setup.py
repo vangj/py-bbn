@@ -12,6 +12,7 @@ setup(
     packages=find_packages('pybbn', exclude=['tests']),
     description='Learning and Inference in Bayesian Belief Networks',
     long_description=long_desc,
+    long_description_content_type='text/x-rst',
     url='https://github.com/vangj/py-bbn',
     keywords=' '.join(['bayesian', 'belief', 'network', 'exact', 'approximate', 'inference', 'junction', 'tree',
                        'algorithm', 'pptc', 'dag', 'gibbs', 'sampling', 'multivariate', 'conditional', 'gaussian',
