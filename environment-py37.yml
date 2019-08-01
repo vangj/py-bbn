@@ -12,5 +12,6 @@ dependencies:
   - pandas
   - matplotlib
   - pygraphviz
+  - ipykernel
   - sphinx
   - sphinx_rtd_theme

@@ -128,15 +128,11 @@ conda env create -f environment-py37.yml
 If you want to use the environments with Jupyter, install the kernel.
 
 ```bash
-python -m ipykernel install --user --name pybbn27 --display-name "pybbn27"
-python -m ipykernel install --user --name pybbn27 --display-name "pybbn37"
-```
-
-Activate the environment as follows.
-
-```bash
 conda activate pybbn27
+python -m ipykernel install --user --name pybbn27 --display-name "pybbn27"
+
 conda activate pybbn37
+python -m ipykernel install --user --name pybbn37 --display-name "pybbn37"
 ```
 
 Then you may build the project as follows. (Note that in Python 3.6 you will get some warnings).
