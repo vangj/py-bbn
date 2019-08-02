@@ -149,12 +149,11 @@ make html
 
 # Publishing
 
+To publish, make sure you have `.pypirc` with the correct credentials stored. Then type in the following.
+
 ```bash
-python setup.py sdist bdist bdist_wheel
-twine check dist/*
-twine upload --repository-url https://test.pypi.org/legacy/ dist/pybbn-*-py2-*.whl
-twine upload --repository-url https://test.pypi.org/legacy/ dist/pybbn-*-py3-*.whl
-twine upload --repository-url https://test.pypi.org/legacy/ dist/pybbn-*.tar.gz
+./build -r testpypi -v 0.2.5 # for testing
+./build -r pypi -v 0.2.5 # the real thing
 ```
 
 # Docker
