@@ -11,16 +11,16 @@ fi
 if [[ -f /root/.pypirc ]]; then
     if [[ -f ${PY37_WHEEL} ]]; then
         echo "uploading py37 wheel"
-        twine upload --repository testpypi ${PY37_WHEEL}
+        twine upload --repository ${PYPI_REPO} ${PY37_WHEEL}
     fi
 
     if [[ "py37" == ${PY_VERSION} ]]; then
         echo "uploading source"
-        twine upload --repository testpypi ${SOURCE_DIST}
+        twine upload --repository ${PYPI_REPO} ${SOURCE_DIST}
     fi
 
     if [[ -f ${PY27_WHEEL} ]]; then
         echo "uploading py27 wheel"
-        twine upload --repository testpypi ${PY27_WHEEL}
+        twine upload --repository ${PYPI_REPO} ${PY27_WHEEL}
     fi
 fi
