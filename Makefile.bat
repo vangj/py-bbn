@@ -17,7 +17,7 @@ pip install -r requirements.txt
 goto :eof
 
 :lint
-python -m flake8 ./bechtel
+python -m flake8 ./pybbn
 goto :eof
 
 :test
@@ -30,6 +30,9 @@ rmdir /S /Q coverage
 rmdir /S /Q dist
 rmdir /S /Q build
 rmdir /S /Q pybbn.egg-info
+rmdir /S /Q pybbn/pybbn.egg-info
+rmdir /S /Q jupyter/.ipynb_checkpoints
+rmdir /S /Q docs/build
 del .coverage
 del .noseids
 goto :eof
