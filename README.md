@@ -173,6 +173,22 @@ Use pip to install the package as it has been published to [PyPi](https://pypi.p
 pip install pybbn
 ```
 
+## GraphViz issue
+
+Make sure you [install GraphViz](https://graphviz.gitlab.io/download/) on your system.
+
+* CentOS: yum install graphviz*
+* Mac OSX: brew install graphviz
+* Windows: [msi installer](https://graphviz.gitlab.io/_pages/Download/windows/graphviz-2.38.msi)
+
+## testpypi issue
+
+You should **NOT** be doing this operation, but if you do want to install from `testpypi`, then add the `--extra-index-url` as follows.
+
+```bash
+pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ pybbn
+```
+
 # Other Python Bayesian Belief Network Inference Libraries
 
 Here is a list of other Python libraries for inference in Bayesian Belief Networks. 
