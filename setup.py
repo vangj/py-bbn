@@ -5,7 +5,7 @@ with open('README.rst', 'r') as fh:
 
 setup(
     name='pybbn',
-    version='0.2.0',
+    version='0.2.2',
     author='Jee Vang',
     author_email='vangjee@gmail.com',
     package_dir={'': 'pybbn'},
@@ -30,5 +30,5 @@ setup(
         'Intended Audience :: Science/Research',
         'Development Status :: 4 - Beta'
     ],
-    include_package_data=True,
+    include_package_data=True
 )

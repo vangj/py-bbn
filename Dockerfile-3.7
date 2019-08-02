@@ -1,6 +1,9 @@
 FROM continuumio/anaconda3
 LABEL Jee Vang, Ph.D. "vangjee@gmail.com"
 ENV PATH /opt/conda/bin:$PATH
+ENV PYBBN_VERSION 0.2.2
+ENV PY_VERSION py37
+ENV PYPI_REPO testpypi
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install build-essential -y
@@ -11,4 +14,5 @@ RUN cd /py-bbn \
     && python setup.py sdist bdist bdist_wheel \
     && twine check dist/* \
     && cd /py-bbn/docs \
-    && make html
+    && make html \
+    && /py-bbn/publish.sh
