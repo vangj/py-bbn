@@ -9,6 +9,5 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install build-essential -y
 COPY . /py-bbn
-RUN conda env create -f /py-bbn/environment-py27.yml \
-    && conda env create -f /py-bbn/environment-py37.yml \
-    && /py-bbn/publish.sh
+RUN conda install --file /py-bbn/requirements.txt -y
+RUN /py-bbn/publish.sh
