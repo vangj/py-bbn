@@ -15,10 +15,10 @@ do
 esac
 done
 
-if [[ "version" == $APYBBN_VERSION ]]; then
-  echo "version is required; -v"
-elif [[ "repo" == $APYPI_REPO ]]; then
-  echo "repo is required; -r"
+if [[ "version" == $APYBBN_VERSION || "repo" == $APYPI_REPO ]]; then
+  echo "Usage: ./build.sh -r [pypi|testpypi] -v [version]"
+  echo "     -r repository, pypi or testpypi"
+  echo "     -v version e.g. 0.2.5"
 else
   docker build --no-cache \
     -f $DOCKER_FILE \
