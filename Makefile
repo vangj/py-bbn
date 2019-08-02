@@ -26,6 +26,7 @@ clean:
 	rm -fr build/
 	rm -fr pybbn.egg-info/
 	rm -fr pybbn/pybbn.egg-info
+	rm -fr jupyter/.ipynb_checkpoints
 	rm -f .coverage
 	rm -f .noseids
 
