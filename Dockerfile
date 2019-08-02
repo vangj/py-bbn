@@ -1,13 +1,10 @@
 FROM continuumio/anaconda3
 LABEL Jee Vang, Ph.D. "vangjee@gmail.com"
-# environment variables
+ARG APYBBN_VERSION
+ARG APYPI_REPO
+ENV PYBBN_VERSION=$APYBBN_VERSION
+ENV PYPI_REPO=$APYPI_REPO
 ENV PATH /opt/conda/bin:$PATH
-ENV PYBBN_VERSION 0.2.3
-ENV PYPI_REPO testpypi
-# arguments
-ARG PYBBN_VERSION
-ARG PYPI_REPO
-# do the build
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install build-essential -y
