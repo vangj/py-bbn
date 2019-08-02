@@ -72,6 +72,7 @@ publish37() {
 
 build27() {
   echo "python 2.7 build"
+  cp -f /py-bbn/requirements.py27 /py-bbn/requirements.txt
   conda activate pybbn27
   buildCode
   publish27
@@ -79,6 +80,7 @@ build27() {
 
 build37() {
   echo "python 3.7 build"
+  cp -f /py-bbn/requirements.py37 /py-bbn/requirements.txt
   conda activate pybbn37
   buildCode
   publish37

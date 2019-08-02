@@ -17,9 +17,7 @@ setup(
     keywords=' '.join(['bayesian', 'belief', 'network', 'exact', 'approximate', 'inference', 'junction', 'tree',
                        'algorithm', 'pptc', 'dag', 'gibbs', 'sampling', 'multivariate', 'conditional', 'gaussian',
                        'linear', 'causal', 'causality', 'structure', 'parameter']),
-    install_requires=[
-        'numpy', 'scipy', 'networkx', 'pandas', 'matplotlib', 'pygraphviz'
-    ],
+    install_requires=['numpy', 'scipy', 'networkx', 'pandas', 'matplotlib', 'pygraphviz'],
     classifiers=[
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
