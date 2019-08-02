@@ -176,10 +176,10 @@ pip install pybbn
 
 Make sure you [install GraphViz](https://graphviz.gitlab.io/download/) on your system.
 
-* CentOS: yum install graphviz*
-* Ubuntu: sudo apt-get install libgraphviz-dev
-* Mac OSX: brew install graphviz
-* Windows: [msi installer](https://graphviz.gitlab.io/_pages/Download/windows/graphviz-2.38.msi)
+* CentOS: `yum install graphviz*`
+* Ubuntu: `sudo apt-get install libgraphviz-dev`
+* Mac OSX: `brew install graphviz`
+* Windows: use the [msi installer](https://graphviz.gitlab.io/_pages/Download/windows/graphviz-2.38.msi)
 
 ## testpypi issue
 
