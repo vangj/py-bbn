@@ -25,6 +25,7 @@ clean:
 	rm -fr dist/
 	rm -fr build/
 	rm -fr pybbn.egg-info/
+	rm -fr pybbn/pybbn.egg-info
 	rm -f .coverage
 	rm -f .noseids
 
