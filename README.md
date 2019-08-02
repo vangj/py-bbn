@@ -161,8 +161,7 @@ To publish, make sure you have `.pypirc` with the correct credentials stored. Th
 You may also build the code as follows using Docker.
 
 ```bash
-./build27.sh
-./build37.sh
+./build.sh
 ```
 
 # Installing
