@@ -73,17 +73,23 @@ publish37() {
 build27() {
   echo "python 2.7 build"
   cp -f /py-bbn/requirements.py27 /py-bbn/requirements.txt
+  cp -f /py-bbn/setup.py /py-bbn/setup.bak
+  sed -i "s/install_requires=['numpy', 'scipy', 'networkx', 'pandas', 'matplotlib', 'pygraphviz']/install_requires=['numpy>=1.16.4', 'scipy>=1.2.1', 'networkx>=2.2', 'pandas>=0.24.2', 'matplotlib>=2.2.3', 'pygraphviz>=1.3']/g" /py-bbn/setup.py
   conda activate pybbn27
   buildCode
   publish27
+  cp -f /py-bbn/setup.bak /py-bbn/setup.py
 }
 
 build37() {
   echo "python 3.7 build"
   cp -f /py-bbn/requirements.py37 /py-bbn/requirements.txt
+  cp -f /py-bbn/setup.py /py-bbn/setup.bak
+  sed -i "s/install_requires=['numpy', 'scipy', 'networkx', 'pandas', 'matplotlib', 'pygraphviz']/install_requires=['numpy>=1.16.4', 'scipy>=1.3.0', 'networkx>=2.3', 'pandas>=0.25.0', 'matplotlib>=3.1.0', 'pygraphviz>=1.3']/g" /py-bbn/setup.py
   conda activate pybbn37
   buildCode
   publish37
+  cp -f /py-bbn/setup.bak /py-bbn/setup.py
 }
 
 conda init bash
