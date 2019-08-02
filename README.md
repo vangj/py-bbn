@@ -152,8 +152,8 @@ make html
 To publish, make sure you have `.pypirc` with the correct credentials stored. Then type in the following.
 
 ```bash
-./build -r testpypi -v 0.2.5 # for testing
-./build -r pypi -v 0.2.5 # the real thing
+./build.sh -r testpypi -v 0.2.5 # for testing
+./build.sh -r pypi -v 0.2.5 # the real thing
 ```
 
 # Docker
