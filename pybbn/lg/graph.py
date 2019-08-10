@@ -4,7 +4,8 @@ import networkx as nx
 import numpy as np
 from networkx.algorithms.dag import topological_sort, is_directed_acyclic_graph
 
-from pybbn.lg.gaussian import rnorm, dnorm, dcmvnorm, RandCondMvn
+from pybbn.lg.gaussian import dnorm, dcmvnorm
+from pybbn.lg.inference import MvnInference
 
 
 class Dag(object):
@@ -179,7 +180,8 @@ class Bbn(object):
         """
         self.dag = dag
         self.params = params
-        self.evidence = np.array([None for _ in range(dag.number_of_nodes())], dtype=float)
+        self.mvn = MvnInference(params.means, params.cov)
+        self.evidence = [None for _ in range(dag.number_of_nodes())]
         self.max_samples = max_samples
         self.max_iters = max_iters
         self.mb = mb
@@ -241,7 +243,7 @@ class Bbn(object):
         Clears all the evidences.
         :return: None
         """
-        self.evidence = np.array([None for _ in range(self.dag.number_of_nodes())], dtype=float)
+        self.evidence = [None for _ in range(self.dag.number_of_nodes())]
 
     def __has_parents__(self, node_id):
         """
@@ -259,136 +261,87 @@ class Bbn(object):
         """
         return False if np.isnan(self.evidence[node_id]) else True
 
+    def __get_evidences__(self):
+        evidences = [(i, v) for i, v in enumerate(self.evidence)]
+        evidences = list(filter(lambda tup: tup[1] is not None, evidences))
+        v = list(map(lambda tup: tup[1], evidences))
+        iv = list(map(lambda tup: tup[0], evidences))
+        return v, iv
+
     def do_inference(self):
         """
-        Conducts Gibbs sampling.
+        Conducts inference.
         :return: The expected state of every variable.
         """
+        v, iv = self.__get_evidences__()
+        self.mvn.update_mean_cov(v, iv)
+        return self.mvn.get_params()[0]
 
-        def get_init_value(bbn, node_id):
-            """
-            Gets a random initial value for the specified node. If the specified node has evidence set, then that value
-            is returned.
-            :param bbn: BBN.
-            :param node_id: Node id.
-            :return: Initial value.
-            """
-            if bbn.__has_evidence__(node_id):
-                return bbn.get_evidence(node_id)
-            else:
-                m = bbn.params.means[node_id]
-                stdev = math.sqrt(bbn.params.cov[node_id, node_id])
-                return list(rnorm(1, m, stdev))[0]
-
-        def get_nodes_selector(node_id, num_nodes):
-            """
-            Gets a selector for all the nodes except the specified node.
-            :param node_id: Node id.
-            :param num_nodes: Number of nodes.
-            :return: Sorted array of node ids.
-            """
-            return sorted([i for i in range(num_nodes) if i != node_id])
-
-        def get_rcmvnorm_dist(node_id, means, cov):
-            """
-            Gets a conditional multivariate normal distribution.
-            :param node_id: Node id.
-            :param means: Means.
-            :param cov: Covariance.
-            :return: Random conditional multivariate normal distribution.
-            """
-            num_nodes = cov.shape[0]
-            other_nodes = get_nodes_selector(node_id, num_nodes)
-            dist = RandCondMvn(means, cov, node_id, other_nodes)
-            return dist
-
-        def get_mb_rcmvnorm_dist(dag, node_id, means, cov):
-            other_nodes = dag.markov_blanket(node_id)
-            dist = RandCondMvn(means, cov, node_id, other_nodes)
-            return dist
-
-        def get_rcmvnorm_dists(means, cov):
-            """
-            Gets a dictionary of rcmvnorm distributions keyed by node ID.
-            :param means: Means.
-            :param cov: Covariance.
-            :return: Dictionary of rcmvnorm distributions.
-            """
-            dists = {}
-            for node_id in range(cov.shape[0]):
-                dist = get_rcmvnorm_dist(node_id, means, cov)
-                dists[node_id] = dist
-            return dists
-
-        def get_mb_rcmvnorm_dists(dag, means, cov):
-            """
-
-            :param dag:
-            :param means:
-            :param cov:
-            :return:
-            """
-            dists = {}
-            for node_id in range(cov.shape[0]):
-                dist = get_mb_rcmvnorm_dist(dag, node_id, means, cov)
-                dists[node_id] = dist
-            return dists
-
-        def get_sample(dag, sample, max_samples, dists, mb=False):
-            """
-            Gets a sample.
-            :param dag: Directed acyclic graph.
-            :param sample: Initial sample.
-            :param max_samples: Max samples.
-            :return: Final sample.
-            """
-            num_nodes = dag.number_of_nodes()
-
-            for i in range(max_samples):
-                i_sample = np.copy(sample)
-
-                for node_id in range(num_nodes):
-                    if self.__has_evidence__(node_id) is True:
-                        x = self.get_evidence(node_id)
-                        i_sample[node_id] = x
-                    else:
-                        other_nodes = dag.markov_blanket(node_id) if mb is True else get_nodes_selector(node_id,
-                                                                                                        num_nodes)
-                        X = i_sample[other_nodes]
-                        i_sample[node_id] = dists[node_id].next(X)
-
-                sample = (sample + i_sample) / 2.0
-            return sample
-
+    def predict_proba(self, X):
+        num_data = X.shape[0]
         num_nodes = self.dag.number_of_nodes()
-        max_iters = self.max_iters
-        outcome = np.zeros((1, num_nodes))
-        dists = get_mb_rcmvnorm_dists(self.dag, self.params.means,
-                                      self.params.cov) if self.mb is True else get_rcmvnorm_dists(self.params.means,
-                                                                                                  self.params.cov)
+        all_probs = []
 
-        for i in range(max_iters):
-            sample = np.array([get_init_value(self, node_id) for node_id in range(num_nodes)], dtype=float)
-            sample = get_sample(self.dag, sample, self.max_samples, dists, mb=self.mb)
-            outcome = outcome + sample
+        for row_id in range(num_data):
+            probs = []
+            for node_id in range(num_nodes):
+                if self.__has_parents__(node_id) is False:
+                    d = X[row_id, node_id]
+                    m = self.params.means[node_id]
+                    s = math.sqrt(self.params.cov[node_id, node_id])
+                    p = next(dnorm([d], m, s))
+                    probs.append(p)
+                else:
+                    d = X[row_id, :].reshape(1, -1)
+                    m = self.params.means
+                    s = self.params.cov
+                    dep = sorted(self.dag.parents(node_id))
+                    p = next(dcmvnorm(d, m, s, node_id, dep))
+                    probs.append(p)
 
-        outcome = outcome / float(max_iters)
-        return outcome[0]
+            all_probs.append(10**np.log10(probs).sum())
+        return np.array(all_probs)
 
-    def log_prob(self, data):
+    def predict_log_proba(self, X):
+        num_data = X.shape[0]
+        num_nodes = self.dag.number_of_nodes()
+        all_probs = []
+
+        for row_id in range(num_data):
+            probs = []
+            for node_id in range(num_nodes):
+                if self.__has_parents__(node_id) is False:
+                    d = X[row_id, node_id]
+                    m = self.params.means[node_id]
+                    s = math.sqrt(self.params.cov[node_id, node_id])
+                    p = next(dnorm([d], m, s))
+                    p = np.log10(p)
+                    probs.append(p)
+                else:
+                    d = X[row_id, :].reshape(1, -1)
+                    m = self.params.means
+                    s = self.params.cov
+                    dep = sorted(self.dag.parents(node_id))
+                    p = next(dcmvnorm(d, m, s, node_id, dep))
+                    p = np.log10(p)
+                    probs.append(p)
+            all_probs.append(np.sum(probs))
+        return np.array(all_probs)
+
+    def log_prob(self, X):
         num_nodes = self.dag.number_of_nodes()
         sum = 0.0
         for node_id in range(num_nodes):
             if self.__has_parents__(node_id) is False:
-                d = data[:, node_id]
+                d = X[:, node_id]
                 m = self.params.means[node_id]
-                s = math.sqrt(self.params.cov[node_id, node_id])
-                logp = np.sum([math.log10(p) for p in dnorm(d, m, s)])
+                s = np.sqrt(self.params.cov[node_id, node_id])
+                logp = np.sum([np.log10(p) for p in dnorm(d, m, s)])
                 sum += logp
             else:
                 m = self.params.means
                 s = self.params.cov
                 dep = sorted(self.dag.parents(node_id))
-                logp = np.sum([math.log10(p) for p in dcmvnorm(data, m, s, node_id, dep)])
+                logp = np.sum([np.log10(p) for p in dcmvnorm(X, m, s, node_id, dep)])
                 sum += logp
         return sum

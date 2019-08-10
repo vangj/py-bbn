@@ -4,6 +4,7 @@ from collections import namedtuple
 import numpy as np
 from numpy.linalg import inv
 from numpy.random import multivariate_normal, normal
+from scipy.stats import multivariate_normal as mvn_normal
 
 COV = namedtuple('COV', 'C11 C12 C21 C22 C22I')
 
@@ -194,3 +195,11 @@ class MvnInference(object):
         :return: Pairwise correlation matrix.
         """
         return np.corrcoef(self.get_samples().T)
+
+    def predict_proba(self, X):
+        M, S = self.get_params()
+        return multivariate_normal.pdf(X, mean=M, cov=S)
+
+    def predict_log_proba(self, X):
+        M, S = self.get_params()
+        return mvn_normal.logpdf(X, mean=M, cov=S)
