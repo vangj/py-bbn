@@ -199,7 +199,7 @@ def test_inference():
     ])
     params = Parameters(means, cov)
 
-    bbn = Bbn(dag, params, max_samples=9000, max_iters=1)
+    bbn = Bbn(dag, params)
 
     s, _ = bbn.do_inference()
     assert_almost_equal(s[0], 0.0, delta=0.01)
@@ -239,7 +239,7 @@ def test_local_inference():
     ])
     params = Parameters(means, cov)
 
-    bbn = Bbn(dag, params, max_samples=9000, max_iters=1, mb=True)
+    bbn = Bbn(dag, params)
 
     s, _ = bbn.do_inference()
     assert_almost_equal(s[0], 0.0, delta=0.01)
@@ -299,7 +299,7 @@ def test_log_proba():
     dag1.add_edge(1, 3)
     dag1.add_edge(2, 3)
     dag1.add_edge(3, 4)
-    bbn1 = Bbn(dag1, params, max_samples=9000, max_iters=1, mb=True)
+    bbn1 = Bbn(dag1, params)
     lp1 = bbn1.log_prob(X)
 
     dag2 = Dag()
@@ -312,7 +312,7 @@ def test_log_proba():
     dag2.add_edge(1, 3)
     dag2.add_edge(1, 4)
     dag2.add_edge(2, 3)
-    bbn2 = Bbn(dag2, params, max_samples=9000, max_iters=1, mb=True)
+    bbn2 = Bbn(dag2, params)
     lp2 = bbn2.log_prob(df.values)
 
     dag3 = Dag()
@@ -325,7 +325,7 @@ def test_log_proba():
     dag3.add_edge(1, 3)
     dag3.add_edge(3, 4)
     dag3.add_edge(3, 2)
-    bbn3 = Bbn(dag3, params, max_samples=9000, max_iters=1, mb=True)
+    bbn3 = Bbn(dag3, params)
     lp3 = bbn3.log_prob(X)
 
     dag4 = Dag()
@@ -337,7 +337,7 @@ def test_log_proba():
     dag4.add_edge(0, 1)
     dag4.add_edge(2, 3)
     dag4.add_edge(3, 4)
-    bbn4 = Bbn(dag4, params, max_samples=9000, max_iters=1, mb=True)
+    bbn4 = Bbn(dag4, params)
     lp4 = bbn4.log_prob(X)
 
     print('lp1 {}'.format(lp1))
