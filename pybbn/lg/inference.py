@@ -1,8 +1,9 @@
-import numpy as np
+import warnings
 from collections import namedtuple
+
+import numpy as np
 from numpy.linalg import inv
 from numpy.random import multivariate_normal, normal
-import warnings
 
 COV = namedtuple('COV', 'C11 C12 C21 C22 C22I')
 

@@ -1,7 +1,7 @@
 import numpy as np
-from numpy.random import normal
 from nose import with_setup
 from nose.tools import assert_almost_equal
+from numpy.random import normal
 
 from pybbn.lg.inference import MvnGaussian
 
@@ -57,7 +57,7 @@ def test_one_variable():
     assert_almost_equal(S_e, S_u, 0.1)
 
     samples = mvn.get_samples()
-    assert(samples.shape[0] == N)
+    assert (samples.shape[0] == N)
 
 
 @with_setup(setup, teardown)

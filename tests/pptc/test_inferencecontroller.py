@@ -354,15 +354,15 @@ def test_inference_var_permutation():
     a1 = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
     b1 = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
     c1 = BbnNode(Variable(2, 'c', ['t', 'f']), [0.2, 0.8, 0.7, 0.3])
-    bbn1 = Bbn().add_node(a1).add_node(b1).add_node(c1)\
-        .add_edge(Edge(a1, b1, EdgeType.DIRECTED))\
+    bbn1 = Bbn().add_node(a1).add_node(b1).add_node(c1) \
+        .add_edge(Edge(a1, b1, EdgeType.DIRECTED)) \
         .add_edge(Edge(b1, c1, EdgeType.DIRECTED))
     jt1 = InferenceController.apply(bbn1)
 
     a2 = BbnNode(Variable(2, 'a', ['t', 'f']), [0.2, 0.8])
     b2 = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
     c2 = BbnNode(Variable(0, 'c', ['t', 'f']), [0.2, 0.8, 0.7, 0.3])
-    bbn2 = Bbn().add_node(a2).add_node(b2).add_node(c2)\
+    bbn2 = Bbn().add_node(a2).add_node(b2).add_node(c2) \
         .add_edge(Edge(a2, b2, EdgeType.DIRECTED)) \
         .add_edge(Edge(b2, c2, EdgeType.DIRECTED))
     jt2 = InferenceController.apply(bbn2)
