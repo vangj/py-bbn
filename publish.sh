@@ -43,6 +43,13 @@ publish() {
   fi
 }
 
+cleanUp() {
+  if [[ -f /root/.pypirc ]]; then
+    echo "cleaning up"
+    rm -f /root/.pypirc
+  fi
+}
+
 build() {
   echo "python build"
   buildCode
@@ -54,5 +61,6 @@ conda init bash
 updateVersion
 copyCredentials
 build
+cleanUp
 
 echo "done!"
