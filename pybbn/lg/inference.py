@@ -40,12 +40,12 @@ def __update_mean__(m, v, M, i1, i2):
     :param i2: Indices of conditioned variables.
     :return: Updated means.
     """
-    v = np.copy(M)
+    M_u = np.copy(M)
     for i, mu in zip(i1, m):
-        v[i] = mu
+        M_u[i] = mu
     for i, mu in zip(i2, v):
-        v[i] = mu
-    return v
+        M_u[i] = mu
+    return M_u
 
 
 def __update_cov__(c, S, i1, i2):

@@ -79,7 +79,7 @@ def test_two_variables():
     mvn.update_mean_cov(np.array([1.0]), [0])
 
     M_u, S_u = mvn.get_params()
-    M_e = np.array([1., 5.00664999])
+    M_e = np.array([1., 2.99873267])
     S_e = np.array([[0.01, 1.98924418],
                     [1.98924418, 1.00995594]])
 
@@ -98,7 +98,7 @@ def test_two_variables():
     mvn.update_mean_cov(np.array([1.0]), [1])
 
     M_u, S_u = mvn.get_params()
-    M_e = np.array([0.40151428, 1.])
+    M_e = np.array([0.00399886, 1.])
     S_e = np.array([[0.19994501, 1.98924418],
                     [1.98924418, 0.01]])
 
