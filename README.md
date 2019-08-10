@@ -95,7 +95,7 @@ cov = np.array([
 params = Parameters(means, cov)
 
 # create the bayesian belief network
-bbn = Bbn(dag, params, max_samples=2000, max_iters=10)
+bbn = Bbn(dag, params)
 
 # do the inference
 M, C = bbn.do_inference()

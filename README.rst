@@ -99,22 +99,22 @@ Below is an example to create a linear Gaussian BBN and perform inference.
     params = Parameters(means, cov)
 
     # create the bayesian belief network
-    bbn = Bbn(dag, params, max_samples=2000, max_iters=10)
+    bbn = Bbn(dag, params)
 
     # do the inference
-    s = bbn.do_inference()
-    print(s)
+    M, C = bbn.do_inference()
+    print(M)
 
     # set the evidence on node 0 to a value of 1
     bbn.set_evidence(0, 1)
-    s = bbn.do_inference()
-    print(s)
+    M, C = bbn.do_inference()
+    print(M)
     bbn.clear_evidences()
 
     # set the evidence on node 1 to a value of 20
     bbn.set_evidence(1, 20)
-    s = bbn.do_inference()
-    print(s)
+    M, C = bbn.do_inference()
+    print(M)
     bbn.clear_evidences()
 
 Building

@@ -169,22 +169,16 @@ class Bbn(object):
     Bayesian Belief Network.
     """
 
-    def __init__(self, dag, params, max_samples=9000, max_iters=1, mb=False):
+    def __init__(self, dag, params):
         """
         Ctor. Note that the dimensions of the DAG and parameters must match.
         :param dag: DAG.
         :param params: Parameters (means and covariance).
-        :param max_samples: Max number of samples to use for approximate inference per iteration. Default is 9,000.
-        :param max_iters: Max number of iterations. Default is 1.
-        :param mb: A boolean indicating if we are only sampling locally based on Markov Blanket. Default is False.
         """
         self.dag = dag
         self.params = params
         self.mvn = MvnInference(params.means, params.cov)
         self.evidence = [None for _ in range(dag.number_of_nodes())]
-        self.max_samples = max_samples
-        self.max_iters = max_iters
-        self.mb = mb
 
         # all of these checks are to make sure the DAG and params align
         # check for 1-to-1 correspondence between nodes and variables
