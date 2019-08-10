@@ -271,7 +271,7 @@ class Bbn(object):
     def do_inference(self):
         """
         Conducts inference.
-        :return: The expected state of every variable.
+        :return: (means, covariances)
         """
         v, iv = self.__get_evidences__()
         self.mvn.update_mean_cov(v, iv)
