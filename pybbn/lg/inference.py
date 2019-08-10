@@ -114,7 +114,7 @@ def get_covariances(i1, i2, S):
     return COV(C11, C12, C21, C22, C22I)
 
 
-class MvnGaussian(object):
+class MvnInference(object):
     """
     Multivariate normal Gaussian.
     """

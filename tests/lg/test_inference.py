@@ -3,7 +3,7 @@ from nose import with_setup
 from nose.tools import assert_almost_equal
 from numpy.random import normal
 
-from pybbn.lg.inference import MvnGaussian
+from pybbn.lg.inference import MvnInference
 
 
 def setup():
@@ -35,7 +35,7 @@ def test_one_variable():
     M = np.mean(X, axis=0)
     S = np.cov(X.T)
 
-    mvn = MvnGaussian(M, S, N)
+    mvn = MvnInference(M, S, N)
 
     M_u, S_u = mvn.get_params()
     M_e = [0.00172341]
@@ -74,7 +74,7 @@ def test_two_variables():
     M = np.mean(X, axis=0)
     S = np.cov(X.T)
 
-    mvn = MvnGaussian(M, S, N)
+    mvn = MvnInference(M, S, N)
 
     mvn.update_mean_cov(np.array([1.0]), [0])
 
@@ -149,7 +149,7 @@ def test_serial_inference():
     M = np.mean(X, axis=0)
     S = np.cov(X.T)
 
-    mvn = MvnGaussian(M, S, N)
+    mvn = MvnInference(M, S, N)
     mvn.update_mean_cov(np.array([2.0]), [1])
     M_u, S_u = mvn.get_params()
 
