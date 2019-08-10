@@ -275,7 +275,7 @@ class Bbn(object):
         """
         v, iv = self.__get_evidences__()
         self.mvn.update_mean_cov(v, iv)
-        return self.mvn.get_params()[0]
+        return self.mvn.get_params()
 
     def predict_proba(self, X):
         num_data = X.shape[0]
