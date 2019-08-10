@@ -2,6 +2,7 @@ import numpy as np
 from collections import namedtuple
 from numpy.linalg import inv
 from numpy.random import multivariate_normal
+import warnings
 
 COV = namedtuple('COV', 'C11 C12 C21 C22 C22I')
 
@@ -97,8 +98,10 @@ class MvnGaussian(object):
         return (self.M, self.S) if self.M_u is None or self.S_u is None else (self.M_u, self.S_u)
 
     def get_samples(self):
-        M, S = self.get_params()
-        return multivariate_normal(M, S, self.N)
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore')
+            M, S = self.get_params()
+            return multivariate_normal(M, S, self.N)
 
     def get_corr(self):
         return np.corrcoef(self.get_samples().T)
