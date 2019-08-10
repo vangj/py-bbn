@@ -5,7 +5,7 @@ with open('README.rst', 'r') as fh:
 
 setup(
     name='pybbn',
-    version='0.2.3',
+    version='1.0.0',
     author='Jee Vang',
     author_email='vangjee@gmail.com',
     packages=find_packages(),
@@ -25,7 +25,7 @@ setup(
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
-        'Development Status :: 4 - Beta'
+        'Development Status :: 5 - Production/Stable'
     ],
     include_package_data=True
 )
