@@ -1,7 +1,7 @@
 import numpy as np
 from collections import namedtuple
 from numpy.linalg import inv
-from numpy.random import multivariate_normal
+from numpy.random import multivariate_normal, normal
 import warnings
 
 COV = namedtuple('COV', 'C11 C12 C21 C22 C22I')
@@ -85,6 +85,11 @@ class MvnGaussian(object):
             self.S_u = np.copy(self.S)
             return
 
+        if self.M.shape[0] == 1:
+            self.M_u = np.array([v[0]])
+            self.S_u = 0.01
+            return
+
         i2 = iv.copy()
         i1 = [i for i in range(self.S.shape[0]) if i not in i2]
 
@@ -101,6 +106,10 @@ class MvnGaussian(object):
         with warnings.catch_warnings():
             warnings.simplefilter('ignore')
             M, S = self.get_params()
+
+            if M.shape[0] == 1:
+                return normal(M[0], S, self.N)
+
             return multivariate_normal(M, S, self.N)
 
     def get_corr(self):

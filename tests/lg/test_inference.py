@@ -23,6 +23,44 @@ def teardown():
 
 
 @with_setup(setup, teardown)
+def test_one_variable():
+    """
+    Tests inference on X.
+    :return: None
+    """
+    N = 10000
+    x0 = normal(0, 1, N)
+
+    X = np.hstack([x0.reshape(-1, 1)])
+    M = np.mean(X, axis=0)
+    S = np.cov(X.T)
+
+    mvn = MvnGaussian(M, S, N)
+
+    M_u, S_u = mvn.get_params()
+    M_e = [0.00172341]
+    S_e = 0.9907002440358945
+
+    for m, m_u in zip(M_e, M_u):
+        assert_almost_equal(m, m_u, delta=0.1)
+
+    assert_almost_equal(S_e, S_u, 0.1)
+
+    mvn.update_mean_cov(np.array([0.5]), [0])
+    M_u, S_u = mvn.get_params()
+    M_e = [0.5]
+    S_e = 0.01
+
+    for m, m_u in zip(M_e, M_u):
+        assert_almost_equal(m, m_u, delta=0.1)
+
+    assert_almost_equal(S_e, S_u, 0.1)
+
+    samples = mvn.get_samples()
+    assert(samples.shape[0] == N)
+
+
+@with_setup(setup, teardown)
 def test_two_variables():
     """
     Tests inference on X -> Y
