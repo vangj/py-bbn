@@ -271,30 +271,52 @@ class Bbn(object):
         self.mvn.update_mean_cov(v, iv)
         return self.mvn.get_params()
 
-    def predict_proba(self, X):
+    def predict_proba(self, X, n_jobs=-1, batch_size=5000):
+        from collections import namedtuple
+        from joblib import Parallel, delayed
+
+        WORK_UNIT = namedtuple('WORK_UNIT', 'row_id, node_id d m s dep')
+        WORK_UNITS = namedtuple('WORK_UNITS', 'row_id, units')
+        WORK_RESULT = namedtuple('WORK_RESULT', 'row_id, probs, prob')
+
+        def get_prob(W):
+            return next(dnorm(W.d, W.m, W.s)) if W.dep is None else next(dcmvnorm(W.d, W.m, W.s, W.node_id, W.dep))
+
+        def get_probs(W):
+            probs = [get_prob(w) for w in W.units]
+            prob = 10**np.log10(probs).sum()
+            return WORK_RESULT(W.row_id, probs, prob)
+
         num_data = X.shape[0]
         num_nodes = self.dag.number_of_nodes()
-        all_probs = []
 
+        all_units = []
         for row_id in range(num_data):
-            probs = []
+            units = []
             for node_id in range(num_nodes):
                 if self.__has_parents__(node_id) is False:
-                    d = X[row_id, node_id]
+                    d = [X[row_id, node_id]]
                     m = self.params.means[node_id]
                     s = math.sqrt(self.params.cov[node_id, node_id])
-                    p = next(dnorm([d], m, s))
-                    probs.append(p)
+                    unit = WORK_UNIT(row_id, node_id, d, m, s, None)
+                    units.append(unit)
                 else:
                     d = X[row_id, :].reshape(1, -1)
                     m = self.params.means
                     s = self.params.cov
                     dep = sorted(self.dag.parents(node_id))
-                    p = next(dcmvnorm(d, m, s, node_id, dep))
-                    probs.append(p)
+                    unit = WORK_UNIT(row_id, node_id, d, m, s, dep)
+                    units.append(unit)
+            work_units = WORK_UNITS(row_id, units)
+            all_units.append(work_units)
 
-            all_probs.append(10**np.log10(probs).sum())
-        return np.array(all_probs)
+        results = Parallel(n_jobs=n_jobs,
+                           backend='threading',
+                           batch_size=batch_size)(delayed(get_probs)(W) for W in all_units)
+        results = sorted(results, key=lambda r: r.row_id)
+        results = list(map(lambda r: r.prob, results))
+
+        return np.array(results)
 
     def predict_log_proba(self, X):
         num_data = X.shape[0]

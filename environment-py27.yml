@@ -8,6 +8,7 @@ dependencies:
   - pyflakes
   - numpy
   - scipy
+  - joblib
   - networkx
   - pandas
   - matplotlib
