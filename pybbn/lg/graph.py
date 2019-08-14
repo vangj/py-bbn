@@ -1,14 +1,14 @@
 import math
+from collections import namedtuple
 
 import networkx as nx
 import numpy as np
-from scipy.stats import multivariate_normal
+from joblib import Parallel, delayed
 from networkx.algorithms.dag import topological_sort, is_directed_acyclic_graph
+from scipy.stats import multivariate_normal
 
 from pybbn.lg.gaussian import dnorm, dcmvnorm
 from pybbn.lg.inference import MvnInference
-from collections import namedtuple
-from joblib import Parallel, delayed
 
 WORK_UNIT = namedtuple('WORK_UNIT', 'row_id node_id m s dep')
 WORK_UNITS = namedtuple('WORK_UNITS', 'row_id units')
