@@ -2,6 +2,7 @@ import math
 
 import networkx as nx
 import numpy as np
+from scipy.stats import multivariate_normal
 from networkx.algorithms.dag import topological_sort, is_directed_acyclic_graph
 
 from pybbn.lg.gaussian import dnorm, dcmvnorm
@@ -297,14 +298,23 @@ class Bbn(object):
         iv = list(map(lambda tup: tup[0], evidences))
         return v, iv
 
-    def do_inference(self):
+    def do_inference(self, N=None):
         """
         Conducts inference.
+        :param N: Number of samples. If an integer is provided, the sampled means and covariances will be returned.
         :return: (means, covariances)
         """
         v, iv = self.__get_evidences__()
         self.mvn.update_mean_cov(v, iv)
-        return self.mvn.get_params()
+
+        M, S = self.mvn.get_params()
+
+        if N is not None:
+            D = multivariate_normal.rvs(M, S, N)
+            M = D.mean(axis=0)
+            S = np.cov(D.T)
+
+        return M, S
 
     def get_memmap(self, X):
         import os

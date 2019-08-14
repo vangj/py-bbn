@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from nose import with_setup
 from nose.tools import assert_almost_equal
+from numpy.random import normal
 
 from pybbn.lg.graph import Dag, Parameters, Bbn
 
@@ -259,6 +260,59 @@ def test_local_inference():
     assert_almost_equal(s[1], 20.0, delta=0.0)
     print(s)
     bbn.clear_evidences()
+
+
+@with_setup(setup, teardown)
+def test_sampled_mean_cov():
+    """
+    Tests getting sampled means and covariances.
+    :return: None.
+    """
+    N = 10000
+
+    x0 = normal(2.0, 1, N)
+    x1 = normal(5.0 + 2.0 * x0, 1, N)
+    x2 = normal(2.0, 1.0, N)
+    x3 = normal(1.0 + 0.3 * x1 + 0.5 * x2, 1, N)
+    x4 = normal(8.0 + 0.9 * x3, 1, N)
+
+    X = np.hstack([x0.reshape(-1, 1), x1.reshape(-1, 1), x2.reshape(-1, 1), x3.reshape(-1, 1), x4.reshape(-1, 1)])
+    M_e = X.mean(axis=0)
+    S_e = np.cov(X.T)
+    print(M_e)
+    print('>')
+    print(S_e)
+
+    params = Parameters(M_e, S_e)
+
+    dag = Dag()
+    dag.add_node(0)
+    dag.add_node(1)
+    dag.add_node(2)
+    dag.add_node(3)
+    dag.add_node(4)
+    dag.add_edge(0, 1)
+    dag.add_edge(1, 3)
+    dag.add_edge(2, 3)
+    dag.add_edge(3, 4)
+    bbn = Bbn(dag, params)
+
+    M_o, S_o = bbn.do_inference(N=10000)
+    print('>')
+    print(M_o)
+    print('>')
+    print(S_o)
+
+    assert M_e.shape[0] == M_o.shape[0]
+    for e, o in zip(M_e, M_o):
+        assert_almost_equal(e, o, delta=0.1)
+
+    assert S_e.shape[0] == S_o.shape[0]
+    assert S_e.shape[1] == S_o.shape[1]
+
+    for r in range(S_e.shape[0]):
+        for c in range(S_e.shape[1]):
+            assert_almost_equal(S_e[r, c], S_o[r, c], delta=0.1)
 
 
 @with_setup(setup, teardown)

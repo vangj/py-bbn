@@ -11,3 +11,4 @@ build/
 .ipynb_checkpoints/
 .pypirc
 .pypircc
+joblib_memmap/

@@ -7,3 +7,4 @@ docs/build/
 .coverage
 .noseids
 .ipynb_checkpoints/
+joblib_memmap/
