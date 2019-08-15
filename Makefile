@@ -27,6 +27,7 @@ clean:
 	rm -fr pybbn.egg-info/
 	rm -fr pybbn/pybbn.egg-info/
 	rm -fr jupyter/.ipynb_checkpoints/
+	rm -fr joblib_memmap/
 	rm -fr docs/build/
 	rm -f .coverage
 	rm -f .noseids

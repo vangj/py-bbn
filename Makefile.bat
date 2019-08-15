@@ -33,6 +33,7 @@ rmdir /S /Q pybbn.egg-info
 rmdir /S /Q pybbn/pybbn.egg-info
 rmdir /S /Q jupyter/.ipynb_checkpoints
 rmdir /S /Q docs/build
+rmdir /S /Q joblib_memmap
 del .coverage
 del .noseids
 goto :eof
