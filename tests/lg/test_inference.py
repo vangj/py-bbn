@@ -84,16 +84,12 @@ def test_two_variables():
                     [1.98924418, 1.00995594]])
 
     assert (M_e.shape[0] == M_u.shape[0])
-    for m, m_u in zip(M_e, M_u):
-        assert_almost_equal(m, m_u, delta=0.1)
+    assert np.allclose(M_e, M_u)
 
     assert (S_e.shape[0] == S_u.shape[0])
     assert (S_e.shape[1] == S_u.shape[1])
 
-    rows, cols = S_e.shape
-    for r in range(rows):
-        for c in range(cols):
-            assert_almost_equal(S_e[r, c], S_u[r, c], delta=0.5)
+    assert np.allclose(S_e, S_u)
 
     mvn.update_mean_cov(np.array([1.0]), [1])
 
@@ -103,16 +99,12 @@ def test_two_variables():
                     [1.98924418, 0.01]])
 
     assert (M_e.shape[0] == M_u.shape[0])
-    for m, m_u in zip(M_e, M_u):
-        assert_almost_equal(m, m_u, delta=0.1)
+    assert np.allclose(M_e, M_u)
 
     assert (S_e.shape[0] == S_u.shape[0])
     assert (S_e.shape[1] == S_u.shape[1])
 
-    rows, cols = S_e.shape
-    for r in range(rows):
-        for c in range(cols):
-            assert_almost_equal(S_e[r, c], S_u[r, c], delta=0.5)
+    assert np.allclose(S_e, S_u)
 
     mvn.update_mean_cov(None, None)
 
@@ -122,16 +114,12 @@ def test_two_variables():
                     [1.98924418, 5.00419378]])
 
     assert (M_e.shape[0] == M_u.shape[0])
-    for m, m_u in zip(M_e, M_u):
-        assert_almost_equal(m, m_u, delta=0.1)
+    assert np.allclose(M_e, M_u)
 
     assert (S_e.shape[0] == S_u.shape[0])
     assert (S_e.shape[1] == S_u.shape[1])
 
-    rows, cols = S_e.shape
-    for r in range(rows):
-        for c in range(cols):
-            assert_almost_equal(S_e[r, c], S_u[r, c], delta=0.5)
+    assert np.allclose(S_e, S_u)
 
 
 @with_setup(setup, teardown)
