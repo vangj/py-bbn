@@ -1,7 +1,9 @@
 import json
+import numpy as np
 
 from nose import with_setup
 
+from pybbn.generator.bbngenerator import generate_singly_bbn, convert_for_exact_inference
 from pybbn.graph.dag import Dag, BbnUtil, Bbn
 from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.node import Node
@@ -12,7 +14,7 @@ def setup():
     Setup.
     :return: None.
     """
-    pass
+    np.random.seed(37)
 
 
 def teardown():
@@ -264,6 +266,23 @@ def test_to_dict():
 
     assert len(j) == len(e)
     assert j == e
+
+
+@with_setup(setup, teardown)
+def test_generated_serde():
+    """
+    Tests serde of generated BBN.
+    :return: Nonde.
+    """
+    g, p = generate_singly_bbn(100, max_iter=10)
+    e_bbn = convert_for_exact_inference(g, p)
+    d = Bbn.to_dict(e_bbn)
+    s = json.dumps(d, sort_keys=True, indent=2)
+    d = json.loads(s)
+    o_bbn = Bbn.from_dict(d)
+
+    assert len(e_bbn.get_nodes()) == len(o_bbn.get_nodes())
+    assert len(e_bbn.get_edges()) == len(o_bbn.get_edges())
 
 
 @with_setup(setup, teardown)

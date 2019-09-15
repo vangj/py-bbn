@@ -150,8 +150,12 @@ class Bbn(Dag):
             bbn.add_node(n)
 
         for e in edges:
-            pa = nodes[e['pa']]
-            ch = nodes[e['ch']]
+            pa_id = e['pa']
+            ch_id = e['ch']
+
+            pa = nodes[pa_id] if pa_id in nodes else nodes[str(pa_id)]
+            ch = nodes[ch_id] if ch_id in nodes else nodes[str(ch_id)]
+
             bbn.add_edge(Edge(pa, ch, EdgeType.DIRECTED))
 
         return bbn
