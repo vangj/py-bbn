@@ -12,3 +12,4 @@ build/
 .pypirc
 .pypircc
 joblib_memmap/
+.pytest_cache/
