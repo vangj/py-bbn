@@ -56,7 +56,7 @@ class BbnNode(Node):
         :return: Dictionary.
         """
         return {
-            'probs': self.probs,
+            'probs': [p for p in self.probs],
             'variable': self.variable.to_dict()
         }
 
