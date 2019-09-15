@@ -1,9 +1,13 @@
+from functools import lru_cache
+
+
 class IdUtil(object):
     """
     ID util.
     """
 
     @staticmethod
+    @lru_cache(maxsize=32768)
     def hash_string(s):
         """
         Hashes the string.
