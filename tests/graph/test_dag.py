@@ -1,6 +1,6 @@
 import json
-import numpy as np
 
+import numpy as np
 from nose import with_setup
 
 from pybbn.generator.bbngenerator import generate_singly_bbn, convert_for_exact_inference
