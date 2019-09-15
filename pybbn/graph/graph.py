@@ -20,16 +20,8 @@ class Graph(object):
         :param id: Node id.
         :return: Set of neighbors of the specified node.
         """
-        set1 = set()
-        set2 = set()
-
-        if id in self.map:
-            for x in self.map[id]:
-                set1.add(x)
-
-        for x in self.map:
-            if id in self.map[x]:
-                set2.add(x)
+        set1 = {x for x in self.map[id]} if id in self.map else set()
+        set2 = {x for x in self.map if id in self.map[x]}
 
         return set1 | set2
 
