@@ -44,7 +44,7 @@ def test_one_variable():
     for m, m_u in zip(M_e, M_u):
         assert_almost_equal(m, m_u, delta=0.1)
 
-    assert_almost_equal(S_e, S_u, 0.1)
+    assert_almost_equal(S_e, S_u, delta=0.1)
 
     mvn.update_mean_cov(np.array([0.5]), [0])
     M_u, S_u = mvn.get_params()
@@ -54,7 +54,7 @@ def test_one_variable():
     for m, m_u in zip(M_e, M_u):
         assert_almost_equal(m, m_u, delta=0.1)
 
-    assert_almost_equal(S_e, S_u, 0.1)
+    assert_almost_equal(S_e, S_u, delta=0.1)
 
     samples = mvn.get_samples()
     assert (samples.shape[0] == N)
