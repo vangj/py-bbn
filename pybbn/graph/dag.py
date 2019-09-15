@@ -116,6 +116,46 @@ class Bbn(Dag):
             return True
         return Dag.__shouldadd__(edge)
 
+    @staticmethod
+    def to_dict(bbn):
+        """
+        Gets a JSON serializable dictionary representation.
+        :param bbn: BBN.
+        :return: Dictionary.
+        """
+        return {
+            'nodes': {n.id: n.to_dict() for n in bbn.get_nodes()},
+            'edges': [{'pa': edge.i.id, 'ch': edge.j.id} for _, edge in bbn.edges.items()]
+        }
+
+    @staticmethod
+    def from_dict(d):
+        """
+        Creates a BBN from a dictionary (deserialized JSON).
+        :param d: Dictionary.
+        :return: BBN.
+        """
+        def get_variable(d):
+            return Variable(d['id'], d['name'], d['values'])
+
+        def get_bbn_node(d):
+            return BbnNode(get_variable(d['variable']), d['probs'])
+
+        nodes = {k: get_bbn_node(n) for k, n in d['nodes'].items()}
+        edges = d['edges']
+
+        bbn = Bbn()
+
+        for k, n in nodes.items():
+            bbn.add_node(n)
+
+        for e in edges:
+            pa = nodes[e['pa']]
+            ch = nodes[e['ch']]
+            bbn.add_edge(Edge(pa, ch, EdgeType.DIRECTED))
+
+        return bbn
+
 
 class PathDetector(object):
     """

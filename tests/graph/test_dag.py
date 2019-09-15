@@ -1,6 +1,8 @@
+import json
+
 from nose import with_setup
 
-from pybbn.graph.dag import Dag
+from pybbn.graph.dag import Dag, BbnUtil, Bbn
 from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.node import Node
 
@@ -72,3 +74,206 @@ def test_dag_creation():
 
     assert 1 in g.get_children(0)
     assert 2 in g.get_children(1)
+
+
+@with_setup(setup, teardown)
+def test_to_dict():
+    """
+    Tests creating serializable dictionary representation.
+    :return: None.
+    """
+    bbn = BbnUtil.get_huang_graph()
+    d = Bbn.to_dict(bbn)
+    j = json.dumps(d, sort_keys=True, indent=2)
+    e = """{
+  "edges": [
+    {
+      "ch": 1,
+      "pa": 0
+    },
+    {
+      "ch": 2,
+      "pa": 0
+    },
+    {
+      "ch": 3,
+      "pa": 1
+    },
+    {
+      "ch": 4,
+      "pa": 2
+    },
+    {
+      "ch": 5,
+      "pa": 3
+    },
+    {
+      "ch": 5,
+      "pa": 4
+    },
+    {
+      "ch": 6,
+      "pa": 2
+    },
+    {
+      "ch": 7,
+      "pa": 4
+    },
+    {
+      "ch": 7,
+      "pa": 6
+    }
+  ],
+  "nodes": {
+    "0": {
+      "probs": [
+        0.5,
+        0.5
+      ],
+      "variable": {
+        "id": 0,
+        "name": "a",
+        "values": [
+          "on",
+          "off"
+        ]
+      }
+    },
+    "1": {
+      "probs": [
+        0.5,
+        0.5,
+        0.4,
+        0.6
+      ],
+      "variable": {
+        "id": 1,
+        "name": "b",
+        "values": [
+          "on",
+          "off"
+        ]
+      }
+    },
+    "2": {
+      "probs": [
+        0.7,
+        0.3,
+        0.2,
+        0.8
+      ],
+      "variable": {
+        "id": 2,
+        "name": "c",
+        "values": [
+          "on",
+          "off"
+        ]
+      }
+    },
+    "3": {
+      "probs": [
+        0.9,
+        0.1,
+        0.5,
+        0.5
+      ],
+      "variable": {
+        "id": 3,
+        "name": "d",
+        "values": [
+          "on",
+          "off"
+        ]
+      }
+    },
+    "4": {
+      "probs": [
+        0.3,
+        0.7,
+        0.6,
+        0.4
+      ],
+      "variable": {
+        "id": 4,
+        "name": "e",
+        "values": [
+          "on",
+          "off"
+        ]
+      }
+    },
+    "5": {
+      "probs": [
+        0.01,
+        0.99,
+        0.01,
+        0.99,
+        0.01,
+        0.99,
+        0.99,
+        0.01
+      ],
+      "variable": {
+        "id": 5,
+        "name": "f",
+        "values": [
+          "on",
+          "off"
+        ]
+      }
+    },
+    "6": {
+      "probs": [
+        0.8,
+        0.2,
+        0.1,
+        0.9
+      ],
+      "variable": {
+        "id": 6,
+        "name": "g",
+        "values": [
+          "on",
+          "off"
+        ]
+      }
+    },
+    "7": {
+      "probs": [
+        0.05,
+        0.95,
+        0.95,
+        0.05,
+        0.95,
+        0.05,
+        0.95,
+        0.05
+      ],
+      "variable": {
+        "id": 7,
+        "name": "h",
+        "values": [
+          "on",
+          "off"
+        ]
+      }
+    }
+  }
+}"""
+
+    assert len(j) == len(e)
+    assert j == e
+
+
+@with_setup(setup, teardown)
+def test_from_dict():
+    """
+    Tests creating BBN from dictionary (deserialized from JSON).
+    :return: None.
+    """
+    e_bbn = BbnUtil.get_huang_graph()
+    o_bbn = Bbn.from_dict(Bbn.to_dict(e_bbn))
+
+    assert len(e_bbn.get_nodes()) == len(o_bbn.get_nodes())
+    assert len(e_bbn.get_edges()) == len(o_bbn.get_edges())

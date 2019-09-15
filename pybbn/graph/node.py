@@ -50,6 +50,16 @@ class BbnNode(Node):
     def __str__(self):
         return '{}|{}|{}'.format(self.id, self.variable.name, str.join(',', self.variable.values))
 
+    def to_dict(self):
+        """
+        Gets a JSON serializable dictionary representation.
+        :return: Dictionary.
+        """
+        return {
+            'probs': self.probs,
+            'variable': self.variable.to_dict()
+        }
+
 
 class Clique(Node):
     """
