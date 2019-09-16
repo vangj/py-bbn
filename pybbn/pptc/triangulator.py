@@ -51,9 +51,9 @@ class Triangulator(object):
     @staticmethod
     def generate_cliques(m):
         """
-        Generates a dictionary of node cliques
+        Generates a list of node cliques.
         :param m: Graph.
-        :return: Dictionary of NodeCliques. Keys are ids of nodes and values are NodeCliques.
+        :return: List of NodeCliques.
         """
         def get_neighbors(node, m):
             return [m.get_node(neighbor_id) for neighbor_id in m.get_neighbors(node.id)]
@@ -64,8 +64,8 @@ class Triangulator(object):
         def get_edges_to_add(node, m):
             return Triangulator.get_edges_to_add(node, m)
 
-        return {node.id: NodeClique(node, get_neighbors(node, m), get_weight(node, m), get_edges_to_add(node, m))
-                for node in m.get_nodes()}
+        return (NodeClique(node, get_neighbors(node, m), get_weight(node, m), get_edges_to_add(node, m))
+                for node in m.get_nodes())
 
     @staticmethod
     def select_node(m):
@@ -74,9 +74,7 @@ class Triangulator(object):
         :param m: Graph.
         :return: Clique.
         """
-        cliques = Triangulator.generate_cliques(m).values()
-        cliques = sorted(cliques, key=lambda x: (len(x.edges), x.weight, x.node.id))
-        return cliques[0]
+        return sorted(Triangulator.generate_cliques(m), key=lambda x: (len(x.edges), x.weight, x.node.id))[0]
 
     @staticmethod
     def get_weight(n, m):
