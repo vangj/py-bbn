@@ -161,12 +161,7 @@ class SepSet(Clique):
         rhs = [x.id for x in right.nodes]
         intersection = [x for x in lhs if x in rhs]
 
-        nodes = []
-        nodes.extend(lhs)
-        nodes.extend(intersection)
-        nodes.extend(rhs)
-
-        sid = str.join('-', [str(x) for x in nodes])
+        sid = '-'.join(str(x) for arr in [lhs, intersection, rhs] for x in arr)
         Node.__init__(self, sid)
         self.nodes = [x for x in left.nodes if x.id in intersection]
         self.marked = False
