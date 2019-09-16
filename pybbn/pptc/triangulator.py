@@ -1,3 +1,5 @@
+from itertools import combinations
+
 from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.graph import Ug
 from pybbn.graph.node import Clique
@@ -85,16 +87,10 @@ class Triangulator(object):
         :param m: Graph.
         :return: Array of edges.
         """
-        edges = []
         neighbors = [m.get_node(i) for i in m.get_neighbors(n.id)]
-        size = len(neighbors)
-        for i in range(size):
-            ne1 = neighbors[i]
-            for j in range(i + 1, size):
-                ne2 = neighbors[j]
-                if not m.edge_exists(ne1.id, ne2.id):
-                    edges.append(Edge(ne1, ne2, EdgeType.UNDIRECTED))
-        return edges
+        return [Edge(neighbors[i], neighbors[j], EdgeType.UNDIRECTED)
+                for i, j in combinations(range(len(neighbors)), 2)
+                if not m.edge_exists(neighbors[i].id, neighbors[j].id)]
 
     @staticmethod
     def is_subset(cliques, clique):
