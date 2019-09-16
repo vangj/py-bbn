@@ -7,7 +7,7 @@ from pybbn.graph.dag import Bbn
 
 np.random.seed(37)
 
-g, p = generate_singly_bbn(600, max_iter=10)
+g, p = generate_singly_bbn(900, max_iter=10)
 s_bbn = convert_for_exact_inference(g, p)
 
 with open('singly-bbn.json', 'w') as f:
