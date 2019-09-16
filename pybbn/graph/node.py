@@ -73,6 +73,7 @@ class Clique(Node):
         Node.__init__(self, sid)
         self.nodes = nodes
         self.marked = False
+        self.node_ids = set([node.id for node in self.nodes])
 
     def get_sid(self):
         sids = '-'.join(sorted([n.variable.name for n in self.nodes]))
@@ -100,15 +101,15 @@ class Clique(Node):
         """
         :return: An array of numeric ids of the nodes in this clique.
         """
-        return [node.id for node in self.nodes]
+        return self.node_ids
 
     def is_superset(self, that):
         """
         :param that: Clique.
         :return: A boolean indicating if this clique is a superset of the clique passed in.
         """
-        s1 = set(self.get_node_ids())
-        s2 = set(that.get_node_ids())
+        s1 = self.get_node_ids()
+        s2 = that.get_node_ids()
         return s1.issuperset(s2)
 
     def get_weight(self):

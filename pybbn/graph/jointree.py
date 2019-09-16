@@ -79,7 +79,7 @@ class JoinTree(Ug):
         ids.append(id)
 
         set1 = set(ids)
-        return [clique for clique in self.get_cliques() if set(clique.get_node_ids()).issuperset(set1)]
+        return [clique for clique in self.get_cliques() if clique.get_node_ids().issuperset(set1)]
 
     def add_potential(self, clique, potential):
         """
