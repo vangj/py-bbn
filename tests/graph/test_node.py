@@ -65,7 +65,7 @@ def test_clique_creation():
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
     clique = Clique([a, b, c])
 
-    assert clique.id == 45718137
+    assert clique.id == '0-1-2'
     assert len(clique.nodes) == 3
     assert clique.get_weight() == 8
     assert clique.contains(0)

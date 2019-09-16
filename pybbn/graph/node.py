@@ -1,6 +1,3 @@
-from pybbn.graph.util import IdUtil
-
-
 class Node(object):
     """
     A node.
@@ -73,14 +70,12 @@ class Clique(Node):
         nids = [n.id for n in nodes]
         nids.sort()
         sid = str.join('-', [str(x) for x in nids])
-        id = IdUtil.hash_string(sid)
-        Node.__init__(self, id)
+        Node.__init__(self, sid)
         self.nodes = nodes
         self.marked = False
 
     def get_sid(self):
         sids = '-'.join(sorted([n.variable.name for n in self.nodes]))
-        sids = IdUtil.hash_string(sids)
         return sids
 
     def is_marked(self):
@@ -172,8 +167,7 @@ class SepSet(Clique):
         nodes.extend(rhs)
 
         sid = str.join('-', [str(x) for x in nodes])
-        id = IdUtil.hash_string(sid)
-        Node.__init__(self, id)
+        Node.__init__(self, sid)
         self.nodes = [x for x in left.nodes if x.id in intersection]
         self.marked = False
 
