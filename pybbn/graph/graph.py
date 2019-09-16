@@ -23,10 +23,11 @@ class Graph(object):
         :param id: Node id.
         :return: Set of neighbors of the specified node.
         """
-        set1 = {x for x in self.map[id]} if id in self.map else set()
-        set2 = {x for x in self.map if id in self.map[x]}
+        # set1 = {x for x in self.map[id]} if id in self.map else set()
+        # set2 = {x for x in self.map if id in self.map[x]}
 
-        return set1 | set2
+        # x = set1 | set2
+        return self.neighbors[id]
 
     def get_node(self, id):
         """

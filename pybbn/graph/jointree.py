@@ -132,9 +132,13 @@ class JoinTree(Ug):
 
             self.map[lhs.id].add(sep_set.id)
             self.map[rhs.id].add(sep_set.id)
+            self.neighbors[lhs.id].add(sep_set.id)
+            self.neighbors[rhs.id].add(sep_set.id)
 
             self.map[sep_set.id].add(lhs.id)
             self.map[sep_set.id].add(rhs.id)
+            self.neighbors[sep_set.id].add(lhs.id)
+            self.neighbors[sep_set.id].add(rhs.id)
 
             self.edges[edge.key] = edge
             # lhs_edge = edge.get_lhs_edge()
