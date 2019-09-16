@@ -2,7 +2,7 @@ from nose import with_setup
 
 from pybbn.graph.dag import Dag
 from pybbn.graph.edge import Edge, EdgeType
-from pybbn.graph.graph import Graph
+from pybbn.graph.graph import Graph, Ug
 from pybbn.graph.node import Node
 
 
@@ -70,6 +70,43 @@ def test_graph_neighbor_tracking():
     e1 = Edge(n1, n2, EdgeType.UNDIRECTED)
 
     g = Graph()
+    g.add_node(n0)
+    g.add_node(n1)
+    g.add_edge(e0)
+    g.add_edge(e1)
+
+    assert 3 == len(g.neighbors)
+    assert 1 == len(g.neighbors[0])
+    assert 2 == len(g.neighbors[1])
+    assert 1 == len(g.neighbors[2])
+    assert 1 in g.neighbors[0]
+    assert 0 in g.neighbors[1]
+    assert 2 in g.neighbors[1]
+    assert 1 in g.neighbors[2]
+
+    g.remove_node(0)
+
+    assert 0 not in g.neighbors
+    assert 2 == len(g.neighbors)
+    assert 1 == len(g.neighbors[1])
+    assert 1 == len(g.neighbors[2])
+    assert 2 in g.neighbors[1]
+    assert 1 in g.neighbors[2]
+
+
+@with_setup(setup, teardown)
+def test_ug_neighbor_tracking():
+    """
+    Tests tracking neighbors for undirected graph.
+    :return: None.
+    """
+    n0 = Node(0)
+    n1 = Node(1)
+    n2 = Node(2)
+    e0 = Edge(n0, n1, EdgeType.UNDIRECTED)
+    e1 = Edge(n1, n2, EdgeType.UNDIRECTED)
+
+    g = Ug()
     g.add_node(n0)
     g.add_node(n1)
     g.add_edge(e0)
