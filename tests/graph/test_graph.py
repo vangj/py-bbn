@@ -54,3 +54,40 @@ def test_graph_creation():
     assert g.edge_exists(0, 1) == 1
     assert g.edge_exists(1, 2) == 1
     assert g.edge_exists(0, 2) == 0
+
+
+@with_setup(setup, teardown)
+def test_neighbor_tracking():
+    """
+    Tests tracking neighbors.
+    :return: None.
+    """
+    n0 = Node(0)
+    n1 = Node(1)
+    n2 = Node(2)
+    e0 = Edge(n0, n1, EdgeType.UNDIRECTED)
+    e1 = Edge(n1, n2, EdgeType.UNDIRECTED)
+
+    g = Graph()
+    g.add_node(n0)
+    g.add_node(n1)
+    g.add_edge(e0)
+    g.add_edge(e1)
+
+    assert 3 == len(g.neighbors)
+    assert 1 == len(g.neighbors[0])
+    assert 2 == len(g.neighbors[1])
+    assert 1 == len(g.neighbors[2])
+    assert 1 in g.neighbors[0]
+    assert 0 in g.neighbors[1]
+    assert 2 in g.neighbors[1]
+    assert 1 in g.neighbors[2]
+
+    g.remove_node(0)
+
+    assert 0 not in g.neighbors
+    assert 2 == len(g.neighbors)
+    assert 1 == len(g.neighbors[1])
+    assert 1 == len(g.neighbors[2])
+    assert 2 in g.neighbors[1]
+    assert 1 in g.neighbors[2]

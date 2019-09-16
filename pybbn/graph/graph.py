@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from pybbn.graph.edge import EdgeType
 
 
@@ -13,6 +15,7 @@ class Graph(object):
         self.nodes = dict()
         self.edges = dict()
         self.map = dict()
+        self.neighbors = defaultdict(set)
 
     def get_neighbors(self, id):
         """
@@ -76,6 +79,10 @@ class Graph(object):
             self.map[edge.i.id].add(edge.j.id)
             if EdgeType.UNDIRECTED == edge.type:
                 self.map[edge.j.id].add(edge.i.id)
+
+            self.neighbors[edge.i.id].add(edge.j.id)
+            self.neighbors[edge.j.id].add(edge.i.id)
+
             self.__edge_added__(edge)
 
         return self
@@ -129,7 +136,13 @@ class Graph(object):
         """
         self.nodes.pop(id, None)
         self.map.pop(id, None)
+        self.neighbors.pop(id, None)
+
         for k, v in self.map.items():
+            if id in v:
+                v.remove(id)
+
+        for k, v in self.neighbors.items():
             if id in v:
                 v.remove(id)
 
