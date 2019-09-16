@@ -49,18 +49,32 @@ class Triangulator(object):
         return ug
 
     @staticmethod
+    def generate_cliques(m):
+        """
+        Generates a dictionary of node cliques
+        :param m: Graph.
+        :return: Dictionary of NodeCliques. Keys are ids of nodes and values are NodeCliques.
+        """
+        def get_neighbors(node, m):
+            return [m.get_node(neighbor_id) for neighbor_id in m.get_neighbors(node.id)]
+
+        def get_weight(node, m):
+            return Triangulator.get_weight(node, m)
+
+        def get_edges_to_add(node, m):
+            return Triangulator.get_edges_to_add(node, m)
+
+        return {node.id: NodeClique(node, get_neighbors(node, m), get_weight(node, m), get_edges_to_add(node, m))
+                for node in m.get_nodes()}
+
+    @staticmethod
     def select_node(m):
         """
         Selects a clique from the specified graph. Cliques are sorted by number of edges, weight, and id (asc).
         :param m: Graph.
         :return: Clique.
         """
-        cliques = []
-        for node in m.get_nodes():
-            weight = Triangulator.get_weight(node, m)
-            edges = Triangulator.get_edges_to_add(node, m)
-            neighbors = [m.get_node(neighbor_id) for neighbor_id in m.get_neighbors(node.id)]
-            cliques.append(NodeClique(node, neighbors, weight, edges))
+        cliques = Triangulator.generate_cliques(m).values()
         cliques = sorted(cliques, key=lambda x: (len(x.edges), x.weight, x.node.id))
         return cliques[0]
 
@@ -129,6 +143,8 @@ class NodeClique:
         Gets all the BBN nodes in this node clique.
         :return: Array of BBN nodes.
         """
-        nodes = [node for node in self.neighbors]
-        nodes.append(self.node)
-        return nodes
+        neighbors = [node for node in self.neighbors] + [self.node]
+        return neighbors
+
+    def __str__(self):
+        return f'{self.node.id}|weight={self.weight}|edges={len(self.edges)}|neighbors={len(self.neighbors)}'
