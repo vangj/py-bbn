@@ -42,7 +42,7 @@ class Graph(object):
         Gets all the nodes.
         :return: List of nodes.
         """
-        return [node for node in self.nodes.values()]
+        return self.nodes.values()
 
     def get_edges(self):
         """
