@@ -25,6 +25,10 @@ def teardown():
 
 @with_setup(setup, teardown)
 def test_node_copy():
+    """
+    Tests node copy.
+    :return: None.
+    """
     lhs = Node(1)
     rhs = copy.copy(lhs)
 
@@ -36,6 +40,10 @@ def test_node_copy():
 
 @with_setup(setup, teardown)
 def test_node_deepcopy():
+    """
+    Tests node deep copy.
+    :return: None.
+    """
     lhs = Node(1)
     rhs = copy.deepcopy(lhs)
 
@@ -47,6 +55,10 @@ def test_node_deepcopy():
 
 @with_setup(setup, teardown)
 def test_bbn_node_copy():
+    """
+    Tests BBN node copy.
+    :return: None.
+    """
     lhs = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
     rhs = copy.copy(lhs)
 
@@ -65,6 +77,10 @@ def test_bbn_node_copy():
 
 @with_setup(setup, teardown)
 def test_bbn_node_deepcopy():
+    """
+    Tests BBN deep copy.
+    :return: None.
+    """
     lhs = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
     rhs = copy.deepcopy(lhs)
 
