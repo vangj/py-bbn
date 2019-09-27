@@ -41,11 +41,7 @@ class JoinTree(Ug):
         Gets all the BBN nodes in this junction tree.
         :return: List of BBN nodes.
         """
-        nodes = dict()
-        for clique in self.get_cliques():
-            for node in clique.nodes:
-                nodes[node.id] = node
-        return list(nodes.values())
+        return list({node.id: node for clique in self.get_cliques() for node in clique.nodes}.values())
 
     def get_bbn_node(self, id):
         """
@@ -53,9 +49,9 @@ class JoinTree(Ug):
         :param id: Node id.
         :return: BBN node or None if no such node exists.
         """
-        for node in self.get_bbn_nodes():
-            if id == node.id:
-                return node
+        bbn_nodes = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
+        if id in bbn_nodes:
+            return bbn_nodes[id]
         return None
 
     def get_bbn_node_by_name(self, name):
@@ -64,9 +60,9 @@ class JoinTree(Ug):
         :param name: Node name.
         :return: BBN node or None if no such node exists.
         """
-        for node in self.get_bbn_nodes():
-            if name == node.variable.name:
-                return node
+        bbn_nodes = {node.variable.name: node for clique in self.get_cliques() for node in clique.nodes}
+        if name in bbn_nodes:
+            return bbn_nodes[name]
         return None
 
     def find_cliques_with_node_and_parents(self, id):
