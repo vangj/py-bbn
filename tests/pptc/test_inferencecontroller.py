@@ -435,7 +435,6 @@ def test_forest_inference():
         assert_almost_equals(p, o[k], 0.001)
 
 
-
 def __validate_posterior__(expected, join_tree, debug=False):
     """
     Validates the posterior probabilities of a join tree.
