@@ -29,6 +29,15 @@ class Potential(object):
         """
         return [e for e in self.entries if e.matches(entry)]
 
+    @staticmethod
+    def to_dict(potentials):
+        """
+        Converts potential to dictionary for easy validation.
+        :param potentials: Potential.
+        :return: Dictionary representation. Keys are entries and values are probabilities.
+        """
+        return {tup[0]: tup[1] for tup in [pe.get_kv() for p in potentials for pe in p.entries]}
+
     def __str__(self):
         return str.join('\n', [entry.__str__() for entry in self.entries])
 
@@ -84,6 +93,13 @@ class PotentialEntry(object):
         :return: List of tuples. First tuple is id of variable and second tuple is value of variable.
         """
         return sorted([(k, v) for k, v in self.entries.items()], key=lambda tup: tup[0])
+
+    def get_kv(self):
+        """
+        Gets key-value pair that may be used for storage in dictionary.
+        :return: Key-value pair.
+        """
+        return '|'.join(list(map(lambda tup: '{}={}'.format(tup[0], tup[1]), self.get_entry_keys()))), self.value
 
     def __str__(self):
         arr = ['{}={}'.format(k, v) for k, v in self.entries.items()]

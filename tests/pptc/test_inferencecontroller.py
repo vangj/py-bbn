@@ -5,6 +5,7 @@ from pybbn.graph.dag import BbnUtil, Bbn
 from pybbn.graph.edge import EdgeType, Edge
 from pybbn.graph.jointree import EvidenceBuilder
 from pybbn.graph.node import BbnNode
+from pybbn.graph.potential import Potential
 from pybbn.graph.variable import Variable
 from pybbn.pptc.inferencecontroller import InferenceController
 
@@ -387,21 +388,6 @@ def test_forest_inference():
     Tests inference on a disconnected DAG; sub-DAGs are a -> b, c -> d and e -> f.
     :return: None.
     """
-
-    def to_dict(potentials):
-        """
-        Converts potential to dictionary for easy validation.
-        :param potentials: Potential.
-        :return: Dictionary representation. Keys are entries and values are probabilities.
-        """
-        def get_k(pe):
-            return '|'.join(list(map(lambda tup: '{}={}'.format(tup[0], tup[1]), pe.get_entry_keys())))
-
-        def get_v(pe):
-            return pe.value
-
-        return {get_k(pe): get_v(pe) for p in potentials for pe in p.entries}
-
     a = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
     b = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
     c = BbnNode(Variable(2, 'c', ['t', 'f']), [0.2, 0.8])
@@ -415,7 +401,7 @@ def test_forest_inference():
 
     jt = InferenceController.apply(bbn)
     pot = [jt.get_bbn_potential(n) for n in jt.get_bbn_nodes()]
-    o = to_dict(pot)
+    o = Potential.to_dict(pot)
     e = {
         '0=t': 0.2,
         '0=f': 0.8,
