@@ -1,3 +1,5 @@
+import copy
+
 from nose import with_setup
 
 from pybbn.graph.dag import Bbn
@@ -66,6 +68,41 @@ def test_copy():
     b = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
     bbn = Bbn().add_node(a).add_node(b) \
         .add_edge(Edge(a, b, EdgeType.DIRECTED))
-    o = InferenceController.apply(bbn)
+    lhs = InferenceController.apply(bbn)
+    rhs = copy.copy(lhs)
 
-    print(o)
+    assert len(lhs.get_nodes()) == len(rhs.get_nodes())
+    assert len(lhs.get_edges()) == len(rhs.get_edges())
+    assert len(lhs.neighbors) == len(rhs.neighbors)
+    assert len(lhs.evidences) == len(rhs.evidences)
+    assert len(lhs.potentials) == len(rhs.potentials)
+
+    list(lhs.get_nodes())[0].nodes[0].variable.values[0] = 'true'
+    lhs_v = list(lhs.get_nodes())[0].nodes[0].variable.values[0]
+    rhs_v = list(rhs.get_nodes())[0].nodes[0].variable.values[0]
+    assert lhs_v == rhs_v
+
+
+@with_setup(setup, teardown)
+def test_deepcopy():
+    """
+    Tests deep copy of join tree.
+    :return: None
+    """
+    a = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
+    b = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
+    bbn = Bbn().add_node(a).add_node(b) \
+        .add_edge(Edge(a, b, EdgeType.DIRECTED))
+    lhs = InferenceController.apply(bbn)
+    rhs = copy.deepcopy(lhs)
+
+    assert len(lhs.get_nodes()) == len(rhs.get_nodes())
+    assert len(lhs.get_edges()) == len(rhs.get_edges())
+    assert len(lhs.neighbors) == len(rhs.neighbors)
+    assert len(lhs.evidences) == len(rhs.evidences)
+    assert len(lhs.potentials) == len(rhs.potentials)
+
+    list(lhs.get_nodes())[0].nodes[0].variable.values[0] = 'true'
+    lhs_v = list(lhs.get_nodes())[0].nodes[0].variable.values[0]
+    rhs_v = list(rhs.get_nodes())[0].nodes[0].variable.values[0]
+    assert lhs_v != rhs_v
