@@ -1,3 +1,5 @@
+import copy
+
 from nose import with_setup
 
 from pybbn.graph.dag import Dag
@@ -166,3 +168,49 @@ def test_dag_neighbor_tracking():
     assert 1 == len(g.neighbors[2])
     assert 2 in g.neighbors[1]
     assert 1 in g.neighbors[2]
+
+
+@with_setup(setup, teardown)
+def test_copy():
+    """
+    Tests copy graph.
+    :return: None.
+    """
+    n0 = Node(0)
+    n1 = Node(1)
+    e = Edge(n0, n1, EdgeType.UNDIRECTED)
+    lhs = Graph().add_node(n0).add_node(n1).add_edge(e)
+    rhs = copy.copy(lhs)
+
+    assert len(lhs.get_nodes()) == len(rhs.get_nodes())
+    for i in map(lambda n: n.id, lhs.get_nodes()):
+        assert i in list(map(lambda n: n.id, rhs.get_nodes()))
+    assert len(lhs.get_edges()) == len(rhs.get_edges())
+    for e in map(lambda e: e.key, lhs.get_edges()):
+        assert e in list(map(lambda e: e.key, rhs.get_edges()))
+
+    lhs.get_node(0).id = 3
+    assert lhs.get_node(0).id == rhs.get_node(0).id
+
+
+@with_setup(setup, teardown)
+def test_deepcopy():
+    """
+    Tests deep copy graph.
+    :return: None.
+    """
+    n0 = Node(0)
+    n1 = Node(1)
+    e = Edge(n0, n1, EdgeType.UNDIRECTED)
+    lhs = Graph().add_node(n0).add_node(n1).add_edge(e)
+    rhs = copy.deepcopy(lhs)
+
+    assert len(lhs.get_nodes()) == len(rhs.get_nodes())
+    for i in map(lambda n: n.id, lhs.get_nodes()):
+        assert i in list(map(lambda n: n.id, rhs.get_nodes()))
+    assert len(lhs.get_edges()) == len(rhs.get_edges())
+    for e in map(lambda e: e.key, lhs.get_edges()):
+        assert e in list(map(lambda e: e.key, rhs.get_edges()))
+
+    lhs.get_node(0).id = 3
+    assert lhs.get_node(0).id != rhs.get_node(0).id

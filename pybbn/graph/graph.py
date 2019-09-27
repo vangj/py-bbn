@@ -1,4 +1,5 @@
 from collections import defaultdict
+from copy import deepcopy
 
 from pybbn.graph.edge import EdgeType
 
@@ -151,6 +152,20 @@ class Graph(object):
         nodes = str.join('\n', [x.__str__() for x in self.nodes.values()])
         edges = str.join('\n', [x.__str__() for x in self.edges.values()])
         return nodes + '\n' + edges
+
+    def __copy__(self):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        result.__dict__.update(self.__dict__)
+        return result
+
+    def __deepcopy__(self, memodict={}):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memodict[id(self)] = result
+        for k, v in self.__dict__.items():
+            setattr(result, k, deepcopy(v, memodict))
+        return result
 
 
 class Ug(Graph):
