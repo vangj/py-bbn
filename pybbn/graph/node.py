@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+
 class Node(object):
     """
     A node.
@@ -17,6 +20,20 @@ class Node(object):
         :param v: Value. Any object.
         """
         self.metadata[k] = v
+
+    def __copy__(self):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        result.__dict__.update(self.__dict__)
+        return result
+
+    def __deepcopy__(self, memodict={}):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memodict[id(self)] = result
+        for k, v in self.__dict__.items():
+            setattr(result, k, deepcopy(v, memodict))
+        return result
 
     def __str__(self):
         return '{}'.format(self.id)
@@ -44,9 +61,6 @@ class BbnNode(Node):
         """
         return len(self.variable.values)
 
-    def __str__(self):
-        return '{}|{}|{}'.format(self.id, self.variable.name, str.join(',', self.variable.values))
-
     def to_dict(self):
         """
         Gets a JSON serializable dictionary representation.
@@ -56,6 +70,9 @@ class BbnNode(Node):
             'probs': [p for p in self.probs],
             'variable': self.variable.to_dict()
         }
+
+    def __str__(self):
+        return '{}|{}|{}'.format(self.id, self.variable.name, str.join(',', self.variable.values))
 
 
 class Clique(Node):

@@ -1,6 +1,9 @@
-from nose import with_setup
+import copy
 
-from pybbn.graph.node import BbnNode, Clique
+from nose import with_setup
+from nose.tools import assert_almost_equals
+
+from pybbn.graph.node import BbnNode, Clique, Node
 from pybbn.graph.variable import Variable
 
 
@@ -18,6 +21,64 @@ def teardown():
     :return: None.
     """
     pass
+
+
+@with_setup(setup, teardown)
+def test_node_copy():
+    lhs = Node(1)
+    rhs = copy.copy(lhs)
+
+    assert lhs.id == rhs.id
+
+    lhs.id = 0
+    assert lhs.id != rhs.id
+
+
+@with_setup(setup, teardown)
+def test_node_deepcopy():
+    lhs = Node(1)
+    rhs = copy.deepcopy(lhs)
+
+    assert lhs.id == rhs.id
+
+    lhs.id = 0
+    assert lhs.id != rhs.id
+
+
+@with_setup(setup, teardown)
+def test_bbn_node_copy():
+    lhs = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
+    rhs = copy.copy(lhs)
+
+    assert lhs.variable.id == rhs.variable.id
+    assert lhs.variable.name == rhs.variable.name
+    assert len(lhs.variable.values) == len(rhs.variable.values)
+    for lhs_v, rhs_v in zip(lhs.variable.values, rhs.variable.values):
+        assert lhs_v == rhs_v
+    assert len(lhs.probs) == len(rhs.probs)
+    for lhs_v, rhs_v in zip(lhs.probs, rhs.probs):
+        assert_almost_equals(lhs_v, rhs_v, 0.001)
+
+    lhs.variable.values[0] = 'true'
+    assert lhs.variable.values[0] == rhs.variable.values[0]
+
+
+@with_setup(setup, teardown)
+def test_bbn_node_deepcopy():
+    lhs = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
+    rhs = copy.deepcopy(lhs)
+
+    assert lhs.variable.id == rhs.variable.id
+    assert lhs.variable.name == rhs.variable.name
+    assert len(lhs.variable.values) == len(rhs.variable.values)
+    for lhs_v, rhs_v in zip(lhs.variable.values, rhs.variable.values):
+        assert lhs_v == rhs_v
+    assert len(lhs.probs) == len(rhs.probs)
+    for lhs_v, rhs_v in zip(lhs.probs, rhs.probs):
+        assert_almost_equals(lhs_v, rhs_v, 0.001)
+
+    lhs.variable.values[0] = 'true'
+    assert lhs.variable.values[0] != rhs.variable.values[0]
 
 
 @with_setup(setup, teardown)
