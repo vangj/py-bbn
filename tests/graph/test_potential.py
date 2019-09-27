@@ -98,4 +98,6 @@ def test_str():
         .add_entry(entry3) \
         .add_entry(entry4)
 
-    assert potential.__str__() == '0=on,1=on|1.0\n0=on,1=off|1.0\n0=off,1=on|1.0\n0=off,1=off|1.0'
+    o = potential.__str__()
+    e = '0=on,1=on|1.00000\n0=on,1=off|1.00000\n0=off,1=on|1.00000\n0=off,1=off|1.00000'
+    assert o == e

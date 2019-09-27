@@ -78,10 +78,17 @@ class PotentialEntry(object):
         entry.value = self.value
         return entry
 
+    def get_entry_keys(self):
+        """
+        Gets entry keys sorted.
+        :return: List of tuples. First tuple is id of variable and second tuple is value of variable.
+        """
+        return sorted([(k, v) for k, v in self.entries.items()], key=lambda tup: tup[0])
+
     def __str__(self):
         arr = ['{}={}'.format(k, v) for k, v in self.entries.items()]
         s = str.join(',', arr)
-        return '{}|{}'.format(s, self.value)
+        return '{}|{:.5f}'.format(s, self.value)
 
 
 class PotentialUtil(object):

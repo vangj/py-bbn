@@ -1,4 +1,5 @@
 from nose import with_setup
+from nose.tools import assert_almost_equals
 
 from pybbn.graph.dag import BbnUtil, Bbn
 from pybbn.graph.edge import EdgeType, Edge
@@ -378,6 +379,61 @@ def test_inference_var_permutation():
         'b': [0.74, 0.26],
         'c': [0.33, 0.67]
     }, jt2, debug=False)
+
+
+@with_setup(setup, teardown)
+def test_forest_inference():
+    """
+    Tests inference on a disconnected DAG; sub-DAGs are a -> b, c -> d and e -> f.
+    :return: None.
+    """
+
+    def to_dict(potentials):
+        """
+        Converts potential to dictionary for easy validation.
+        :param potentials: Potential.
+        :return: Dictionary representation. Keys are entries and values are probabilities.
+        """
+        def get_k(pe):
+            return '|'.join(list(map(lambda tup: '{}={}'.format(tup[0], tup[1]), pe.get_entry_keys())))
+
+        def get_v(pe):
+            return pe.value
+
+        return {get_k(pe): get_v(pe) for p in potentials for pe in p.entries}
+
+    a = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
+    b = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
+    c = BbnNode(Variable(2, 'c', ['t', 'f']), [0.2, 0.8])
+    d = BbnNode(Variable(3, 'd', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
+    e = BbnNode(Variable(4, 'e', ['t', 'f']), [0.2, 0.8])
+    f = BbnNode(Variable(5, 'f', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
+    bbn = Bbn().add_node(a).add_node(b).add_node(c).add_node(d).add_node(e).add_node(f)\
+        .add_edge(Edge(a, b, EdgeType.DIRECTED))\
+        .add_edge(Edge(c, d, EdgeType.DIRECTED))\
+        .add_edge(Edge(e, f, EdgeType.DIRECTED))
+
+    jt = InferenceController.apply(bbn)
+    pot = [jt.get_bbn_potential(n) for n in jt.get_bbn_nodes()]
+    o = to_dict(pot)
+    e = {
+        '0=t': 0.2,
+        '0=f': 0.8,
+        '1=t': 0.7400000000000001,
+        '1=f': 0.26,
+        '2=t': 0.2,
+        '2=f': 0.8,
+        '3=t': 0.7400000000000001,
+        '3=f': 0.26,
+        '4=t': 0.2,
+        '4=f': 0.8,
+        '5=t': 0.7400000000000001,
+        '5=f': 0.26
+    }
+
+    for k, p in e.items():
+        assert_almost_equals(p, o[k], 0.001)
+
 
 
 def __validate_posterior__(expected, join_tree, debug=False):
