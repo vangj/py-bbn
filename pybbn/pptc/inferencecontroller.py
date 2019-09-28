@@ -46,6 +46,8 @@ class InferenceController(JoinTreeListener):
         """
         jt = copy.deepcopy(join_tree)
         jt.update_bbn_cpts(cpts)
+        jt.listener = None
+        jt.evidences = dict()
 
         PotentialInitializer.reinit(jt)
         Initializer.initialize(jt)
