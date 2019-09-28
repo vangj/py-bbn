@@ -177,9 +177,9 @@ class SepSet(Clique):
         :param left: Clique.
         :param right: Clique.
         """
-        lhs = [x.id for x in left.nodes]
-        rhs = [x.id for x in right.nodes]
-        intersection = [x for x in lhs if x in rhs]
+        lhs = {x.id for x in left.nodes}
+        rhs = {x.id for x in right.nodes}
+        intersection = lhs & rhs
 
         sid = '-'.join(str(x) for arr in [lhs, intersection, rhs] for x in arr)
         Node.__init__(self, sid)
