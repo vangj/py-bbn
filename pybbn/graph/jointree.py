@@ -1,3 +1,4 @@
+from collections import defaultdict
 from enum import Enum
 
 from pybbn.graph.edge import JtEdge
@@ -19,6 +20,7 @@ class JoinTree(Ug):
         self.potentials = dict()
         self.evidences = dict()
         self.listener = None
+        self.parent_info = defaultdict(set)
 
     def get_bbn_potential(self, node):
         """
@@ -35,6 +37,23 @@ class JoinTree(Ug):
         """
         for clique in self.get_cliques():
             clique.unmark()
+
+    def update_bbn_cpts(self, cpts):
+        """
+        Updates the CPTs of the BBN nodes.
+        :param cpts: Dictionary of CPTs. Keys are ids of BBN node and values are new CPTs.
+        :return: None
+        """
+        bbn_nodes = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
+        for idx, cpt in cpts.items():
+            if idx in bbn_nodes:
+                bbn_nodes[idx].probs = cpt
+                bbn_nodes[idx].potential = None
+
+    def get_bbn_node_and_parents(self):
+        bbn_nodes = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
+        return {node: [pa for pa_id, pa in bbn_nodes.items() if pa_id in self.parent_info[node_id]]
+                for node_id, node in bbn_nodes.items()}
 
     def get_bbn_nodes(self):
         """

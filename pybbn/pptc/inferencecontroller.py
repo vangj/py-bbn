@@ -1,3 +1,5 @@
+import copy
+
 from pybbn.graph.jointree import JoinTreeListener
 from pybbn.pptc.initializer import Initializer
 from pybbn.pptc.moralizer import Moralizer
@@ -24,6 +26,7 @@ class InferenceController(JoinTreeListener):
         ug = Moralizer.moralize(bbn)
         cliques = Triangulator.triangulate(ug)
         join_tree = Transformer.transform(cliques)
+        join_tree.parent_info = {node.id: bbn.get_parents_ordered(node.id) for node in bbn.get_nodes()}
 
         Initializer.initialize(join_tree)
         Propagator.propagate(join_tree)
@@ -31,6 +34,26 @@ class InferenceController(JoinTreeListener):
         join_tree.set_listener(InferenceController())
 
         return join_tree
+
+    @staticmethod
+    def reapply(join_tree, cpts):
+        """
+        Reapply propagation to join tree with new CPTs. The join tree structure is kept but the BBN node CPTs
+        are updated. A new instance/copy of the join tree will be returned.
+        :param join_tree: Join tree.
+        :param cpts: Dictionary of new CPTs. Keys are id's of nodes and values are new CPTs.
+        :return: Join tree.
+        """
+        jt = copy.deepcopy(join_tree)
+        jt.update_bbn_cpts(cpts)
+
+        PotentialInitializer.reinit(jt)
+        Initializer.initialize(jt)
+        Propagator.propagate(jt)
+
+        jt.set_listener(InferenceController())
+
+        return jt
 
     def evidence_retracted(self, join_tree):
         """
