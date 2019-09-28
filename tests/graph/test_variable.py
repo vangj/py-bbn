@@ -24,7 +24,7 @@ def teardown():
 @with_setup(setup, teardown)
 def test_copy():
     """
-    Test variable copy.
+    Tests variable copy.
     :return: None.
     """
     lhs = Variable(0, 'a', ['t', 'f'])

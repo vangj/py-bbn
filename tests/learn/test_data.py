@@ -180,7 +180,7 @@ def test_to_query():
 @with_setup(setup, teardown)
 def test_get_prob():
     """
-    Gets getting simple probability.
+    Tests getting simple probability.
     :return: None.
     """
     data = DiscreteData(get_good_df())

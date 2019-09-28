@@ -3,8 +3,9 @@ from enum import Enum
 
 from pybbn.graph.edge import JtEdge
 from pybbn.graph.graph import Ug
-from pybbn.graph.node import SepSet
+from pybbn.graph.node import SepSet, Clique, BbnNode
 from pybbn.graph.potential import Potential, PotentialEntry, PotentialUtil
+from pybbn.graph.variable import Variable
 
 
 class JoinTree(Ug):
@@ -310,6 +311,79 @@ class JoinTree(Ug):
             self.update_evidences([evidence])
 
         return self
+
+    @staticmethod
+    def to_dict(jt):
+        """
+        Converts a junction tree to a serializable dictionary.
+        :param jt: Junction tree.
+        :return: Dictionary.
+        """
+        def nodes_to_dict(nodes):
+            d = {}
+            for n in nodes:
+                if isinstance(n, SepSet):
+                    d[n.id] = {
+                        'left': n.left.id,
+                        'right': n.right.id,
+                        'type': 'sepset'
+                    }
+                elif isinstance(n, Clique):
+                    d[n.id] = {
+                        'node_ids': list(n.node_ids),
+                        'type': 'clique'
+                    }
+            return d
+
+        def edges_to_dict(edges):
+            return [e.sep_set.id for e in edges]
+
+        bbn_nodes = {n.id: n.to_dict() for n in jt.get_bbn_nodes()}
+        jt_nodes = nodes_to_dict(jt.get_nodes())
+        jt_edges = edges_to_dict(jt.get_edges())
+
+        return {
+            'bbn_nodes': bbn_nodes,
+            'jt': {
+                'nodes': jt_nodes,
+                'edges': jt_edges,
+                'parent_info': jt.parent_info
+            }
+        }
+
+    @staticmethod
+    def from_dict(d):
+        """
+        Converts a dictionary to a junction tree.
+        :param d: Dictionary.
+        :return: Junction tree.
+        """
+        def get_variable(d):
+            return Variable(d['id'], d['name'], d['values'])
+
+        def get_bbn_node(d):
+            return BbnNode(get_variable(d['variable']), d['probs'])
+
+        def get_clique(d, bbn_nodes):
+            return Clique([bbn_nodes[idx] if idx in bbn_nodes else bbn_nodes[str(idx)] for idx in d['node_ids']])
+
+        bbn_nodes = {k: get_bbn_node(n) for k, n in d['bbn_nodes'].items()}
+
+        cliques = [get_clique(clique, bbn_nodes)
+                   for k, clique in d['jt']['nodes'].items() if clique['type'] == 'clique']
+        cliques = {c.id: c for c in cliques}
+
+        sepsets = [SepSet(cliques[s['left']], cliques[s['right']])
+                   for k, s in d['jt']['nodes'].items() if s['type'] == 'sepset']
+        sepsets = {s.id: s for s in sepsets}
+
+        edges = [JtEdge(sepsets[e]) for e in d['jt']['edges']]
+
+        jt = JoinTree()
+        for e in edges:
+            jt.add_edge(e)
+        jt.parent_info = {int(k): v for k, v in d['jt']['parent_info'].items()}
+        return jt
 
     def __shouldadd__(self, edge):
         """

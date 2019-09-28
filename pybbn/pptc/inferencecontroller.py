@@ -57,6 +57,24 @@ class InferenceController(JoinTreeListener):
 
         return jt
 
+    @staticmethod
+    def apply_from_serde(join_tree):
+        """
+        Applies propagation to join tree from a deserialzed join tree.
+        :param join_tree: Join tree.
+        :return: Join tree (the same one passed in).
+        """
+        join_tree.listener = None
+        join_tree.evidences = dict()
+
+        PotentialInitializer.reinit(join_tree)
+        Initializer.initialize(join_tree)
+        Propagator.propagate(join_tree)
+
+        join_tree.set_listener(InferenceController())
+
+        return join_tree
+
     def evidence_retracted(self, join_tree):
         """
         Evidence is retracted.

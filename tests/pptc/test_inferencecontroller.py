@@ -423,6 +423,10 @@ def test_forest_inference():
 
 @with_setup(setup, teardown)
 def test_reapply():
+    """
+    Tests reinitializing join tree after updating CPTs.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
     b = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
     bbn = Bbn().add_node(a).add_node(b) \
@@ -452,9 +456,6 @@ def test_reapply():
     lhs = InferenceController.apply(bbn)
     lhs_pot = [lhs.get_bbn_potential(n) for n in lhs.get_bbn_nodes()]
     lhs_d = Potential.to_dict(lhs_pot)
-
-    print(lhs_d)
-    print(rhs_d)
 
     for k, prob in lhs_d.items():
         assert k in rhs_d
