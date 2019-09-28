@@ -53,13 +53,15 @@ class BbnNode(Node):
         self.variable = variable
         self.probs = probs
         self.potential = None
+        self.weight = len(self.variable.values)
 
     def get_weight(self):
         """
         Gets the weight, which is the number of values.
         :return: Weight.
         """
-        return len(self.variable.values)
+        # return len(self.variable.values)
+        return self.weight
 
     def to_dict(self):
         """
