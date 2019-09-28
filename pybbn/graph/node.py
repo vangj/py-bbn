@@ -1,4 +1,5 @@
 from copy import deepcopy
+from functools import reduce
 
 
 class Node(object):
@@ -136,10 +137,7 @@ class Clique(Node):
         Gets the weight of this clique; the weight is product of the weights of the nodes in this clique.
         :return: Weight.
         """
-        weight = 1
-        for node in self.nodes:
-            weight = weight * node.get_weight()
-        return weight
+        return reduce(lambda x, y: x * y, [node.get_weight() for node in self.nodes])
 
     def contains(self, id):
         """
