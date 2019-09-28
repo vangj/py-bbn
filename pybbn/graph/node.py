@@ -70,8 +70,7 @@ class BbnNode(Node):
         """
         return {
             'probs': [p for p in self.probs],
-            'variable': self.variable.to_dict(),
-            'metadata': self.metadata
+            'variable': self.variable.to_dict()
         }
 
     def __str__(self):
