@@ -23,6 +23,10 @@ def teardown():
 
 @with_setup(setup, teardown)
 def test_copy():
+    """
+    Test variable copy.
+    :return: None.
+    """
     lhs = Variable(0, 'a', ['t', 'f'])
     rhs = copy.copy(lhs)
 
@@ -38,6 +42,10 @@ def test_copy():
 
 @with_setup(setup, teardown)
 def test_deep_copy():
+    """
+    Tests variable deepcopy.
+    :return: None.
+    """
     lhs = Variable(0, 'a', ['t', 'f'])
     rhs = copy.deepcopy(lhs)
 
