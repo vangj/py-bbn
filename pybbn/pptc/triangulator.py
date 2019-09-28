@@ -1,4 +1,5 @@
 from itertools import combinations
+from functools import reduce
 
 from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.graph import Ug
@@ -85,11 +86,10 @@ class Triangulator(object):
         :param m: Graph.
         :return: Weight.
         """
-        weight = n.get_weight()
-        for neighbor_id in m.get_neighbors(n.id):
-            neighbor = m.get_node(neighbor_id)
-            weight *= neighbor.get_weight()
-        return weight
+        if len(m.neighbors[n.id]) == 0:
+            return n.get_weight()
+        weights = (m.get_node(neighbor_id).get_weight() for neighbor_id in m.get_neighbors(n.id))
+        return n.get_weight() * reduce(lambda x, y: x * y, weights)
 
     @staticmethod
     def get_edges_to_add(n, m):
