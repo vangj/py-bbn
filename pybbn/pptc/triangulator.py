@@ -1,5 +1,5 @@
-from itertools import combinations
 from functools import reduce
+from itertools import combinations
 
 from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.graph import Ug
