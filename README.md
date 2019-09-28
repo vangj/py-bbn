@@ -158,10 +158,22 @@ To publish, make sure you have `.pypirc` with the correct credentials stored. Th
 
 # Installing
 
+## From PyPi
 Use pip to install the package as it has been published to [PyPi](https://pypi.python.org/pypi/pybbn).
 
 ```bash
 pip install pybbn
+```
+
+## From Source
+
+If you check out the source do the following.
+
+```bash
+pip list | grep pybbn
+pip uninstall pybbn
+python setup.py install
+pip list | grep pybbn
 ```
 
 ## GraphViz issue
