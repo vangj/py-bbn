@@ -327,3 +327,29 @@ def test_from_dict():
 
     for k, p in lhs_pot.items():
         assert_almost_equals(p, rhs_pot[k], 0.001)
+
+
+@with_setup(setup, teardown)
+def test_simple_serde():
+    """
+    Tests join tree serde with only 1 clique.
+    :return: None.
+    """
+    a = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
+    b = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
+    bbn = Bbn().add_node(a).add_node(b) \
+        .add_edge(Edge(a, b, EdgeType.DIRECTED))
+    lhs = InferenceController.apply(bbn)
+
+    d = JoinTree.to_dict(lhs)
+
+    rhs = JoinTree.from_dict(d)
+    rhs = InferenceController.apply_from_serde(rhs)
+
+    lhs_pot = [lhs.get_bbn_potential(n) for n in lhs.get_bbn_nodes()]
+    rhs_pot = [rhs.get_bbn_potential(n) for n in rhs.get_bbn_nodes()]
+
+    lhs_pot = Potential.to_dict(lhs_pot)
+    rhs_pot = Potential.to_dict(rhs_pot)
+
+    assert len(lhs_pot) == len(rhs_pot)

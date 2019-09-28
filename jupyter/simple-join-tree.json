@@ -1,0 +1,52 @@
+{
+  "bbn_nodes": {
+    "0": {
+      "probs": [
+        0.2,
+        0.8
+      ],
+      "variable": {
+        "id": 0,
+        "name": "a",
+        "values": [
+          "t",
+          "f"
+        ]
+      }
+    },
+    "1": {
+      "probs": [
+        0.1,
+        0.9,
+        0.9,
+        0.1
+      ],
+      "variable": {
+        "id": 1,
+        "name": "b",
+        "values": [
+          "t",
+          "f"
+        ]
+      }
+    }
+  },
+  "jt": {
+    "edges": [],
+    "nodes": {
+      "0-1": {
+        "node_ids": [
+          0,
+          1
+        ],
+        "type": "clique"
+      }
+    },
+    "parent_info": {
+      "0": [],
+      "1": [
+        0
+      ]
+    }
+  }
+}

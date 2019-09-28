@@ -380,8 +380,12 @@ class JoinTree(Ug):
         edges = [JtEdge(sepsets[e]) for e in d['jt']['edges']]
 
         jt = JoinTree()
-        for e in edges:
-            jt.add_edge(e)
+        if len(edges) > 0:
+            for e in edges:
+                jt.add_edge(e)
+        else:
+            jt.nodes = cliques
+
         jt.parent_info = {int(k): v for k, v in d['jt']['parent_info'].items()}
         return jt
 
