@@ -322,7 +322,7 @@ def test_log_proba():
     :return: None.
     """
 
-    num_samples = 10000
+    num_samples = 1000
 
     x0 = 2.0 + np.random.standard_normal(num_samples)
     x1 = 5.0 + 2.0 * x0 + np.random.standard_normal(num_samples)
