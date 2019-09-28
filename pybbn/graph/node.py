@@ -61,7 +61,6 @@ class BbnNode(Node):
         Gets the weight, which is the number of values.
         :return: Weight.
         """
-        # return len(self.variable.values)
         return self.weight
 
     def to_dict(self):
@@ -71,7 +70,8 @@ class BbnNode(Node):
         """
         return {
             'probs': [p for p in self.probs],
-            'variable': self.variable.to_dict()
+            'variable': self.variable.to_dict(),
+            'metadata': self.metadata
         }
 
     def __str__(self):

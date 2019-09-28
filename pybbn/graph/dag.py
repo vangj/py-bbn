@@ -139,7 +139,9 @@ class Bbn(Dag):
             return Variable(d['id'], d['name'], d['values'])
 
         def get_bbn_node(d):
-            return BbnNode(get_variable(d['variable']), d['probs'])
+            bbn_node = BbnNode(get_variable(d['variable']), d['probs'])
+            bbn_node.metadata = d['metadata']
+            return bbn_node
 
         nodes = {k: get_bbn_node(n) for k, n in d['nodes'].items()}
         edges = d['edges']

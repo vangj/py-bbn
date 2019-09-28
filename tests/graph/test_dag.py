@@ -128,6 +128,7 @@ def test_to_dict():
   ],
   "nodes": {
     "0": {
+      "metadata": {},
       "probs": [
         0.5,
         0.5
@@ -142,6 +143,7 @@ def test_to_dict():
       }
     },
     "1": {
+      "metadata": {},
       "probs": [
         0.5,
         0.5,
@@ -158,6 +160,7 @@ def test_to_dict():
       }
     },
     "2": {
+      "metadata": {},
       "probs": [
         0.7,
         0.3,
@@ -174,6 +177,7 @@ def test_to_dict():
       }
     },
     "3": {
+      "metadata": {},
       "probs": [
         0.9,
         0.1,
@@ -190,6 +194,7 @@ def test_to_dict():
       }
     },
     "4": {
+      "metadata": {},
       "probs": [
         0.3,
         0.7,
@@ -206,6 +211,7 @@ def test_to_dict():
       }
     },
     "5": {
+      "metadata": {},
       "probs": [
         0.01,
         0.99,
@@ -226,6 +232,7 @@ def test_to_dict():
       }
     },
     "6": {
+      "metadata": {},
       "probs": [
         0.8,
         0.2,
@@ -242,6 +249,7 @@ def test_to_dict():
       }
     },
     "7": {
+      "metadata": {},
       "probs": [
         0.05,
         0.95,
