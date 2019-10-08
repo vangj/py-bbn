@@ -174,8 +174,8 @@ class SepSet(Clique):
         :param left: Clique.
         :param right: Clique.
         """
-        lhs = [x.id for x in left.nodes]
-        rhs = [x.id for x in right.nodes]
+        lhs = sorted([x.id for x in left.nodes])
+        rhs = sorted([x.id for x in right.nodes])
         intersection = [x for x in lhs if x in rhs]
 
         sid = '-'.join(str(x) for arr in [lhs, intersection, rhs] for x in arr)

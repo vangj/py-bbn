@@ -22,6 +22,7 @@ class JoinTree(Ug):
         self.evidences = dict()
         self.listener = None
         self.parent_info = defaultdict(set)
+        self.__all_nodes__ = None
 
     def get_bbn_potential(self, node):
         """
@@ -56,12 +57,21 @@ class JoinTree(Ug):
         return {node: [pa for pa_id, pa in bbn_nodes.items() if pa_id in self.parent_info[node_id]]
                 for node_id, node in bbn_nodes.items()}
 
+    def __get_bbn_nodes__(self):
+        """
+        Gets all BBN nodes (cached).
+        :return: Dictionary of BBN nodes.
+        """
+        if self.__all_nodes__ is None:
+            self.__all_nodes__ = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
+        return self.__all_nodes__
+
     def get_bbn_nodes(self):
         """
         Gets all the BBN nodes in this junction tree.
         :return: List of BBN nodes.
         """
-        return list({node.id: node for clique in self.get_cliques() for node in clique.nodes}.values())
+        return list(self.__get_bbn_nodes__().values())
 
     def get_bbn_node(self, id):
         """
@@ -69,7 +79,7 @@ class JoinTree(Ug):
         :param id: Node id.
         :return: BBN node or None if no such node exists.
         """
-        bbn_nodes = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
+        bbn_nodes = self.__get_bbn_nodes__()
         if id in bbn_nodes:
             return bbn_nodes[id]
         return None
