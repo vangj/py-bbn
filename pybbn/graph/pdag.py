@@ -18,7 +18,7 @@ class Pdag(Graph):
         :param id: Node id.
         :return: Array of parent ids.
         """
-        return [x for x in self.map if id in self.map[x]]
+        return [x for x in self.edge_map if id in self.edge_map[x]]
 
     def get_out_nodes(self, id):
         """
@@ -44,7 +44,7 @@ class Pdag(Graph):
         if parent.id == child.id:
             return False
 
-        if child.id not in self.map[parent.id] and parent.id not in self.map[child.id]:
+        if child.id not in self.edge_map[parent.id] and parent.id not in self.edge_map[child.id]:
             if not PathDetector(self, child.id, parent.id).exists():
                 return True
 
@@ -57,7 +57,7 @@ class Pdag(Graph):
         :param id2: Node id.
         :return: A boolean indicating if the edge exists.
         """
-        if id2 in self.map[id1] or id1 in self.map[id2]:
+        if id2 in self.edge_map[id1] or id1 in self.edge_map[id2]:
             return True
         return False
 
@@ -68,7 +68,7 @@ class Pdag(Graph):
         :param id2: Node id.
         :return: A boolean indicating if the edge exists.
         """
-        if id2 in self.map[id1] and id1 not in self.map[id2]:
+        if id2 in self.edge_map[id1] and id1 not in self.edge_map[id2]:
             return True
         return False
 

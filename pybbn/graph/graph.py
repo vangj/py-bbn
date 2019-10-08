@@ -15,7 +15,7 @@ class Graph(object):
         """
         self.nodes = dict()
         self.edges = dict()
-        self.map = dict()
+        self.edge_map = defaultdict(set)
         self.neighbors = defaultdict(set)
 
     def get_neighbors(self, id):
@@ -67,16 +67,11 @@ class Graph(object):
         self.add_node(edge.i)
         self.add_node(edge.j)
 
-        if edge.i.id not in self.map:
-            self.map[edge.i.id] = set()
-        if edge.j.id not in self.map:
-            self.map[edge.j.id] = set()
-
         if self.__shouldadd__(edge):
             self.edges[edge.key] = edge
-            self.map[edge.i.id].add(edge.j.id)
+            self.edge_map[edge.i.id].add(edge.j.id)
             if EdgeType.UNDIRECTED == edge.type:
-                self.map[edge.j.id].add(edge.i.id)
+                self.edge_map[edge.j.id].add(edge.i.id)
 
             self.neighbors[edge.i.id].add(edge.j.id)
             self.neighbors[edge.j.id].add(edge.i.id)
@@ -106,10 +101,10 @@ class Graph(object):
             return False
 
         if EdgeType.UNDIRECTED == edge.type:
-            if lhs.id not in self.map[rhs.id] or rhs.id not in self.map[lhs.id]:
+            if lhs.id not in self.edge_map[rhs.id] or rhs.id not in self.edge_map[lhs.id]:
                 return True
         else:
-            if rhs.id not in self.map[lhs.id]:
+            if rhs.id not in self.edge_map[lhs.id]:
                 return True
 
         return False
@@ -121,9 +116,9 @@ class Graph(object):
         :param id2: Node id.
         :return: A boolean indicating if the specified edge exists.
         """
-        if id1 in self.map and id2 in self.map[id1]:
+        if id1 in self.edge_map and id2 in self.edge_map[id1]:
             return True
-        if id2 in self.map and id1 in self.map[id2]:
+        if id2 in self.edge_map and id1 in self.edge_map[id2]:
             return True
         return False
 
@@ -133,10 +128,10 @@ class Graph(object):
         :param id: Node id.
         """
         self.nodes.pop(id, None)
-        self.map.pop(id, None)
+        self.edge_map.pop(id, None)
         self.neighbors.pop(id, None)
 
-        for k, v in self.map.items():
+        for k, v in self.edge_map.items():
             if id in v:
                 v.remove(id)
 

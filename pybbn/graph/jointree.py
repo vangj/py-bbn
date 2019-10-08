@@ -1,4 +1,5 @@
 from collections import defaultdict
+from copy import deepcopy
 from enum import Enum
 
 from pybbn.graph.edge import JtEdge
@@ -22,7 +23,15 @@ class JoinTree(Ug):
         self.evidences = dict()
         self.listener = None
         self.parent_info = defaultdict(set)
-        self.__all_nodes__ = None
+        # self.__all_nodes__ = None
+
+    def __deepcopy__(self, memodict={}):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memodict[id(self)] = result
+        for k, v in self.__dict__.items():
+            setattr(result, k, deepcopy(v, memodict))
+        return result
 
     def get_bbn_potential(self, node):
         """
@@ -62,9 +71,10 @@ class JoinTree(Ug):
         Gets all BBN nodes (cached).
         :return: Dictionary of BBN nodes.
         """
-        if self.__all_nodes__ is None:
-            self.__all_nodes__ = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
-        return self.__all_nodes__
+        # if self.__all_nodes__ is None:
+        #     self.__all_nodes__ = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
+        # return self.__all_nodes__
+        return {node.id: node for clique in self.get_cliques() for node in clique.nodes}
 
     def get_bbn_nodes(self):
         """
@@ -149,20 +159,13 @@ class JoinTree(Ug):
             self.add_node(lhs)
             self.add_node(rhs)
 
-            if sep_set.id not in self.map:
-                self.map[sep_set.id] = set()
-            if lhs.id not in self.map:
-                self.map[lhs.id] = set()
-            if rhs.id not in self.map:
-                self.map[rhs.id] = set()
-
-            self.map[lhs.id].add(sep_set.id)
-            self.map[rhs.id].add(sep_set.id)
+            self.edge_map[lhs.id].add(sep_set.id)
+            self.edge_map[rhs.id].add(sep_set.id)
             self.neighbors[lhs.id].add(sep_set.id)
             self.neighbors[rhs.id].add(sep_set.id)
 
-            self.map[sep_set.id].add(lhs.id)
-            self.map[sep_set.id].add(rhs.id)
+            self.edge_map[sep_set.id].add(lhs.id)
+            self.edge_map[sep_set.id].add(rhs.id)
             self.neighbors[sep_set.id].add(lhs.id)
             self.neighbors[sep_set.id].add(rhs.id)
 

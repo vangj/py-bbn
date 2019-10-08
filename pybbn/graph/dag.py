@@ -23,7 +23,7 @@ class Dag(Graph):
         :param id: Node id.
         :return: Array of parent ids.
         """
-        return [x for x in self.map if id in self.map[x]]
+        return [x for x in self.edge_map if id in self.edge_map[x]]
 
     def get_children(self, node_id):
         """
@@ -31,7 +31,7 @@ class Dag(Graph):
         :param node_id: Node id.
         :return: Array of children ids.
         """
-        return [x for x in self.map[node_id]]
+        return [x for x in self.edge_map[node_id]]
 
     def __shouldadd__(self, edge):
         """
@@ -48,7 +48,7 @@ class Dag(Graph):
         if parent.id == child.id:
             return False
 
-        if child.id not in self.map[parent.id] and parent.id not in self.map[child.id]:
+        if child.id not in self.edge_map[parent.id] and parent.id not in self.edge_map[child.id]:
             if not PathDetector(self, child.id, parent.id).exists():
                 return True
 
@@ -61,7 +61,7 @@ class Dag(Graph):
         :param id2: Node id.
         :return: A boolean indicating if a directed edge id1 -> id2 exists.
         """
-        if id2 in self.map[id1] and id1 not in self.map[id2]:
+        if id2 in self.edge_map[id1] and id1 not in self.edge_map[id2]:
             return True
         return False
 
