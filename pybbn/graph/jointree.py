@@ -26,12 +26,27 @@ class JoinTree(Ug):
         # self.__all_nodes__ = None
 
     def __deepcopy__(self, memodict={}):
-        cls = self.__class__
-        result = cls.__new__(cls)
-        memodict[id(self)] = result
-        for k, v in self.__dict__.items():
-            setattr(result, k, deepcopy(v, memodict))
-        return result
+        # FIXME: fix this method
+        self.nodes = dict()
+        self.edges = dict()
+        self.edge_map = defaultdict(set)
+        self.neighbors = defaultdict(set)
+
+        nodes = deepcopy(self.nodes, memodict)
+        edges = deepcopy(self.edges, memodict)
+        edge_map = deepcopy(self.edge_map, memodict)
+        neighbors = deepcopy(self.neighbors, memodict)
+        potentials = deepcopy(self.potentials, memodict)
+        parent_info = deepcopy(self.parent_info, memodict)
+
+        jt = JoinTree()
+        jt.nodes = nodes
+        jt.edges = edges
+        jt.edge_map = edge_map
+        jt.neighbors = neighbors
+        jt.potentials = potentials
+        jt.parent_info = parent_info
+        return jt
 
     def get_bbn_potential(self, node):
         """
