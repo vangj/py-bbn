@@ -170,10 +170,6 @@ class JoinTree(Ug):
             self.neighbors[sep_set.id].add(rhs.id)
 
             self.edges[edge.key] = edge
-            # lhs_edge = edge.get_lhs_edge()
-            # rhs_edge = edge.get_rhs_edge()
-            # self.edges[lhs_edge.key] = lhs_edge
-            # self.edges[rhs_edge.key] = rhs_edge
 
         return self
 
