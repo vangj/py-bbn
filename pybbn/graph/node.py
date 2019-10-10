@@ -29,12 +29,9 @@ class Node(object):
         return result
 
     def __deepcopy__(self, memodict={}):
-        cls = self.__class__
-        result = cls.__new__(cls)
-        memodict[id(self)] = result
-        for k, v in self.__dict__.items():
-            setattr(result, k, deepcopy(v, memodict))
-        return result
+        node = Node(self.id)
+        memodict[self.id] = node
+        return node
 
     def __str__(self):
         return '{}'.format(self.id)
@@ -72,6 +69,16 @@ class BbnNode(Node):
             'probs': [p for p in self.probs],
             'variable': self.variable.to_dict()
         }
+
+    def __deepcopy__(self, memodict={}):
+        variable = deepcopy(self.variable, memodict)
+        probs = deepcopy(self.probs, memodict)
+        potential = deepcopy(self.potential, memodict)
+        bbn_node = BbnNode(variable, probs)
+        bbn_node.potential = potential
+
+        memodict[self.id] = bbn_node
+        return bbn_node
 
     def __str__(self):
         return '{}|{}|{}'.format(self.id, self.variable.name, str.join(',', self.variable.values))
