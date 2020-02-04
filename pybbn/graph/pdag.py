@@ -22,7 +22,7 @@ class Pdag(Graph):
 
     def get_out_nodes(self, id):
         """
-        Gets all the out nodes for the node with the specified id. Out nodes are all connected ndoes that are
+        Gets all the out nodes for the node with the specified id. Out nodes are all connected nodes that are
         not parents (do not have a directed arc into the specified node).
         :param id: Node id.
         :return: Array of out node ids.
