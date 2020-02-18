@@ -89,7 +89,11 @@ def test_simple_inference():
 
     expected = {
         'a': [0.5, 0.5],
-        'b': [0.45, 0.55]
+        'b': [0.45, 0.55],
+        'c': [0.45, 0.55],
+        'd': [0.68, 0.32],
+        'e': [0.465, 0.535],
+        'f': [0.176, 0.824]
     }
 
     __validate_posterior__(expected, join_tree)
