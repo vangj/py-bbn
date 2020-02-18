@@ -74,6 +74,28 @@ def test_huang_inference():
 
     __validate_posterior__(expected, join_tree)
 
+    __print_potentials__(join_tree)
+
+
+@with_setup(setup, teardown)
+def test_simple_inference():
+    """
+    Tests inference on the Huang graph.
+    :return: None.
+    """
+    bbn = BbnUtil.get_simple()
+
+    join_tree = InferenceController.apply(bbn)
+
+    expected = {
+        'a': [0.5, 0.5],
+        'b': [0.45, 0.55]
+    }
+
+    __validate_posterior__(expected, join_tree)
+
+    __print_potentials__(join_tree)
+
 
 @with_setup(setup, teardown)
 def test_inference_1():

@@ -245,3 +245,19 @@ class BbnUtil(object):
             .add_edge(Edge(g, h, EdgeType.DIRECTED))
 
         return bbn
+
+    @staticmethod
+    def get_simple():
+        """
+        Gets a simple BBN graph.
+        :return: BBN.
+        """
+        a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
+        b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
+
+        bbn = Bbn() \
+            .add_node(a) \
+            .add_node(b) \
+            .add_edge(Edge(a, b, EdgeType.DIRECTED))
+
+        return bbn
