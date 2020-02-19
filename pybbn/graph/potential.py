@@ -102,7 +102,9 @@ class PotentialEntry(object):
         return '|'.join(list(map(lambda tup: '{}={}'.format(tup[0], tup[1]), self.get_entry_keys()))), self.value
 
     def __str__(self):
-        arr = ['{}={}'.format(k, v) for k, v in self.entries.items()]
+        arr = [(k, v) for k, v in self.entries.items()]
+        arr = sorted(arr, key=lambda tup: tup[0])
+        arr = ['{}={}'.format(tup[0], tup[1]) for tup in arr]
         s = str.join(',', arr)
         return '{}|{:.5f}'.format(s, self.value)
 
