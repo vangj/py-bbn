@@ -184,6 +184,7 @@ Make sure you [install GraphViz](https://graphviz.gitlab.io/download/) on your s
 * Ubuntu: `sudo apt-get install libgraphviz-dev`
 * Mac OSX: `brew install graphviz`
 * Windows: use the [msi installer](https://graphviz.gitlab.io/_pages/Download/windows/graphviz-2.38.msi)
+  * For Anaconda + Windows, install pygraphviz from this [channel](https://anaconda.org/alubbock/pygraphviz) `conda install -c alubbock pygraphviz`
 
 ## testpypi issue
 
