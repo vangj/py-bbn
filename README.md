@@ -208,6 +208,12 @@ Here is a list of other Python libraries for inference in Bayesian Belief Networ
 
 I found other [packages](https://pypi.python.org/pypi?%3Aaction=search&term=bayesian+network&submit=search) in PyPI too.
 
+# Java
+
+But I am coming from the Java mothership and I want to use Bayesian Belief Networks in Java. How do I perform probabilistic inference in Java?
+
+This Python code base is a port of the [original Java code](https://github.com/vangj/jbayes).
+
 # Citation
 
 ```
