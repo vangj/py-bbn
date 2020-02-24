@@ -26,12 +26,6 @@ class JoinTree(Ug):
         # self.__all_nodes__ = None
 
     def __deepcopy__(self, memodict={}):
-        # FIXME: fix this method
-        # self.nodes = dict()
-        # self.edges = dict()
-        # self.edge_map = defaultdict(set)
-        # self.neighbors = defaultdict(set)
-
         nodes = deepcopy(self.nodes, memodict)
         edges = deepcopy(self.edges, memodict)
         edge_map = deepcopy(self.edge_map, memodict)
