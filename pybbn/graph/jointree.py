@@ -55,7 +55,8 @@ class JoinTree(Ug):
         :return: Potential.
         """
         clique = node.metadata['parent.clique']
-        return PotentialUtil.normalize(PotentialUtil.marginalize_for(self, clique, [node]))
+        potential = PotentialUtil.normalize(PotentialUtil.marginalize_for(self, clique, [node]))
+        return potential
 
     def unmark_cliques(self):
         """
@@ -78,8 +79,9 @@ class JoinTree(Ug):
 
     def get_bbn_node_and_parents(self):
         bbn_nodes = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
-        return {node: [pa for pa_id, pa in bbn_nodes.items() if pa_id in self.parent_info[node_id]]
+        result = {node: [pa for pa_id, pa in bbn_nodes.items() if pa_id in self.parent_info[node_id]]
                 for node_id, node in bbn_nodes.items()}
+        return result
 
     def __get_bbn_nodes__(self):
         """
@@ -89,7 +91,8 @@ class JoinTree(Ug):
         # if self.__all_nodes__ is None:
         #     self.__all_nodes__ = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
         # return self.__all_nodes__
-        return {node.id: node for clique in self.get_cliques() for node in clique.nodes}
+        result = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
+        return result
 
     def get_bbn_nodes(self):
         """
@@ -130,7 +133,8 @@ class JoinTree(Ug):
         ids.append(id)
 
         set1 = set(ids)
-        return [clique for clique in self.get_cliques() if clique.get_node_ids().issuperset(set1)]
+        result = [clique for clique in self.get_cliques() if clique.get_node_ids().issuperset(set1)]
+        return result
 
     def add_potential(self, clique, potential):
         """
@@ -227,7 +231,8 @@ class JoinTree(Ug):
 
             self.evidences[node.id][value] = potential
 
-        return self.evidences[node.id][value]
+        result = self.evidences[node.id][value]
+        return result
 
     def get_change_type(self, evidences):
         """
