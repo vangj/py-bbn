@@ -92,24 +92,29 @@ def test_deepcopy():
     Tests deep copy of join tree.
     :return: None
     """
-    # FIXME: FAILING
-    # a = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
-    # b = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
-    # bbn = Bbn().add_node(a).add_node(b) \
-    #     .add_edge(Edge(a, b, EdgeType.DIRECTED))
-    # lhs = InferenceController.apply(bbn)
-    # rhs = copy.deepcopy(lhs)
-    #
-    # assert len(lhs.get_nodes()) == len(rhs.get_nodes())
-    # assert len(lhs.get_edges()) == len(rhs.get_edges())
-    # assert len(lhs.neighbors) == len(rhs.neighbors)
-    # assert len(lhs.evidences) == len(rhs.evidences)
-    # assert len(lhs.potentials) == len(rhs.potentials)
-    #
-    # list(lhs.get_nodes())[0].nodes[0].variable.values[0] = 'true'
-    # lhs_v = list(lhs.get_nodes())[0].nodes[0].variable.values[0]
-    # rhs_v = list(rhs.get_nodes())[0].nodes[0].variable.values[0]
-    # assert lhs_v != rhs_v
+    a = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
+    b = BbnNode(Variable(1, 'b', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
+    bbn = Bbn().add_node(a).add_node(b) \
+        .add_edge(Edge(a, b, EdgeType.DIRECTED))
+    lhs = InferenceController.apply(bbn)
+    rhs = copy.deepcopy(lhs)
+
+    lhs_nodes, rhs_nodes = lhs.get_nodes(), rhs.get_nodes()
+    lhs_edges, rhs_edges = lhs.get_edges(), rhs.get_edges()
+    lhs_neighbors, rhs_neighbors = lhs.neighbors, rhs.neighbors
+    lhs_evidences, rhs_evidences = lhs.evidences, rhs.evidences
+    lhs_potentials, rhs_potentials = lhs.potentials, rhs.potentials
+
+    assert len(lhs_nodes) == len(rhs_nodes)
+    assert len(lhs_edges) == len(rhs_edges)
+    assert len(lhs_neighbors) == len(rhs_neighbors)
+    assert len(lhs_evidences) == len(rhs_evidences)
+    assert len(lhs_potentials) == len(rhs_potentials)
+
+    list(lhs.get_nodes())[0].nodes[0].variable.values[0] = 'true'
+    lhs_v = list(lhs.get_nodes())[0].nodes[0].variable.values[0]
+    rhs_v = list(rhs.get_nodes())[0].nodes[0].variable.values[0]
+    assert lhs_v != rhs_v
 
 
 @with_setup(setup, teardown)

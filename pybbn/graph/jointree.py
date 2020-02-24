@@ -27,16 +27,17 @@ class JoinTree(Ug):
 
     def __deepcopy__(self, memodict={}):
         # FIXME: fix this method
-        self.nodes = dict()
-        self.edges = dict()
-        self.edge_map = defaultdict(set)
-        self.neighbors = defaultdict(set)
+        # self.nodes = dict()
+        # self.edges = dict()
+        # self.edge_map = defaultdict(set)
+        # self.neighbors = defaultdict(set)
 
         nodes = deepcopy(self.nodes, memodict)
         edges = deepcopy(self.edges, memodict)
         edge_map = deepcopy(self.edge_map, memodict)
         neighbors = deepcopy(self.neighbors, memodict)
         potentials = deepcopy(self.potentials, memodict)
+        evidences = deepcopy(self.evidences, memodict)
         parent_info = deepcopy(self.parent_info, memodict)
 
         jt = JoinTree()
@@ -45,6 +46,7 @@ class JoinTree(Ug):
         jt.edge_map = edge_map
         jt.neighbors = neighbors
         jt.potentials = potentials
+        jt.evidences = evidences
         jt.parent_info = parent_info
         return jt
 
