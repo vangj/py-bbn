@@ -420,9 +420,9 @@ def test_forest_inference():
     d = BbnNode(Variable(3, 'd', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
     e = BbnNode(Variable(4, 'e', ['t', 'f']), [0.2, 0.8])
     f = BbnNode(Variable(5, 'f', ['t', 'f']), [0.1, 0.9, 0.9, 0.1])
-    bbn = Bbn().add_node(a).add_node(b).add_node(c).add_node(d).add_node(e).add_node(f)\
-        .add_edge(Edge(a, b, EdgeType.DIRECTED))\
-        .add_edge(Edge(c, d, EdgeType.DIRECTED))\
+    bbn = Bbn().add_node(a).add_node(b).add_node(c).add_node(d).add_node(e).add_node(f) \
+        .add_edge(Edge(a, b, EdgeType.DIRECTED)) \
+        .add_edge(Edge(c, d, EdgeType.DIRECTED)) \
         .add_edge(Edge(e, f, EdgeType.DIRECTED))
 
     jt = InferenceController.apply(bbn)

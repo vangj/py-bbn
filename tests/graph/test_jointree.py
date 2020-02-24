@@ -121,8 +121,8 @@ def test_to_dict():
     n0 = BbnNode(Variable(0, 'n0', ['t', 'f']), [0.2, 0.8])
     n1 = BbnNode(Variable(1, 'n1', ['t', 'f']), [0.9, 0.1, 0.9, 0.1])
     n2 = BbnNode(Variable(2, 'n2', ['t', 'f']), [0.6, 0.4, 0.4, 0.6])
-    bbn = Bbn().add_node(n0).add_node(n1).add_node(n2)\
-        .add_edge(Edge(n0, n1, EdgeType.DIRECTED))\
+    bbn = Bbn().add_node(n0).add_node(n1).add_node(n2) \
+        .add_edge(Edge(n0, n1, EdgeType.DIRECTED)) \
         .add_edge(Edge(n1, n2, EdgeType.DIRECTED))
     jt = InferenceController.apply(bbn)
     d = JoinTree.to_dict(jt)
