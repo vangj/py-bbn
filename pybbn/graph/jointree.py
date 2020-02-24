@@ -311,10 +311,6 @@ class JoinTree(Ug):
         :param evidence: Evidence.
         :return: This join tree.
         """
-        # FIXME: remove this line below? was this just for debugging?
-        # if EvidenceType.OBSERVATION != evidence.type:
-        #     return self
-
         potentials = self.evidences[evidence.node.id]
 
         pvalues = []
