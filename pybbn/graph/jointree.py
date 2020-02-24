@@ -80,7 +80,7 @@ class JoinTree(Ug):
     def get_bbn_node_and_parents(self):
         bbn_nodes = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
         result = {node: [pa for pa_id, pa in bbn_nodes.items() if pa_id in self.parent_info[node_id]]
-                for node_id, node in bbn_nodes.items()}
+                  for node_id, node in bbn_nodes.items()}
         return result
 
     def __get_bbn_nodes__(self):
@@ -348,6 +348,7 @@ class JoinTree(Ug):
         :param jt: Junction tree.
         :return: Dictionary.
         """
+
         def nodes_to_dict(nodes):
             d = {}
             for n in nodes:
@@ -387,6 +388,7 @@ class JoinTree(Ug):
         :param d: Dictionary.
         :return: Junction tree.
         """
+
         def get_variable(d):
             return Variable(d['id'], d['name'], d['values'])
 
