@@ -66,6 +66,6 @@ class EvidenceCollector(object):
                 c_arr.append(cli)
 
         for sep, cli in zip(s_arr, c_arr):
-            self.__walk__(self.start_clique, sep[1], cli[1])
+            self.__walk__(y, sep[1], cli[1])
 
         PotentialUtil.pass_single_message(self.join_tree, y, s, x)

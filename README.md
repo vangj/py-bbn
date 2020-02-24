@@ -184,6 +184,7 @@ Make sure you [install GraphViz](https://graphviz.gitlab.io/download/) on your s
 * Ubuntu: `sudo apt-get install libgraphviz-dev`
 * Mac OSX: `brew install graphviz`
 * Windows: use the [msi installer](https://graphviz.gitlab.io/_pages/Download/windows/graphviz-2.38.msi)
+  * For Anaconda + Windows, install pygraphviz from this [channel](https://anaconda.org/alubbock/pygraphviz) `conda install -c alubbock pygraphviz`
 
 ## testpypi issue
 
@@ -206,6 +207,12 @@ Here is a list of other Python libraries for inference in Bayesian Belief Networ
 | [bayesnetinference](https://github.com/sonph/bayesnetinference) | variable elimination | exact | None |
 
 I found other [packages](https://pypi.python.org/pypi?%3Aaction=search&term=bayesian+network&submit=search) in PyPI too.
+
+# Java
+
+But I am coming from the Java mothership and I want to use Bayesian Belief Networks in Java. How do I perform probabilistic inference in Java?
+
+This Python code base is a port of the [original Java code](https://github.com/vangj/jbayes).
 
 # Citation
 
