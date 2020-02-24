@@ -135,6 +135,7 @@ class Bbn(Dag):
         :param d: Dictionary.
         :return: BBN.
         """
+
         def get_variable(d):
             return Variable(d['id'], d['name'], d['values'])
 

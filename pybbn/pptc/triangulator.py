@@ -56,6 +56,7 @@ class Triangulator(object):
         :param m: Graph.
         :return: List of NodeCliques.
         """
+
         def get_neighbors(node, m):
             return [m.get_node(neighbor_id) for neighbor_id in m.get_neighbors(node.id)]
 
