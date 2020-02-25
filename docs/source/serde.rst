@@ -12,6 +12,12 @@ Serializing a BBN
    :language: python
    :linenos:
 
+You will get a file ``simple-bbn.json`` written out with the following content.
+
+.. literalinclude:: code/simple-bbn.json
+   :language: json
+   :linenos:
+
 Deserializing a BBN
 -------------------
 
@@ -24,6 +30,12 @@ Serializing a Join Tree
 
 .. literalinclude:: code/jt-serialization.py
    :language: python
+   :linenos:
+
+You will get a file ``simple-join-tree.json`` written out with the following content.
+
+.. literalinclude:: code/simple-join-tree.json
+   :language: json
    :linenos:
 
 Deserializing a Join Tree

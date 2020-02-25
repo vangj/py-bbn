@@ -8,6 +8,11 @@ in this library only for BBNs having all continuous nodes/variables with the add
 Gaussian distribution. Additional feature includes generating singly- and multi-connected BBNs so that you may use
 these generated BBNs for research purposes.
 
+Source Code
+-----------
+
+Full source code is available on `GitHub <https://github.com/vangj/py-bbn>`_.
+
 PyPi
 ----
 

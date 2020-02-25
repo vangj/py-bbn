@@ -158,5 +158,6 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
-
-
+html_show_sourcelink = False
+html_show_sphinx = False
+html_last_updated_fmt = '%b %d, %Y, %X'
