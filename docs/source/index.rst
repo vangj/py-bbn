@@ -11,6 +11,8 @@ Welcome to PyBBN's documentation!
    :caption: Contents
 
    intro
+   exact-inference
+   serde
 
 .. toctree::
    :maxdepth: 2
