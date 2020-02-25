@@ -15,6 +15,7 @@ class Potential(object):
     def add_entry(self, entry):
         """
         Adds a PotentialEntry.
+
         :param entry: PotentialEntry.
         :return: This potential.
         """
@@ -24,6 +25,7 @@ class Potential(object):
     def get_matching_entries(self, entry):
         """
         Gets all potential entries matching the specified entry.
+
         :param entry: PotentialEntry.
         :return: Array of matching potential entries.
         """
@@ -33,6 +35,7 @@ class Potential(object):
     def to_dict(potentials):
         """
         Converts potential to dictionary for easy validation.
+
         :param potentials: Potential.
         :return: Dictionary representation. Keys are entries and values are probabilities.
         """
@@ -57,6 +60,7 @@ class PotentialEntry(object):
     def add(self, k, v):
         """
         Adds a node id and its value.
+
         :param k: Node id.
         :param v: Value.
         :return: This potential entry.
@@ -68,6 +72,7 @@ class PotentialEntry(object):
         """
         Checks if this potential entry matches the specified one. A match is determined with all the keys
         and their associated values in the potential entry passed in matches this one.
+
         :param that: PotentialEntry.
         :return:
         """
@@ -79,6 +84,7 @@ class PotentialEntry(object):
     def duplicate(self):
         """
         Duplicates this entry.
+
         :return: PotentialEntry.
         """
         entry = PotentialEntry()
@@ -90,6 +96,7 @@ class PotentialEntry(object):
     def get_entry_keys(self):
         """
         Gets entry keys sorted.
+
         :return: List of tuples. First tuple is id of variable and second tuple is value of variable.
         """
         return sorted([(k, v) for k, v in self.entries.items()], key=lambda tup: tup[0])
@@ -97,6 +104,7 @@ class PotentialEntry(object):
     def get_kv(self):
         """
         Gets key-value pair that may be used for storage in dictionary.
+
         :return: Key-value pair.
         """
         return '|'.join(list(map(lambda tup: '{}={}'.format(tup[0], tup[1]), self.get_entry_keys()))), self.value
@@ -118,6 +126,7 @@ class PotentialUtil(object):
     def pass_single_message(join_tree, x, s, y):
         """
         Single message pass from x -- s -- y (from x to s to y).
+
         :param join_tree: Join tree.
         :param x: Clique.
         :param s: Separation-set.
@@ -135,6 +144,7 @@ class PotentialUtil(object):
     def marginalize_for(join_tree, clique, nodes):
         """
         Marginalizes the specified clique's potential over the specified nodes.
+
         :param join_tree: Join tree.
         :param clique: Clique.
         :param nodes: List of BBN nodes.
@@ -153,6 +163,7 @@ class PotentialUtil(object):
     def normalize(potential):
         """
         Normalizes the potential (make sure they sum to 1.0).
+
         :param potential: Potential.
         :return: Potential.
         """
@@ -169,6 +180,7 @@ class PotentialUtil(object):
     def divide(numerator, denominator):
         """
         Divides two potentials.
+
         :param numerator: Potential.
         :param denominator: Potential.
         :return: Potential.
@@ -188,6 +200,7 @@ class PotentialUtil(object):
     def is_zero(d):
         """
         Checks if the specified value is 0.0.
+
         :param d: Value.
         :return: A boolean indicating if the value is zero.
         """
@@ -197,6 +210,7 @@ class PotentialUtil(object):
     def multiply(bigger, smaller):
         """
         Multiplies two potentials. Order matters.
+
         :param bigger: Bigger potential.
         :param smaller: Smaller potential.
         """
@@ -209,6 +223,7 @@ class PotentialUtil(object):
     def get_potential(node, parents):
         """
         Gets the potential associated with the specified node and its parents.
+
         :param node: BBN node.
         :param parents: Parents of the BBN node (that themselves are also BBN nodes).
         :return: Potential.
@@ -223,6 +238,7 @@ class PotentialUtil(object):
     def get_potential_from_nodes(nodes):
         """
         Gets a potential from a list of BBN nodes.
+
         :param nodes: Array of BBN nodes.
         :return: Potential.
         """
@@ -240,12 +256,16 @@ class PotentialUtil(object):
     def get_cartesian_product(lists):
         """
         Gets the cartesian product of a list of lists of values. For example, if the list is
-        [ ['on', 'off'], ['on', 'off'] ],
-        then the result will be a list of the following.
+
+        * [ ['on', 'off'], ['on', 'off'] ]
+
+        then the result will be a list of the following
+
         * [ 'on', 'on']
         * [ 'on', 'off' ]
         * [ 'off', 'on' ]
         * [ 'off', 'off' ]
+
         :param lists: List of list of values.
         :return: Cartesian product of values.
         """
@@ -255,6 +275,7 @@ class PotentialUtil(object):
     def merge(node, parents):
         """
         Merges the nodes into one array.
+
         :param node: BBN node.
         :param parents: BBN parent nodes.
         :return: Array of BBN nodes.

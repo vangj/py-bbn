@@ -58,6 +58,7 @@ class Dag(object):
     def add_node(self, node_id, metadata={}):
         """
         Adds a node.
+
         :param node_id: Node ID.
         :param metadata: Metadata (JSON-like).
         :return: DAG.
@@ -68,6 +69,7 @@ class Dag(object):
     def add_edge(self, parent_id, child_id, metadata={}):
         """
         Adds an edge.
+
         :param parent_id: Parent node ID.
         :param child_id: Child node ID.
         :param metadata: Metadata (JSON-like).
@@ -82,6 +84,7 @@ class Dag(object):
     def nodes(self):
         """
         Gets a list of all the node IDs.
+
         :return: List of node IDs.
         """
         return list(self.g.nodes())
@@ -89,6 +92,7 @@ class Dag(object):
     def edges(self):
         """
         Gets a list of all the edges.
+
         :return: List of edges.
         """
         return list(self.g.edges())
@@ -96,6 +100,7 @@ class Dag(object):
     def number_of_nodes(self):
         """
         Gets the number of nodes.
+
         :return: Number of nodes.
         """
         return self.g.number_of_nodes()
@@ -103,6 +108,7 @@ class Dag(object):
     def number_of_edges(self):
         """
         Gets the number of edges.
+
         :return: Number of edges.
         """
         return self.g.number_of_edges()
@@ -110,6 +116,7 @@ class Dag(object):
     def parents(self, node_id):
         """
         Gets the parents for the specified node ID.
+
         :param node_id: Node ID.
         :return: List of parent node IDs.
         """
@@ -118,6 +125,7 @@ class Dag(object):
     def children(self, node_id):
         """
         Gets the children for the specified node ID.
+
         :param node_id: Node ID.
         :return: List of children node IDs.
         """
@@ -126,6 +134,7 @@ class Dag(object):
     def coparents(self, node_id):
         """
         Gets the coparents of the specified node.
+
         :param node_id:  Node ID.
         :return: List of coparent node IDS.
         """
@@ -140,6 +149,7 @@ class Dag(object):
         """
         Gets the Markov blanket of the specified node. The Markov blanket of a node is defined as its parents,
         children, and co-parents.
+
         :param node_id: Node ID.
         :return: List of node IDs in the Markov blanket.
         """
@@ -159,6 +169,7 @@ class Dag(object):
     def get_sorted_topology(self):
         """
         Gets the sorted topology of the DAG.
+
         :return: Sorted topology of the DAG.
         """
         return list(topological_sort(self.g))
@@ -172,6 +183,7 @@ class Parameters(object):
     def __init__(self, means, cov):
         """
         Ctor.
+
         :param means: Means.
         :param cov: Covariance matrix.
         """
@@ -186,6 +198,7 @@ class Parameters(object):
     def get_mean(self, node_id):
         """
         Gets the mean associated with the node ID.
+
         :param node_id: Integer node ID.
         :return: Mean.
         """
@@ -194,6 +207,7 @@ class Parameters(object):
     def get_stdev(self, node_id):
         """
         Gets the standard deviation associated with the node ID.
+
         :param node_id: Integer node ID.
         :return: Variance.
         """
@@ -208,6 +222,7 @@ class Bbn(object):
     def __init__(self, dag, params):
         """
         Ctor. Note that the dimensions of the DAG and parameters must match.
+
         :param dag: DAG.
         :param params: Parameters (means and covariance).
         """
@@ -246,6 +261,7 @@ class Bbn(object):
     def set_evidence(self, node_id, e):
         """
         Sets the evidence for the specified node.
+
         :param node_id: Node ID.
         :param e: Evidence.
         :return: BBN.
@@ -256,6 +272,7 @@ class Bbn(object):
     def get_evidence(self, node_id):
         """
         Gets the evidence for the specified node.
+
         :param node_id: Node ID.
         :return: Evidence.
         """
@@ -264,6 +281,7 @@ class Bbn(object):
     def get_evidences(self):
         """
         Gets all the evidences.
+
         :return: Array of evidences.
         """
         return self.evidence
@@ -271,6 +289,7 @@ class Bbn(object):
     def clear_evidences(self):
         """
         Clears all the evidences.
+
         :return: None
         """
         self.evidence = [None for _ in range(self.dag.number_of_nodes())]
@@ -278,6 +297,7 @@ class Bbn(object):
     def __has_parents__(self, node_id):
         """
         Checks if the specified node has parents.
+
         :param node_id: Node ID.
         :return: A boolean indicating if the node has parents.
         """
@@ -286,6 +306,7 @@ class Bbn(object):
     def __has_evidence__(self, node_id):
         """
         Checks if the specified node has evidence.
+
         :param node_id: Node ID.
         :return: A boolean indicating if the node has evidence.
         """
@@ -301,6 +322,7 @@ class Bbn(object):
     def do_inference(self, N=None):
         """
         Conducts inference.
+
         :param N: Number of samples. If an integer is provided, the sampled means and covariances will be returned.
         :return: (means, covariances)
         """
@@ -332,6 +354,15 @@ class Bbn(object):
         return data
 
     def predict_proba(self, X, n_jobs=-1, batch_size=5000, parallel=True):
+        """
+        Predict probability.
+
+        :param X: data.
+        :param n_jobs: Number of jobs.
+        :param batch_size: Batch size.
+        :param parallel: Parallel computation?
+        :return: Probabilities.
+        """
         num_data = X.shape[0]
         num_nodes = self.dag.number_of_nodes()
         D = self.get_memmap(X)
@@ -363,6 +394,15 @@ class Bbn(object):
         return np.array(results)
 
     def predict_log_proba(self, X, n_jobs=-1, batch_size=5000, parallel=True):
+        """
+        Predict log probabilities.
+
+        :param X: Data.
+        :param n_jobs: Number of jobs.
+        :param batch_size: Batch size.
+        :param parallel: Compute in parallel?
+        :return: Log probabilities.
+        """
         num_data = X.shape[0]
         num_nodes = self.dag.number_of_nodes()
         D = self.get_memmap(X)
@@ -394,6 +434,12 @@ class Bbn(object):
         return np.array(results)
 
     def log_prob(self, X):
+        """
+        Computes the log probabilities.
+
+        :param X: Data.
+        :return: Log probabilities.
+        """
         num_nodes = self.dag.number_of_nodes()
         sum = 0.0
         for node_id in range(num_nodes):

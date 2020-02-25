@@ -11,6 +11,7 @@ class DiscreteData(object):
     def __init__(self, df):
         """
         Ctor.
+
         :param df: Dataframe.
         """
         self.df = df
@@ -24,6 +25,7 @@ class DiscreteData(object):
     def get_variables(self, by_name=True):
         """
         Gets a dictionary of variables. Keys could be the name or numeric id.
+
         :param by_name: A boolean indicating if keys should be names or not. True by default.
         :return: Dictionary.
         """
@@ -39,6 +41,7 @@ class DiscreteData(object):
         """
         Gets a dictionary of values for each variable. Keys are variable/column names and values are list
         of the domain/values of the variable.
+
         :return: Dictionary.
         """
         profile = {}
@@ -50,6 +53,7 @@ class DiscreteData(object):
     def __is_valid__(self):
         """
         Checks to see if the dataframe is valid. Each variable/column must have more than 1 unique (at least 2) values.
+
         :return: Boolean indicating if the data is valid.
         """
         valid = True
@@ -63,6 +67,7 @@ class DiscreteData(object):
     def __sort__(self, names, vals):
         """
         Sorts the names and corresponding values ascendingly by name.
+
         :param names: List of names.
         :param vals: List of values.
         :return: List of tuple, where each tuple is a (name, value).
@@ -76,6 +81,7 @@ class DiscreteData(object):
         Converts the names and corresponding values to a query filter. For example, if names = ['a', 'c', 'b']
         and values = ['true', 'false', 'true'], then a filter is generated as follows, 'a == "true" and b == "true"
         and c == "false"'.
+
         :param names: List of names.
         :param vals: List of values.
         :return: Query filter for use with dataframe.query(...) method.
@@ -87,6 +93,7 @@ class DiscreteData(object):
     def __count__(self, names, vals):
         """
         Counts the frequency of the combination of the specified values.
+
         :param names: Names of variables.
         :param vals: Values of variables.
         :return: Count.
@@ -102,6 +109,7 @@ class DiscreteData(object):
     def __count_parents_child__(self, ch_name, ch_val, pa_names, pa_vals):
         """
         Counts the frequency of the specified combination of parent and child values.
+
         :param ch_name: Child name.
         :param ch_val: Child value.
         :param pa_names: Parent name.
@@ -119,6 +127,7 @@ class DiscreteData(object):
     def __get_prob__(self, name, val):
         """
         Gets the probability of a variable equal to the specified value.
+
         :param name: Name of variable/column.
         :param val: Value.
         :return: Probability, P(name = val).
@@ -135,6 +144,7 @@ class DiscreteData(object):
     def __get_joint_prob__(self, name1, val1, name2, val2):
         """
         Gets the joint probability of two variables equal to the corresponding values.
+
         :param name1: Name of variable/column.
         :param val1: Value of variable.
         :param name2: Name of variable/column.
@@ -153,6 +163,7 @@ class DiscreteData(object):
     def __get_joint_prob_set__(self, name1, val1, cond_names, cond_vals):
         """
         Gets the joint probability of a variable given a set of variables.
+
         :param name1: Name of variable/column.
         :param val1: Value of variable.
         :param cond_names: List of names of variables/columns.
@@ -183,6 +194,7 @@ class DiscreteData(object):
         """
         Gets the joint probability of three variables equal to the corresponding values. Note that the last
         two parameters should be a list of variable names and values.
+
         :param name1: Name of variable/column.
         :param val1: Value of variable.
         :param name2: Name of variable/column.
@@ -214,6 +226,7 @@ class DiscreteData(object):
     def __get_cond_prob__(self, name1, val1, name2, val2):
         """
         Gets the conditional probability of two variables, namely, P(name1 | name2).
+
         :param name1: Name of variable/column.
         :param val1: Value of variable.
         :param name2: Name of variable/column.
@@ -228,6 +241,7 @@ class DiscreteData(object):
     def __get_cond_prob_set__(self, name1, val1, cond_names, cond_vals):
         """
         Gets the conditional probability of a variable given a set of variables, namely, P(name1 | cond_names).
+
         :param name1: Name of variable/column.
         :param val1: Value of variable.
         :param cond_names: List of names of variables/columns.
@@ -260,6 +274,7 @@ class DiscreteData(object):
         """
         Gets the conditional probability of two variables given a set of third variables, namely,
         P(name1, name2 | cond_names).
+
         :param name1: Name of variable/column.
         :param val1: Value of variable.
         :param name2: Name of variable/column.
@@ -293,6 +308,7 @@ class DiscreteData(object):
     def __get_mi__(self, name1, name2):
         """
         Gets the mutual information between two variables.
+
         :param name1: Name of variable/column.
         :param name2: Name of variable/column.
         :return: Mutual information, I(name1, name2).
@@ -320,6 +336,7 @@ class DiscreteData(object):
     def __get_cond_mi__(self, name1, name2, cond_names):
         """
         Gets the conditional mutual information between two variables given a third set of variables.
+
         :param name1: Name of variable/column.
         :param name2: Name of variable/column.
         :param cond_names: List of names of variables/columns.
@@ -351,6 +368,12 @@ class DiscreteData(object):
         return mi
 
     def __factorial__(self, x):
+        """
+        Factorial.
+
+        :param x: A number.
+        :return: x!
+        """
         if x <= 0.0:
             return 1
 
@@ -361,11 +384,18 @@ class DiscreteData(object):
         return g
 
     def __gamma__(self, n):
+        """
+        Gamma.
+
+        :param n: A number.
+        :return: (n-1)!
+        """
         return self.__factorial__(n - 1)
 
     def is_cond_dep(self, name1, name2, names):
         """
         Checks if two variables are conditionally dependent give a third set of variables.
+
         :param name1: Name of variable/column.
         :param name2: Name of variable/column.
         :param names: List of names of variables/columns.
@@ -381,6 +411,7 @@ class DiscreteData(object):
     def get_pairwise_mutual_information(self):
         """
         Gets all unique pairwise mutual information.
+
         :return: List of tuples where each tuple is (name1, name2, mi).
         """
         mis = []
@@ -403,6 +434,7 @@ class DiscreteData(object):
         to its log form to avoid numerical overflow. All scores should be negative,
         with scores closer to zero indicating better likelihood (higher scores
         indicate the parent-child relationship is more likely).
+
         :param child: Child.
         :param parents: Parent.
         :return: Log of the K2 score.

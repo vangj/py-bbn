@@ -10,6 +10,7 @@ class PotentialInitializer(object):
     def init(bbn):
         """
         Initializes the BBN potentials.
+
         :param bbn: BBN graph.
         """
         for node in bbn.get_nodes():
@@ -21,6 +22,7 @@ class PotentialInitializer(object):
     def reinit(jt):
         """
         Reinitialize potentials of BBN nodes in join tree.
+
         :param jt: Join tree.
         :return: None.
         """

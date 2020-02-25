@@ -10,6 +10,7 @@ class EvidenceDistributor(object):
     def __init__(self, join_tree, start_clique):
         """
         Ctor.
+
         :param join_tree: Join tree.
         :param start_clique: Start clique.
         """
@@ -18,6 +19,12 @@ class EvidenceDistributor(object):
 
     @staticmethod
     def __get_neighboring_cliques__(join_tree, clique):
+        """
+        Gets the neighboring cliques.
+        :param join_tree: Join tree.
+        :param clique: Clique.
+        :return: Tuple. First tuple is list of neighboring sep-sets and second is list of neighboring cliques.
+        """
         sepsets = []
         cliques = []
 
@@ -50,6 +57,7 @@ class EvidenceDistributor(object):
     def __walk__(self, x, s, y):
         """
         Walks away from the specified node y.
+
         :param x: Clique.
         :param s: Separation-set.
         :param y: Clique.

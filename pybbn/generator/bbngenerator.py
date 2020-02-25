@@ -17,6 +17,7 @@ def __get_simple_ordered_tree__(n):
     Generates a simple-ordered tree. The tree is just a
     directed acyclic graph of n nodes with the structure
     0 --> 1 --> .... --> n.
+
     :param n: Number of nodes.
     :return: A directed graph.
     """
@@ -38,6 +39,7 @@ def __convert_to_undirected_graph__(g):
     in checking for connectedness of a graph, the API has a method
     to check for connectedness of an undirected graph, but not a
     DAG.
+
     :param g: Graph.
     :return: An undirected graph.
     """
@@ -52,6 +54,7 @@ def __convert_to_undirected_graph__(g):
 def __is_connected__(g):
     """
     Checks if a the directed acyclic graph is connected.
+
     :return: A boolean indicating if the graph is connected.
     """
     u = __convert_to_undirected_graph__(g)
@@ -61,6 +64,7 @@ def __is_connected__(g):
 def __get_random_node_pair__(n):
     """
     Randomly generates a pair of nodes.
+
     :param n: Number of nodes.
     :return: A tuple of random nodes.
     """
@@ -74,6 +78,7 @@ def __get_random_node_pair__(n):
 def __edge_exists__(i, j, g):
     """
     Checks if the edge i --> j exists in the graph, g.
+
     :param i: Index of a node.
     :param j: Index of a node.
     :param g: Graph.
@@ -87,6 +92,7 @@ def __del_edge__(i, j, g):
     Deletes the edge i --> j in the graph, g. The edge is only
     deleted if this removal does NOT cause the graph to be
     disconnected.
+
     :param i: Index of a node.
     :param j: Index of a node.
     :param g: Graph.
@@ -104,6 +110,7 @@ def __add_edge__(i, j, g):
     Adds an edge i --> j to the graph, g. The edge is only
     added if this addition does NOT cause the graph to have
     cycles.
+
     :param i: Index of a node.
     :param j: Index of a node.
     :param g: Graph.
@@ -122,6 +129,7 @@ def __find_predecessor__(i, j, g):
     We want to find a k, that is a parent of j, that is in
     the path between i and j. In some cases, we may not find
     such a k.
+
     :param i: Index of node.
     :param j: Index of node.
     :param g: Graph.
@@ -141,6 +149,7 @@ def __find_predecessor__(i, j, g):
 def __generate_multi_connected_structure__(n, max_iter=10):
     """
     Generates a multi-connected directed acyclic graph.
+
     :param n: Number of nodes.
     :param max_iter: Maximum iterations.
     :return: Graph structure (networkx).
@@ -158,6 +167,7 @@ def __generate_multi_connected_structure__(n, max_iter=10):
 def __generate_singly_structure__(n, max_iter=10):
     """
     Generates a singly-connected directed acyclic graph.
+
     :param n: Number of nodes.
     :param max_iter: Maximum iterations.
     :return: Graph structure (networkx).
@@ -195,6 +205,7 @@ def __generate_num_values__(n, max_values=2):
     Bayesian Network should have 2 or more values. This generates
     the number of values each variable will have. Each number will be
     sampled uniformly.
+
     :param n: Number of nodes.
     :param max_values: Maximum number of values for a node.
     :return: Array of number of values for each node.
@@ -207,6 +218,7 @@ def __generate_alphas__(n, max_alpha=10):
     Generate random number for the alpha's (the hyperparameters).
     Each number will be in the range [1, max_alpha]. Each number will
     be sampled uniformly.
+
     :param n: Number of alpha's to sample.
     :param max_alpha: Maximum alpha value.
     :return: A list of alpha's.
@@ -219,6 +231,7 @@ def __sample_dirichlet__(n, max_alpha=10):
     Samples from the Dirichlet distribution to a produce
     a probability vector of length n. The sum of each probability
     in the probability vector should sum to 1.
+
     :param n: Number of alpha's to sample.
     :param max_alpha: The maximum alpha.
     :return: Array of Dirichlet distributed values.
@@ -229,6 +242,7 @@ def __sample_dirichlet__(n, max_alpha=10):
 def __get_num_parent_instantiations__(parents, num_values):
     """
     Gets the number of parent instantiations.
+
     :param parents: List of parent indices.
     :param num_values: List of the number of values per node.
     :return: Number of parent instantiations.
@@ -250,6 +264,7 @@ def __generate_dirichlet_parameters__(i, parents, num_values, max_alpha=10):
     size of the node. The domain size is just the number of values
     that a node (variable) has, which should always be greater than
     or equal to 2.
+
     :param i: The index of the node for which parameters are being generated.
     :param parents: The indices of the parents of the node.
     :param num_values: The number of values desired.
@@ -271,6 +286,7 @@ def __generate_parameters__(g, max_values=2, max_alpha=10):
     Generates parameters for each node in the graph, g.
     A dictionary indexed by the node's id will give its
     (sampled) parameters and its parents.
+
     :param max_values: Maximum values per node.
     :param max_alpha: Maximum alpha per value (hyperparameters).
     :return: Parameters.
@@ -292,6 +308,7 @@ def __generate_parameters__(g, max_values=2, max_alpha=10):
 def to_json(g, params, pretty=False):
     """
     Serializes the graph to JSON.
+
     :param g: Graph.
     :param params: Parameters.
     :param pretty: Pretty-print serialization flag.
@@ -312,6 +329,7 @@ def to_json(g, params, pretty=False):
 def generate_multi_bbn(n, max_iter=10, max_values=2, max_alpha=10):
     """
     Generates structure and parameters for a multi-connected BBN.
+
     :param n: Number of nodes.
     :param max_iter: Maximum iterations.
     :param max_values: Maximum values per node.
@@ -326,6 +344,7 @@ def generate_multi_bbn(n, max_iter=10, max_values=2, max_alpha=10):
 def generate_singly_bbn(n, max_iter=10, max_values=2, max_alpha=10):
     """
     Generates structure and parameters for a singly-connected BBN.
+
     :param n: Number of nodes.
     :param max_iter: Maximum iterations.
     :param max_values: Maximum values per node.
@@ -340,6 +359,7 @@ def generate_singly_bbn(n, max_iter=10, max_values=2, max_alpha=10):
 def convert_for_exact_inference(g, p):
     """
     Converts the graph and parameters to a BBN.
+
     :param g: Directed acyclic graph (DAG in the form of networkx).
     :param p: Parameters.
     :return: BBN.
@@ -368,6 +388,7 @@ def convert_for_exact_inference(g, p):
 def convert_for_drawing(bbn):
     """
     Converts a BBN to a networkx graph for drawing.
+
     :param bbn: BBN.
     :return: Directed acyclic graph.
     """

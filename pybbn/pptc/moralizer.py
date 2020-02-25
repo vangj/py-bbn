@@ -11,6 +11,7 @@ class Moralizer(object):
     def moralize(dag):
         """
         Moralizes a DAG.
+
         :param dag: DAG.
         :return: Moralized (undirected) graph.
         """

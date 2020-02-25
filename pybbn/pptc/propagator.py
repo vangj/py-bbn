@@ -11,6 +11,7 @@ class Propagator(object):
     def propagate(join_tree):
         """
         Propagates evidence.
+
         :param join_tree: Join tree.
         :return: Join tree.
         """
@@ -31,6 +32,7 @@ class Propagator(object):
     def collect_evidence(join_tree, start):
         """
         Collects evidence.
+
         :param join_tree: Join tree.
         :param start: Start clique.
         """
@@ -41,6 +43,7 @@ class Propagator(object):
     def distribute_evidence(join_tree, start):
         """
         Distributes evidence.
+
         :param join_tree: Join tree.
         :param start: Start clique.
         """

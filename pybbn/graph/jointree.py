@@ -47,6 +47,7 @@ class JoinTree(Ug):
     def get_bbn_potential(self, node):
         """
         Gets the potential associated with the specified BBN node.
+
         :param node: BBN node.
         :return: Potential.
         """
@@ -64,6 +65,7 @@ class JoinTree(Ug):
     def update_bbn_cpts(self, cpts):
         """
         Updates the CPTs of the BBN nodes.
+
         :param cpts: Dictionary of CPTs. Keys are ids of BBN node and values are new CPTs.
         :return: None
         """
@@ -74,6 +76,11 @@ class JoinTree(Ug):
                 bbn_nodes[idx].potential = None
 
     def get_bbn_node_and_parents(self):
+        """
+        Gets a map of nodes and its parents.
+
+        :return: Map. Keys are node ID and values are list of nodes.
+        """
         bbn_nodes = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
         result = {node: [pa for pa_id, pa in bbn_nodes.items() if pa_id in self.parent_info[node_id]]
                   for node_id, node in bbn_nodes.items()}
@@ -82,6 +89,7 @@ class JoinTree(Ug):
     def __get_bbn_nodes__(self):
         """
         Gets all BBN nodes (cached).
+
         :return: Dictionary of BBN nodes.
         """
         # if self.__all_nodes__ is None:
@@ -93,6 +101,7 @@ class JoinTree(Ug):
     def get_bbn_nodes(self):
         """
         Gets all the BBN nodes in this junction tree.
+
         :return: List of BBN nodes.
         """
         return list(self.__get_bbn_nodes__().values())
@@ -100,6 +109,7 @@ class JoinTree(Ug):
     def get_bbn_node(self, id):
         """
         Gets the BBN node associated with the specified id.
+
         :param id: Node id.
         :return: BBN node or None if no such node exists.
         """
@@ -111,6 +121,7 @@ class JoinTree(Ug):
     def get_bbn_node_by_name(self, name):
         """
         Gets the BBN node associated with the specified name.
+
         :param name: Node name.
         :return: BBN node or None if no such node exists.
         """
@@ -122,6 +133,7 @@ class JoinTree(Ug):
     def find_cliques_with_node_and_parents(self, id):
         """
         Finds all cliques in this junction tree having the specified node and its parents.
+
         :param id: Node id.
         :return: Array of cliques.
         """
@@ -135,6 +147,7 @@ class JoinTree(Ug):
     def add_potential(self, clique, potential):
         """
         Adds a potential associated with the specified clique.
+
         :param clique: Clique.
         :param potential: Potential.
         :return: This join tree.
@@ -145,6 +158,7 @@ class JoinTree(Ug):
     def get_cliques(self):
         """
         Gets all the cliques in this junction tree.
+
         :return: Array of cliques.
         """
         return [clique for clique in self.get_nodes() if not isinstance(clique, SepSet)]
@@ -152,6 +166,7 @@ class JoinTree(Ug):
     def get_sep_sets(self):
         """
         Gets all the separation sets in this junction tree.
+
         :return: Array of separation sets.
         """
         return [sep_set for sep_set in self.get_nodes() if isinstance(sep_set, SepSet)]
@@ -159,6 +174,7 @@ class JoinTree(Ug):
     def add_edge(self, edge):
         """
         Adds an JtEdge.
+
         :param edge: JtEdge.
         :return: This join tree.
         """
@@ -192,6 +208,7 @@ class JoinTree(Ug):
         """
         Gets all the edges "flattened" out. Since separation-sets are really hyper-edges, this method breaks
         separation-sets into two edges.
+
         :return: Array of edges.
         """
         edges = []
@@ -203,6 +220,7 @@ class JoinTree(Ug):
     def set_listener(self, listener):
         """
         Sets the listener.
+
         :param listener: JoinTreeListener.
         """
         self.listener = listener
@@ -210,6 +228,7 @@ class JoinTree(Ug):
     def get_evidence(self, node, value):
         """
         Gets the evidence associated with the specified BBN node and value.
+
         :param node: BBN node.
         :param value: Value.
         :return: Potential (the evidence).
@@ -233,6 +252,7 @@ class JoinTree(Ug):
     def get_change_type(self, evidences):
         """
         Gets the change type associated with the specified list of evidences.
+
         :param evidences: List of evidences.
         :return: ChangeType.
         """
@@ -256,6 +276,7 @@ class JoinTree(Ug):
     def get_unobserved_evidence(self, node):
         """
         Gets the unobserved evidences associated with the specified node.
+
         :param node: BBN node.
         :return: Evidence.
         """
@@ -266,7 +287,8 @@ class JoinTree(Ug):
 
     def unobserve(self, nodes):
         """
-        Unobserves a list of nodeds.
+        Unobserves a list of nodes.
+
         :param nodes: List of nodes.
         :return: This join tree.
         """
@@ -277,6 +299,7 @@ class JoinTree(Ug):
     def unobserve_all(self):
         """
         Unobserves all BBN nodes.
+
         :return: This join tree.
         """
         self.unobserve(self.get_bbn_nodes())
@@ -285,6 +308,7 @@ class JoinTree(Ug):
     def update_evidences(self, evidences):
         """
         Updates this join tree with the list of specified evidence.
+
         :param evidences: List of evidences.
         :return: This join tree.
         """
@@ -304,6 +328,7 @@ class JoinTree(Ug):
     def set_observation(self, evidence):
         """
         Sets a single observation.
+
         :param evidence: Evidence.
         :return: This join tree.
         """
@@ -337,6 +362,7 @@ class JoinTree(Ug):
     def to_dict(jt):
         """
         Converts a junction tree to a serializable dictionary.
+
         :param jt: Junction tree.
         :return: Dictionary.
         """
@@ -377,6 +403,7 @@ class JoinTree(Ug):
     def from_dict(d):
         """
         Converts a dictionary to a junction tree.
+
         :param d: Dictionary.
         :return: Junction tree.
         """
@@ -419,6 +446,7 @@ class JoinTree(Ug):
     def __shouldadd__(self, edge):
         """
         Checks if the specified edge should be added.
+
         :param edge: Edge.
         :return: A boolean indicating if the specified edge should be added.
         """
@@ -436,6 +464,7 @@ class JoinTree(Ug):
     def __get_parent_ids__(self, id):
         """
         Gets the parent ids of the specified node id.
+
         :param id: Node id.
         :return: Array of parent ids.
         """
@@ -447,6 +476,7 @@ class JoinTree(Ug):
     def __notify_listener__(self, change):
         """
         Notifies the JoinTreeListener, if any.
+
         :param change: ChangeType.
         """
         if self.listener is None:
@@ -465,6 +495,7 @@ class PathDetector(object):
     def __init__(self, graph, start, stop):
         """
         Ctor.
+
         :param graph: Join tree.
         :param start: Start node id.
         :param stop: Stop node id.
@@ -477,6 +508,7 @@ class PathDetector(object):
     def exists(self):
         """
         Checks if a path exists.
+
         :return: True if a path exists, otherwise, false.
         """
         if self.start == self.stop:
@@ -487,6 +519,7 @@ class PathDetector(object):
     def __find__(self, i):
         """
         Checks if a path exists from the specified node to the stop node.
+
         :param i: Node id.
         :return: True if a path exists, otherwise, false.
         """
@@ -516,6 +549,7 @@ class JoinTreeListener(object):
     def evidence_retracted(self, join_tree):
         """
         Evidence is retracted.
+
         :param join_tree: Join tree.
         """
         pass
@@ -523,6 +557,7 @@ class JoinTreeListener(object):
     def evidence_updated(self, join_tree):
         """
         Evidence is updated.
+
         :param join_tree: Join tree.
         """
         pass
@@ -563,6 +598,7 @@ class EvidenceBuilder(object):
     def with_node(self, node):
         """
         Adds a BBN node.
+
         :param node: BBN node.
         :return: Builder.
         """
@@ -572,6 +608,7 @@ class EvidenceBuilder(object):
     def with_type(self, type):
         """
         Adds the EvidenceType.
+
         :param type: EvidenceType.
         :return: Builder.
         """
@@ -581,6 +618,7 @@ class EvidenceBuilder(object):
     def with_evidence(self, val, likelihood):
         """
         Adds evidence.
+
         :param val: Value.
         :param likelihood: Likelihood.
         :return: Builder.
@@ -591,6 +629,7 @@ class EvidenceBuilder(object):
     def build(self):
         """
         Builds an evidence.
+
         :return: Evidence.
         """
         evidence = Evidence(self.node, self.type)
@@ -607,6 +646,7 @@ class Evidence(object):
     def __init__(self, node, type):
         """
         Ctor.
+
         :param node: BBN node.
         :param type: EvidenceType.
         """
@@ -617,6 +657,7 @@ class Evidence(object):
     def add_value(self, value, likelihood):
         """
         Adds a value.
+
         :param value: Value.
         :param likelihood: Likelihood.
         :return: This evidence.
@@ -627,6 +668,7 @@ class Evidence(object):
     def compare(self, potentials):
         """
         Compares this evidence with previous ones.
+
         :param potentials: Map of potentials.
         :return: The ChangeType from the comparison.
         """
@@ -656,6 +698,7 @@ class Evidence(object):
     def __convert__(potentials):
         """
         Converts potentials to a map (dict).
+
         :param potentials: Potentials.
         :return: Dict where keys are BBN node values and values are likelihoods.
         """
@@ -669,6 +712,7 @@ class Evidence(object):
         """
         Checks if the values represent an unobserved evidence. If all likelihoods are 1.0, then this
         map of values represent unobserved evidence.
+
         :param values: Map of values, where keys are values and values are likelihoods.
         :return: A boolean indicating if the values represent unobserved evidence.
         """
@@ -682,6 +726,7 @@ class Evidence(object):
         """
         Checks if the values represent an observed evidence. If all likelihoods are 0 with exactly
         one of them being 1, then this map of values represent observed evidence.
+
         :param values: Map of values, where keys are values and values are likelihoods.
         :return: A boolean indicating if the values represent observed evidence.
         """
@@ -700,6 +745,7 @@ class Evidence(object):
     def __get_observed_value__(values):
         """
         Gets the value that is observed (the value whose likelihood is 1.0).
+
         :param values: Map of values, where keys are values and values are likelihoods.
         :return: Observed value.
         """
@@ -711,6 +757,7 @@ class Evidence(object):
         """
         Normalizes the specified value to the range [0.0, 1.0]. If the specified value is less than 0.0 then
         0.0 is returned; if the specified value is greater than 1.0 then 1.0 is returned.
+
         :param val: Value.
         :return: A value in the range [0.0, 1.0].
         """
@@ -726,6 +773,7 @@ class Evidence(object):
         """
         Normalizes the specified value to either 0.0 or 1.0 (and nothing else). If the specified value is anything
         greater than 0.0, then a 1.0 is returned, else a 0.0 is returned.
+
         :param val: Value.
         :return: 0.0 or 1.0.
         """

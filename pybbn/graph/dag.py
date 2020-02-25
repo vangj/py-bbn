@@ -20,6 +20,7 @@ class Dag(Graph):
     def get_parents(self, id):
         """
         Gets the parent IDs of the specified node.
+
         :param id: Node id.
         :return: Array of parent ids.
         """
@@ -28,6 +29,7 @@ class Dag(Graph):
     def get_children(self, node_id):
         """
         Gets the children IDs of the specified node.
+
         :param node_id: Node id.
         :return: Array of children ids.
         """
@@ -36,6 +38,7 @@ class Dag(Graph):
     def __shouldadd__(self, edge):
         """
         Checks if the specified directed edge should be added.
+
         :param edge: Directed edge.
         :return: A boolean indicating if the edge should be added.
         """
@@ -57,6 +60,7 @@ class Dag(Graph):
     def edge_exists(self, id1, id2):
         """
         Checks if a directed edge exists between the specified id. e.g. id1 -> id2
+
         :param id1: Node id.
         :param id2: Node id.
         :return: A boolean indicating if a directed edge id1 -> id2 exists.
@@ -68,6 +72,7 @@ class Dag(Graph):
     def to_nx_graph(self):
         """
         Converts this DAG to a NX DiGraph for visualization.
+
         :return: A tuple, where the first item is the NX DiGraph and the second items are the node labels.
         """
         g = nx.DiGraph()
@@ -92,11 +97,19 @@ class Bbn(Dag):
     """
 
     def __init__(self):
-        """Ctor."""
+        """
+        Ctor.
+        """
         Dag.__init__(self)
         self.parents = {}
 
     def get_parents_ordered(self, id):
+        """
+        Gets the IDs of the specified node ordered.
+
+        :param id: ID of node.
+        :return: List of parent IDs sorted.
+        """
         return sorted(self.parents[id]) if id in self.parents else []
 
     def __edge_added__(self, edge):
@@ -109,6 +122,7 @@ class Bbn(Dag):
     def __shouldadd__(self, edge):
         """
         Checks if the specified directed edge should be added.
+
         :param edge: Directed edge.
         :return: A boolean indicating if the directed edge should be added.
         """
@@ -120,6 +134,7 @@ class Bbn(Dag):
     def to_dict(bbn):
         """
         Gets a JSON serializable dictionary representation.
+
         :param bbn: BBN.
         :return: Dictionary.
         """
@@ -132,6 +147,7 @@ class Bbn(Dag):
     def from_dict(d):
         """
         Creates a BBN from a dictionary (deserialized JSON).
+
         :param d: Dictionary.
         :return: BBN.
         """
@@ -169,6 +185,8 @@ class PathDetector(object):
 
     def __init__(self, graph, start, stop):
         """
+        Ctor.
+
         :param graph: DAG.
         :param start: Start node id.
         :param stop: Stop node id.
@@ -181,6 +199,7 @@ class PathDetector(object):
     def exists(self):
         """
         Checks if a path exists.
+
         :return: True if a path exists, otherwise, false.
         """
         if self.start == self.stop:
@@ -191,6 +210,7 @@ class PathDetector(object):
     def __find__(self, i):
         """
         Checks if a path exists from the specified node to the stop node.
+
         :param i: Node id.
         :return: True if a path exists, otherwise, false.
         """
@@ -215,6 +235,7 @@ class BbnUtil(object):
     def get_huang_graph():
         """
         Gets the Huang reference BBN graph.
+
         :return: BBN.
         """
         a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
@@ -251,6 +272,7 @@ class BbnUtil(object):
     def get_simple():
         """
         Gets a simple BBN graph.
+
         :return: BBN.
         """
         a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])

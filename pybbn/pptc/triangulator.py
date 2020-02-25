@@ -15,6 +15,7 @@ class Triangulator(object):
     def triangulate(m):
         """
         Triangulates the specified moralized graph.
+
         :param m: Moralized undirected graph.
         :return: Array of cliques.
         """
@@ -39,6 +40,7 @@ class Triangulator(object):
     def duplicate(g):
         """
         Duplicates a undirected graph.
+
         :param g: Undirected graph.
         :return: Undirected graph.
         """
@@ -53,6 +55,7 @@ class Triangulator(object):
     def generate_cliques(m):
         """
         Generates a list of node cliques.
+
         :param m: Graph.
         :return: List of NodeCliques.
         """
@@ -73,6 +76,7 @@ class Triangulator(object):
     def select_node(m):
         """
         Selects a clique from the specified graph. Cliques are sorted by number of edges, weight, and id (asc).
+
         :param m: Graph.
         :return: Clique.
         """
@@ -83,6 +87,7 @@ class Triangulator(object):
         """
         Gets the weight of a BBN node. The weight of a node is the product of the its weight with all its
         neighbors' weight.
+
         :param n: BBN node.
         :param m: Graph.
         :return: Weight.
@@ -96,6 +101,7 @@ class Triangulator(object):
     def get_edges_to_add(n, m):
         """
         Gets edges to add.
+
         :param n: BBN node.
         :param m: Graph.
         :return: Array of edges.
@@ -109,6 +115,7 @@ class Triangulator(object):
     def is_subset(cliques, clique):
         """
         Checks if the specified clique is a subset of the specified list of cliques.
+
         :param cliques: List of cliques.
         :param clique: Clique.
         :return: A boolean indicating if the clique is a subset.
@@ -127,6 +134,7 @@ class NodeClique:
     def __init__(self, node, neighbors, weight, edges):
         """
         Ctor.
+
         :param node: BBN node.
         :param neighbors: BBN nodes (neighbors).
         :param weight: Weight.
@@ -140,6 +148,7 @@ class NodeClique:
     def get_bbn_nodes(self):
         """
         Gets all the BBN nodes in this node clique.
+
         :return: Array of BBN nodes.
         """
         neighbors = [node for node in self.neighbors] + [self.node]

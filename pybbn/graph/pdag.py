@@ -15,6 +15,7 @@ class Pdag(Graph):
     def get_parents(self, id):
         """
         Gets the parent of the specified node id.
+
         :param id: Node id.
         :return: Array of parent ids.
         """
@@ -24,6 +25,7 @@ class Pdag(Graph):
         """
         Gets all the out nodes for the node with the specified id. Out nodes are all connected nodes that are
         not parents (do not have a directed arc into the specified node).
+
         :param id: Node id.
         :return: Array of out node ids.
         """
@@ -35,6 +37,7 @@ class Pdag(Graph):
     def __shouldadd__(self, edge):
         """
         Checks if the specified edge should be added.
+
         :param edge: Edge (could be directed or undirected).
         :return: A boolean indicating if the edge should be added.
         """
@@ -53,6 +56,7 @@ class Pdag(Graph):
     def edge_exists(self, id1, id2):
         """
         Checks if the specified edge id1 -- id2 exists.
+
         :param id1: Node id.
         :param id2: Node id.
         :return: A boolean indicating if the edge exists.
@@ -64,6 +68,7 @@ class Pdag(Graph):
     def directed_edge_exists(self, id1, id2):
         """
         Checks if the specified edge id1 -> id2 exists.
+
         :param id1: Node id.
         :param id2: Node id.
         :return: A boolean indicating if the edge exists.
@@ -81,6 +86,7 @@ class PathDetector(object):
     def __init__(self, graph, start, stop):
         """
         Ctor.
+
         :param graph: Pdag.
         :param start: Start node id.
         :param stop: Stop node id.
@@ -93,6 +99,7 @@ class PathDetector(object):
     def exists(self):
         """
         Checks if a path exists.
+
         :return: True if a path exists, otherwise, false.
         """
         if self.start == self.stop:
@@ -103,6 +110,7 @@ class PathDetector(object):
     def __find__(self, i):
         """
         Checks if a path exists from the specified node to the stop node.
+
         :param i: Node id.
         :return: True if a path exists, otherwise, false.
         """

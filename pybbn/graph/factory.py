@@ -16,7 +16,8 @@ class Factory(object):
     def from_libpgm_discrete_json(j):
         """
         Converts a libpgm discrete network as specified by a JSON string into a py-bbn one.
-        Look <a href="https://pythonhosted.org/libpgm/unittestdict.html">here</a>.
+        Look at https://pythonhosted.org/libpgm/unittestdict.html.
+
         :param j: String representing JSON.
         :return: py-bbn BBN.
         """
@@ -26,7 +27,8 @@ class Factory(object):
     def from_libpgm_discrete_dictionary(d):
         """
         Converts a libpgm discrete network as specified by a dictionary into a py-bbn one.
-        Look <a href="https://pythonhosted.org/libpgm/unittestdict.html">here</a>.
+        Look at https://pythonhosted.org/libpgm/unittestdict.html.
+
         :param d: A dictionary representing a libpgm discrete network.
         :return: py-bbn BBN.
         """
@@ -44,6 +46,7 @@ class Factory(object):
     def from_libpgm_discrete_object(bn):
         """
         Converts a libpgm discrete network object into a py-bbn one.
+
         :param bn: libpgm discrete BBN.
         :return: py-bbn BBN.
         """

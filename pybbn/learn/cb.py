@@ -25,6 +25,7 @@ class MwstAlgo(object):
     def fit(self, data):
         """
         Learns the structure and parameter of a Bayesian belief network from the data.
+
         :param data: Data.
         :return: BBN.
         """
@@ -39,6 +40,7 @@ class MwstAlgo(object):
     def learn_parameters(self, data, g):
         """
         Learns the parameters (conditional probability tables, local probability models).
+
         :param data: Data.
         :param g: DAG.
         :return: A dictionary associated with nodes/variables and their parameters.
@@ -69,6 +71,7 @@ class MwstAlgo(object):
     def learn_structure(self, data):
         """
         Learns the BBN structure.
+
         :param data: Data.
         :return: DAG.
         """
@@ -144,6 +147,7 @@ class MwstAlgo(object):
 def build_bbn(variable_profiles, g, p):
     """
     Builds a BBN from a DAG, g, and paremeters, p.
+
     :param variable_profiles: Variable profiles.
     :param g: DAG.
     :param p: Parameters.
@@ -175,6 +179,7 @@ def build_bbn(variable_profiles, g, p):
 def get_likely_directed_edges(edges, data):
     """
     Gets directed edged based on likelihood for each undirected edge.
+
     :param edges: List of edges.
     :param data: Data.
     :return: List of directed edge.
@@ -199,6 +204,7 @@ def get_likely_directed_edges(edges, data):
 def get_missing_edges(u, g):
     """
     Gets the missing edges in g that is in u.
+
     :param u: Undirected graph.
     :param g: Directed acyclic graph.
     :return: List of tuples, where each tuple is a pair of nodes designating an edge.
@@ -218,6 +224,7 @@ def get_v_structures(g):
     """
     Gets all the v-structures in g. For three nodes, a, b, c, where a is connected to b,
     b is connected c, and a and c are not connected, this configuration is called a v-structure.
+
     :param g: Undirected graph.
     :return: List of tuples representing v-structure.
     """
@@ -239,6 +246,7 @@ def get_mwst_skeleton(data):
     """
     Gets the undirected graph that represents the maximum weight spanning tree (MWST)
     of the data.
+
     :param data: Data.
     :return: Undirected graph (MWST).
     """

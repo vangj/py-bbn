@@ -12,6 +12,7 @@ class Transformer(object):
     def transform(cliques):
         """
         Transforms the cliques into a join tree.
+
         :param cliques: List of cliques.
         :return: Join tree.
         """
@@ -31,9 +32,9 @@ class Transformer(object):
     def get_sep_sets(cliques):
         """
         Gets all pair-wise separation-sets.
+
         :param cliques: Array of cliques.
-        :return: Array of separation sets sorted descendingly by mass followed by
-        cost (asc) and id (asc).
+        :return: Array of separation sets sorted descendingly by mass followed by cost (asc) and id (asc).
         """
         sep_sets = []
         size = len(cliques)

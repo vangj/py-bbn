@@ -21,6 +21,7 @@ class Graph(object):
     def get_neighbors(self, id):
         """
         Gets the neighbors of the specified node.
+
         :param id: Node id.
         :return: Set of neighbors of the specified node.
         """
@@ -29,6 +30,7 @@ class Graph(object):
     def get_node(self, id):
         """
         Gets the node associated with the specified id.
+
         :param id: Node id.
         :return: Node.
         """
@@ -37,6 +39,7 @@ class Graph(object):
     def get_nodes(self):
         """
         Gets all the nodes.
+
         :return: List of nodes.
         """
         return self.nodes.values()
@@ -44,6 +47,7 @@ class Graph(object):
     def get_edges(self):
         """
         Gets all the edges.
+
         :return: List of edges.
         """
         return [edge for edge in self.edges.values()]
@@ -51,6 +55,7 @@ class Graph(object):
     def add_node(self, node):
         """
         Adds a node.
+
         :param node: Node.
         :return: This graph.
         """
@@ -61,6 +66,7 @@ class Graph(object):
     def add_edge(self, edge):
         """
         Adds an edge.
+
         :param edge: Edge.
         :return: This graph.
         """
@@ -83,6 +89,7 @@ class Graph(object):
     def __edge_added__(self, edge):
         """
         Callback listener for sub-classes when an edge has been added.
+
         :param edge: Edge.
         :return: None.
         """
@@ -91,6 +98,7 @@ class Graph(object):
     def __shouldadd__(self, edge):
         """
         Checks if the specified edge should be added.
+
         :param edge: Edge.
         :return: A boolean indicating if the edge should be added.
         """
@@ -112,6 +120,7 @@ class Graph(object):
     def edge_exists(self, id1, id2):
         """
         Checks if the specified edge id1 -- id2 exists.
+
         :param id1: Node id.
         :param id2: Node id.
         :return: A boolean indicating if the specified edge exists.
@@ -125,6 +134,7 @@ class Graph(object):
     def remove_node(self, id):
         """
         Removes a node from the graph.
+
         :param id: Node id.
         """
         self.nodes.pop(id, None)

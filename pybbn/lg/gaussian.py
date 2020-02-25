@@ -8,6 +8,7 @@ from scipy import linalg
 def __get_box_muller_sample__():
     """
     Gets a sample using the Box-Muller transform.
+
     :return: A sample point.
     """
     r = 0
@@ -29,6 +30,7 @@ def __get_box_muller_sample__():
 def __get_box_muller_samples__(n):
     """
     Gets n independent Box-Muller samples.
+
     :param n: Number of samples.
     :return: Array of Box-Muller samples of dimension 1 x n.
     """
@@ -39,6 +41,7 @@ def __get_sample__(m, s):
     """
     Sample from the Gaussian distribution with mean=m and standard
     deviation=s.
+
     :param m: Mean.
     :param s: Standard deviation.
     :return: Sample point.
@@ -51,6 +54,7 @@ def __slice_acov__(cov, dep, given):
     """
     Slices a covariance matrix keeping only the row associated with the dependent variable
     minus its self-covariance.
+
     :param cov: Covariance matrix.
     :param dep: Index of dependent variable.
     :param given: Array of indices of independent variables.
@@ -66,6 +70,7 @@ def __slice_scov__(cov, dep, given):
     """
     Slices a covariance matrix keeping only the covariances between the variables
     indicated by the array of indices of the independent variables.
+
     :param cov: Covariance matrix.
     :param dep: Index of dependent variable.
     :param given: Array of indices of independent variables.
@@ -82,6 +87,7 @@ def rnorm(n, m, s):
     """
     Sample from the Gaussian distribution with mean=m and standard
     deviation=s.
+
     :param n: Number of samples.
     :param m: Mean.
     :param s: Standard deviation.
@@ -94,6 +100,7 @@ def rnorm(n, m, s):
 def dnorm(data, m, s):
     """
     Gets the probability of each value in x given the mean=m and standard deviation=s.
+
     :param data: Array of values.
     :param m: Mean.
     :param s: Standard deviation.
@@ -110,6 +117,7 @@ def rcmvnorm(n, m, cov, dep, given, X):
     """
     Samples from the conditional multivariate Gaussian distribution with means=m and
     covariance matrix=cov subject to the values X.
+
     :param n: The number of samples to generate.
     :param m: An array of means.
     :param cov: Covariance matrix.
@@ -145,6 +153,7 @@ def rcmvnorm(n, m, cov, dep, given, X):
 def dcmvnorm(data, m, cov, dep, given):
     """
     Gets the probability of the dependent variable given the independent ones.
+
     :param data: Matrix of data.
     :param m: Array of means.
     :param cov: Covariance matrix.
@@ -182,6 +191,7 @@ def dcmvnorm(data, m, cov, dep, given):
 def rmvnorm(n, m, cov):
     """
     Samples from the multivariate Gaussian distribution with means=m and covariance matrix=cov.
+
     :param n: Number of samples.
     :param m: Array of means.
     :param cov: Covariance matrix.
@@ -196,6 +206,7 @@ def rmvnorm(n, m, cov):
 def dmvnorm(data, m, cov):
     """
     Computes the probabilities of the sample points in X.
+
     :param data: Data matrix.
     :param m: Means.
     :param cov: Covariance matrix.
@@ -219,7 +230,8 @@ class RandCondMvn(object):
 
     def __init__(self, m, cov, dep, given):
         """
-        Constructor.
+        Ctor.
+
         :param m: An array of means.
         :param cov: Covariance matrix.
         :param dep: Index of dependent variable.
@@ -247,6 +259,7 @@ class RandCondMvn(object):
     def next(self, X):
         """
         Samples from the conditional multivariate Gaussian distribution
+
         :param X: Values of dependent variables.
         :return: Sample.
         """

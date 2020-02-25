@@ -10,6 +10,7 @@ class EvidenceCollector(object):
     def __init__(self, join_tree, start_clique):
         """
         Ctor.
+
         :param join_tree: Join tree.
         :param start_clique: Start clique.
         """
@@ -50,6 +51,7 @@ class EvidenceCollector(object):
     def __walk__(self, x, s, y):
         """
         Walks away from the specified x clique.
+
         :param x: Clique.
         :param s: Separation-set.
         :param y: Clique.

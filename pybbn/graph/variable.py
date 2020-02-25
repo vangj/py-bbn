@@ -8,6 +8,8 @@ class Variable(object):
 
     def __init__(self, id, name, values):
         """
+        Ctor.
+
         :param id: Numeric identifier. e.g. 0
         :param name: Name. e.g. 'a'
         :param values: Array of values. e.g. ['on', 'off']
@@ -36,6 +38,7 @@ class Variable(object):
     def to_dict(self):
         """
         Gets a JSON serializable dictionary representation.
+
         :return: Dictionary.
         """
         return {

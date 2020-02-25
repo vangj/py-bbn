@@ -18,6 +18,7 @@ class InferenceController(JoinTreeListener):
     def apply(bbn):
         """
         Sets up the specified BBN for probability propagation in tree clusters (PPTC).
+
         :param bbn: BBN graph.
         :return: Join tree.
         """
@@ -40,6 +41,7 @@ class InferenceController(JoinTreeListener):
         """
         Reapply propagation to join tree with new CPTs. The join tree structure is kept but the BBN node CPTs
         are updated. A new instance/copy of the join tree will be returned.
+
         :param join_tree: Join tree.
         :param cpts: Dictionary of new CPTs. Keys are id's of nodes and values are new CPTs.
         :return: Join tree.
@@ -61,6 +63,7 @@ class InferenceController(JoinTreeListener):
     def apply_from_serde(join_tree):
         """
         Applies propagation to join tree from a deserialzed join tree.
+
         :param join_tree: Join tree.
         :return: Join tree (the same one passed in).
         """
@@ -78,6 +81,7 @@ class InferenceController(JoinTreeListener):
     def evidence_retracted(self, join_tree):
         """
         Evidence is retracted.
+
         :param join_tree: Join tree.
         """
         Initializer.initialize(join_tree)
@@ -86,6 +90,7 @@ class InferenceController(JoinTreeListener):
     def evidence_updated(self, join_tree):
         """
         Evidence is updated.
+
         :param join_tree: Join tree.
         """
         Propagator.propagate(join_tree)

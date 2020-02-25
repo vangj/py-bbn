@@ -12,6 +12,7 @@ COV = namedtuple('COV', 'C11 C12 C21 C22 C22I')
 def __compute_means__(v, M, C, i1, i2):
     """
     Computes the conditional means.
+
     :param v: The values conditioned on.
     :param M: Marginal means (vector).
     :param C: Covariance matrix.
@@ -25,6 +26,7 @@ def __compute_means__(v, M, C, i1, i2):
 def __compute_covs__(C):
     """
     Computes the conditional covariance matrix.
+
     :param C: Partitioned covariance matrix.
     :return: Conditional covariance matrix.
     """
@@ -34,6 +36,7 @@ def __compute_covs__(C):
 def __update_mean__(m, v, M, i1, i2):
     """
     Updates the means.
+
     :param m: Means of unconditioned variables.
     :param v: Means of conditioned variables.
     :param M: Vector of marginal means.
@@ -52,6 +55,7 @@ def __update_mean__(m, v, M, i1, i2):
 def __update_cov__(c, S, i1, i2):
     """
     Updates the covariance matrix.
+
     :param c: Conditioned covariance matrix.
     :param S: Covariance matrix.
     :param i1: Indices of unconditioned variables.
@@ -71,6 +75,7 @@ def __update_cov__(c, S, i1, i2):
 def __to_row_indices__(indices):
     """
     Creates row indices for help in broadcasting/slicing matrix.
+
     :param indices: Indices.
     :return: Array of array of indices.
     """
@@ -80,6 +85,7 @@ def __to_row_indices__(indices):
 def __to_col_indices__(indices):
     """
     Creates column indices for help in broadcasting/slicing matrix.
+
     :param indices: Indices.
     :return: Array.
     """
@@ -89,6 +95,7 @@ def __to_col_indices__(indices):
 def get_covariances(i1, i2, S):
     """
     Gets the partitioned matrices of S.
+
     :param i1: Indices of unconditioned variables.
     :param i2: Indices of conditioned variables.
     :param S: Covariance matrix.
@@ -123,6 +130,7 @@ class MvnInference(object):
     def __init__(self, M, S, N=10000):
         """
         Ctor.
+
         :param M: Vector of means.
         :param S: Matrix of covariances.
         :param N: Number of samples (default: 10,000).
@@ -136,6 +144,7 @@ class MvnInference(object):
     def clear(self):
         """
         Clears the updated mean and covariance.
+
         :return: None.
         """
         self.M_u = None
@@ -144,6 +153,7 @@ class MvnInference(object):
     def update_mean_cov(self, v, iv):
         """
         Updates the means and covariances.
+
         :param v: Values conditioned.
         :param iv: Indices of variables conditioned on.
         :return: None.
@@ -170,6 +180,7 @@ class MvnInference(object):
     def get_params(self):
         """
         Gets the means and covariances.
+
         :return: (means, covariances).
         """
         return (self.M, self.S) if self.M_u is None or self.S_u is None else (self.M_u, self.S_u)
@@ -177,6 +188,7 @@ class MvnInference(object):
     def get_samples(self):
         """
         Gets drawn samples from the current means and covariances.
+
         :return:
         """
         with warnings.catch_warnings():
@@ -192,14 +204,27 @@ class MvnInference(object):
         """
         Estimates the pair-wise correlation between all variables
         using drawn samples from the means and covariances.
+
         :return: Pairwise correlation matrix.
         """
         return np.corrcoef(self.get_samples().T)
 
     def predict_proba(self, X):
+        """
+        Predicts the probabilities.
+
+        :param X: Data.
+        :return: Probabilities.
+        """
         M, S = self.get_params()
         return multivariate_normal.pdf(X, mean=M, cov=S)
 
     def predict_log_proba(self, X):
+        """
+        Predicts the log probabilities.
+
+        :param X: Data.
+        :return: Log probabilities.
+        """
         M, S = self.get_params()
         return mvn_normal.logpdf(X, mean=M, cov=S)

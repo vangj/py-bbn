@@ -10,6 +10,7 @@ class Initializer(object):
     def initialize(join_tree):
         """
         Starts the initialization.
+
         :param join_tree: Join tree.
         :return: Join tree.
         """
@@ -49,6 +50,7 @@ class Initializer(object):
     def get_clique(node, join_tree):
         """
         Gets the parent clique associated with the specified BBN node.
+
         :param node: BBN node.
         :param join_tree: Join tree.
         :return: Parent clique.

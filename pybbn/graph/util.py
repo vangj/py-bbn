@@ -11,6 +11,7 @@ class IdUtil(object):
     def hash_string(s):
         """
         Hashes the string.
+
         :param s: String.
         :return: Hash value.
         """
