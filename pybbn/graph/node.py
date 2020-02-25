@@ -9,6 +9,8 @@ class Node(object):
 
     def __init__(self, id):
         """
+        Ctor.
+
         :param id: Numeric identifier.
         """
         self.id = id
@@ -17,6 +19,7 @@ class Node(object):
     def add_metadata(self, k, v):
         """
         Adds metadata.
+
         :param k: Key. Typically a string value.
         :param v: Value. Any object.
         """
@@ -47,6 +50,8 @@ class BbnNode(Node):
 
     def __init__(self, variable, probs):
         """
+        Ctor.
+
         :param variable: A variable.
         :param probs: Array of conditional probabilities.
         """
@@ -59,6 +64,7 @@ class BbnNode(Node):
     def get_weight(self):
         """
         Gets the weight, which is the number of values.
+
         :return: Weight.
         """
         return self.weight
@@ -66,6 +72,7 @@ class BbnNode(Node):
     def to_dict(self):
         """
         Gets a JSON serializable dictionary representation.
+
         :return: Dictionary.
         """
         return {
@@ -84,6 +91,8 @@ class Clique(Node):
 
     def __init__(self, nodes):
         """
+        Ctor.
+
         :param nodes: An array of BbnNodes.
         """
         nids = [n.id for n in nodes]
@@ -95,6 +104,12 @@ class Clique(Node):
         self.node_ids = set([node.id for node in self.nodes])
 
     def intersects(self, that):
+        """
+        Gets intersection information.
+
+        :param that: Clique.
+        :return: Tuple where first item is a boolean indicating if there is any intersection, second item are the IDs in this clique, third item are the IDs of that clique and last item are IDs common to both Cliques.
+        """
         lhs = [x.id for x in self.nodes]
         rhs = [x.id for x in that.nodes]
         intersection = [x for x in lhs if x in rhs]
@@ -107,11 +122,18 @@ class Clique(Node):
         return is_intersection, lhs, rhs, intersection
 
     def get_sid(self):
+        """
+        Gets the string ID of this clique.
+
+        :return: String ID composed of the sorted corresponding variables in each node.
+        """
         sids = '-'.join(sorted([n.variable.name for n in self.nodes]))
         return sids
 
     def is_marked(self):
         """
+        Checks if this clique is marked.
+
         :return: A boolean indicating if the clique is marked.
         """
         return self.marked
@@ -130,12 +152,16 @@ class Clique(Node):
 
     def get_node_ids(self):
         """
+        Gets the node IDs in this clique.
+
         :return: An array of numeric ids of the nodes in this clique.
         """
         return self.node_ids
 
     def is_superset(self, that):
         """
+        Checks if this clique is a superset of that clique.
+
         :param that: Clique.
         :return: A boolean indicating if this clique is a superset of the clique passed in.
         """
@@ -146,12 +172,15 @@ class Clique(Node):
     def get_weight(self):
         """
         Gets the weight of this clique; the weight is product of the weights of the nodes in this clique.
+
         :return: Weight.
         """
         return reduce(lambda x, y: x * y, [node.get_weight() for node in self.nodes])
 
     def contains(self, id):
         """
+        Checks if this clique contains the specified ID.
+
         :param id: Numeric id.
         :return: A boolean indicating if the specified id exists in this clique.
         """
@@ -166,6 +195,7 @@ class Clique(Node):
         Creates a separation-set from this node and the one passed in. The separation-set is composed
         of the intersection of the two cliques. If this node has [0, 1, 2] and the node passed in has
         [1, 2, 3], then the separation set will be [1, 2].
+
         :param that: Clique.
         :return: Separation-set.
         """
@@ -184,6 +214,8 @@ class SepSet(Clique):
 
     def __init__(self, left, right, lhs=None, rhs=None, intersection=None):
         """
+        Ctor.
+
         :param left: Clique.
         :param right: Clique.
         """
@@ -201,11 +233,18 @@ class SepSet(Clique):
 
     @property
     def is_empty(self):
+        """
+        Checks if the cliques in this separation set have an empty intersection.
+
+        :return: A boolean indicating if there is no intersection.
+        """
         return self.is_empty_intersection
 
     @property
     def cost(self):
         """
+        Gets the cost.
+
         :return: The cost.
         """
         return self.get_cost()
@@ -213,6 +252,8 @@ class SepSet(Clique):
     @property
     def mass(self):
         """
+        Gets the mass.
+
         :return: The mass.
         """
         return self.get_mass()
@@ -220,6 +261,7 @@ class SepSet(Clique):
     def get_cost(self):
         """
         The cost is the sum of the weights of the cliques connected to this separation-set.
+
         :return: Cost.
         """
         return self.left.get_weight() + self.right.get_weight()
@@ -227,6 +269,7 @@ class SepSet(Clique):
     def get_mass(self):
         """
         The mass is the number of nodes in this separation-set.
+
         :return: Mass.
         """
         return len(self.nodes)
