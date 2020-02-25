@@ -8,9 +8,14 @@ Welcome to PyBBN's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contents
 
    intro
+
+.. toctree::
+   :maxdepth: 2
+   :caption: API Documentation
+
    modules
 
 Indices and tables

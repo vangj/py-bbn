@@ -1,9 +1,6 @@
 pybbn.pptc package
 ==================
 
-Submodules
-----------
-
 pybbn.pptc.evidencecollector module
 -----------------------------------
 
@@ -72,15 +69,6 @@ pybbn.pptc.triangulator module
 ------------------------------
 
 .. automodule:: pybbn.pptc.triangulator
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: pybbn.pptc
     :members:
     :undoc-members:
     :show-inheritance:

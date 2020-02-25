@@ -1,9 +1,6 @@
 pybbn.graph package
 ===================
 
-Submodules
-----------
-
 pybbn.graph.dag module
 ----------------------
 
@@ -80,15 +77,6 @@ pybbn.graph.variable module
 ---------------------------
 
 .. automodule:: pybbn.graph.variable
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: pybbn.graph
     :members:
     :undoc-members:
     :show-inheritance:

@@ -10,11 +10,3 @@ Subpackages
     pybbn.pptc
     pybbn.lg
     pybbn.generator
-
-Module contents
----------------
-
-.. automodule:: pybbn
-    :members:
-    :undoc-members:
-    :show-inheritance:
