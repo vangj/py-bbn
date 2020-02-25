@@ -182,15 +182,13 @@ class SepSet(Clique):
     Separation-set.
     """
 
-    def __init__(self, left, right, lhs, rhs, intersection):
+    def __init__(self, left, right, lhs=None, rhs=None, intersection=None):
         """
         :param left: Clique.
         :param right: Clique.
         """
-        # if lhs is None or rhs is None or intersection is None:
-        #     lhs = sorted([x.id for x in left.nodes])
-        #     rhs = sorted([x.id for x in right.nodes])
-        #     intersection = [x for x in lhs if x in rhs]
+        if lhs is None or rhs is None or intersection is None:
+            _, lhs, rhs, intersection = left.intersects(right)
 
         sid = '-'.join(str(x) for arr in [lhs, intersection, rhs] for x in arr)
         Node.__init__(self, sid)
