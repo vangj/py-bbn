@@ -390,13 +390,17 @@ class JoinTree(Ug):
         def get_clique(d, bbn_nodes):
             return Clique([bbn_nodes[idx] if idx in bbn_nodes else bbn_nodes[str(idx)] for idx in d['node_ids']])
 
+        def get_sep_set(lhs_clique, rhs_clique):
+            _, lhs, rhs, intersection = lhs_clique.intersects(rhs_clique)
+            return SepSet(lhs_clique, rhs_clique, lhs, rhs, intersection)
+
         bbn_nodes = {k: get_bbn_node(n) for k, n in d['bbn_nodes'].items()}
 
         cliques = [get_clique(clique, bbn_nodes)
                    for k, clique in d['jt']['nodes'].items() if clique['type'] == 'clique']
         cliques = {c.id: c for c in cliques}
 
-        sepsets = [SepSet(cliques[s['left']], cliques[s['right']])
+        sepsets = [get_sep_set(cliques[s['left']], cliques[s['right']])
                    for k, s in d['jt']['nodes'].items() if s['type'] == 'sepset']
         sepsets = {s.id: s for s in sepsets}
 

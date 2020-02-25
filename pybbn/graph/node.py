@@ -94,6 +94,18 @@ class Clique(Node):
         self.marked = False
         self.node_ids = set([node.id for node in self.nodes])
 
+    def intersects(self, that):
+        lhs = [x.id for x in self.nodes]
+        rhs = [x.id for x in that.nodes]
+        intersection = [x for x in lhs if x in rhs]
+        is_intersection = True if len(intersection) > 0 else False
+        if is_intersection:
+            lhs = sorted(lhs)
+            rhs = sorted(rhs)
+            intersection = sorted(intersection)
+
+        return is_intersection, lhs, rhs, intersection
+
     def get_sid(self):
         sids = '-'.join(sorted([n.variable.name for n in self.nodes]))
         return sids
@@ -157,7 +169,8 @@ class Clique(Node):
         :param that: Clique.
         :return: Separation-set.
         """
-        return SepSet(self, that)
+        _, lhs, rhs, intersection = self.intersects(that)
+        return SepSet(self, that, lhs, rhs, intersection)
 
     def __str__(self):
         names = sorted([node.variable.name for node in self.nodes])
@@ -169,14 +182,15 @@ class SepSet(Clique):
     Separation-set.
     """
 
-    def __init__(self, left, right):
+    def __init__(self, left, right, lhs, rhs, intersection):
         """
         :param left: Clique.
         :param right: Clique.
         """
-        lhs = sorted([x.id for x in left.nodes])
-        rhs = sorted([x.id for x in right.nodes])
-        intersection = [x for x in lhs if x in rhs]
+        # if lhs is None or rhs is None or intersection is None:
+        #     lhs = sorted([x.id for x in left.nodes])
+        #     rhs = sorted([x.id for x in right.nodes])
+        #     intersection = [x for x in lhs if x in rhs]
 
         sid = '-'.join(str(x) for arr in [lhs, intersection, rhs] for x in arr)
         Node.__init__(self, sid)

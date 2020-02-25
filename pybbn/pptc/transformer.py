@@ -41,7 +41,9 @@ class Transformer(object):
             clique_i = cliques[i]
             for j in range(i + 1, size):
                 clique_j = cliques[j]
-                sep_set = SepSet(clique_i, clique_j)
-                if sep_set.is_empty is False:
+                is_intersection, lhs, rhs, intersection = clique_i.intersects(clique_j)
+                if is_intersection:
+                    sep_set = SepSet(clique_i, clique_j, lhs, rhs, intersection)
                     sep_sets.append(sep_set)
+
         return sorted(sep_sets, key=lambda x: (-1 * x.mass, x.cost, x.id))
