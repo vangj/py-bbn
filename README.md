@@ -214,6 +214,10 @@ But I am coming from the Java mothership and I want to use Bayesian Belief Netwo
 
 This Python code base is a port of the [original Java code](https://github.com/vangj/jbayes).
 
+# Read the Docs
+
+[Documentation](https://py-bbn.readthedocs.io/en/latest/) available online!
+
 # Citation
 
 ```
