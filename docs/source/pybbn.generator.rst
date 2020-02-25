@@ -1,5 +1,5 @@
-pybbn.generator package
-=======================
+Bayesian Belief Network Generator Package
+=========================================
 
 pybbn.generator.bbngenerator module
 -----------------------------------

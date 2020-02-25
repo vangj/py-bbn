@@ -1,5 +1,5 @@
-pybbn package
-=============
+py-bbn
+======
 
 Subpackages
 -----------

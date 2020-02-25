@@ -1,5 +1,5 @@
-pybbn.pptc package
-==================
+Junction Tree Algorithm Package
+===============================
 
 pybbn.pptc.evidencecollector module
 -----------------------------------

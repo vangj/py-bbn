@@ -1,5 +1,5 @@
-pybbn.lg package
-================
+Linear Gaussian Package
+=======================
 
 pybbn.lg.gaussian module
 ------------------------

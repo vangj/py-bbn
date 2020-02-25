@@ -1,5 +1,5 @@
-pybbn.graph package
-===================
+Graph Package
+=============
 
 pybbn.graph.dag module
 ----------------------
