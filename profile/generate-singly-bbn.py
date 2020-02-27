@@ -12,4 +12,3 @@ s_bbn = convert_for_exact_inference(g, p)
 
 with open('singly-bbn.json', 'w') as f:
     f.write(json.dumps(Bbn.to_dict(s_bbn), sort_keys=True, indent=2))
-

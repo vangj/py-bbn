@@ -1,6 +1,6 @@
-import timeit
-import json
 import functools
+import json
+import timeit
 
 from pybbn.graph.dag import Bbn
 from pybbn.pptc.inferencecontroller import InferenceController
