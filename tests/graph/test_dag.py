@@ -79,6 +79,41 @@ def test_dag_creation():
 
 
 @with_setup(setup, teardown)
+def test_csv_serde():
+    """
+    Tests CSV serde.
+    :return: None.
+    """
+    try:
+        lhs = BbnUtil.get_huang_graph()
+        Bbn.to_csv(lhs, 'huang.csv')
+
+        rhs = Bbn.from_csv('huang.csv')
+
+        assert len(lhs.get_nodes()) == len(rhs.get_nodes())
+        assert len(lhs.get_edges()) == len(rhs.get_edges())
+
+        lhs_nodes = set([str(node) for node in lhs.get_nodes()])
+        rhs_nodes = set([str(node) for node in rhs.get_nodes()])
+        for n in lhs_nodes:
+            assert n in rhs_nodes
+
+        lhs_edges = set([str(edge) for edge in lhs.get_edges()])
+        rhs_edges = set([str(edge) for edge in rhs.get_edges()])
+        for e in lhs_edges:
+            assert e in rhs_edges
+    except:
+        assert False
+    finally:
+        import os
+
+        try:
+            os.remove('huang.csv')
+        except:
+            pass
+
+
+@with_setup(setup, teardown)
 def test_to_dict():
     """
     Tests creating serializable dictionary representation.

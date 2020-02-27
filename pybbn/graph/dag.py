@@ -131,6 +131,70 @@ class Bbn(Dag):
         return Dag.__shouldadd__(edge)
 
     @staticmethod
+    def to_csv(bbn, path):
+        """
+        Converts the specified BBN to CSV format.
+
+        :param bbn: BBN.
+        :param path: Path to file.
+        :return: None.
+        """
+        with open(path, 'w') as f:
+            for node in bbn.get_nodes():
+                v = node.variable
+                vals = ','.join(v.values)
+                probs = ','.join([str(p) for p in node.probs])
+                s_node = f'{v.id},{v.name},{vals},|,{probs}'
+                f.write(s_node)
+                f.write('\n')
+
+            for _, edge in bbn.edges.items():
+                t = 'directed' if edge.type == EdgeType.DIRECTED else 'undirected'
+                s_edge = f'{edge.i.id},{edge.j.id},{t}'
+                f.write(s_edge)
+                f.write('\n')
+
+    @staticmethod
+    def from_csv(path):
+        """
+        Converts the BBN in CSV format to a BBN.
+        :param path: Path to CSV file.
+        :return: BBN.
+        """
+        with open(path, 'r') as f:
+            nodes = {}
+            edges = []
+
+            for line in f:
+                tokens = line.split(',')
+                if 3 == len(tokens):
+                    edge = int(tokens[0]), int(tokens[1])
+                    edges.append(edge)
+                else:
+                    tokens = line.split('|')
+                    v_part = [item.strip() for item in tokens[0].split(',') if len(item.strip()) > 0]
+                    p_part = [item.strip() for item in tokens[1].split(',') if len(item.strip()) > 0]
+
+                    i = int(v_part[0])
+                    v = Variable(i, v_part[1], v_part[2:])
+                    p = [float(p) for p in p_part]
+
+                    node = BbnNode(v, p)
+                    nodes[i] = node
+
+            bbn = Bbn()
+            for _, node in nodes.items():
+                bbn.add_node(node)
+            for edge in edges:
+                pa_id, ch_id = edge
+
+                pa = nodes[pa_id]
+                ch = nodes[ch_id]
+
+                bbn.add_edge(Edge(pa, ch, EdgeType.DIRECTED))
+            return bbn
+
+    @staticmethod
     def to_dict(bbn):
         """
         Gets a JSON serializable dictionary representation.
