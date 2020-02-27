@@ -30,3 +30,25 @@ The key method to use here is ``generate_multi_bbn``.
    :language: python
    :linenos:
    :emphasize-lines: 10
+
+Easy Generation
+---------------
+
+In the case where you do ``NOT`` need a reference to the BBN objects, use the API's convenience method to generate and serialize the BBN directly to file.
+
+.. literalinclude:: code/api-generation.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 9, 12
+
+Here's the output for ``singly-bbn.csv``.
+
+.. literalinclude:: code/multi-bbn.csv
+   :language: txt
+   :linenos:
+
+Here's the output for ``singly-bbn.csv``.
+
+.. literalinclude:: code/simple-bbn.csv
+   :language: txt
+   :linenos:
