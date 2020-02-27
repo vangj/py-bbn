@@ -31,7 +31,7 @@ CSV Serialization Format
 You will get a file ``simple-bbn.csv`` written out with the following content.
 
 .. literalinclude:: code/simple-bbn.csv
-   :language: txt
+   :language: text
    :linenos:
 
 Deserializing a BBN

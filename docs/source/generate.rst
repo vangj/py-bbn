@@ -43,12 +43,12 @@ In the case where you do ``NOT`` need a reference to the BBN objects, use the AP
 
 Here's the output for ``singly-bbn.csv``.
 
-.. literalinclude:: code/multi-bbn.csv
-   :language: txt
+.. literalinclude:: code/singly-bbn.csv
+   :language: text
    :linenos:
 
-Here's the output for ``singly-bbn.csv``.
+Here's the output for ``multi-bbn.csv``.
 
-.. literalinclude:: code/simple-bbn.csv
-   :language: txt
+.. literalinclude:: code/multi-bbn.csv
+   :language: text
    :linenos:
