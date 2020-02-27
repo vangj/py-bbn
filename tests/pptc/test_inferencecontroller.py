@@ -27,6 +27,51 @@ def teardown():
 
 
 @with_setup(setup, teardown)
+def test_github_issue_4():
+    a = BbnNode(Variable(0, 'A', ['T', 'F']), [0.5, 0.5])
+    b = BbnNode(Variable(1, 'B', ['T', 'F']), [0.2, 0.8, 0.1, 0.9])
+    c = BbnNode(Variable(2, 'C', ['T', 'F']), [0.5, 0.5, 0.5, 0.5])
+    d = BbnNode(Variable(3, 'D', ['T', 'F']), [0.5, 0.5, 0.5, 0.5])
+    e = BbnNode(Variable(4, 'E', ['T', 'F']), [0.5, 0.5, 0.5, 0.5])
+    f = BbnNode(Variable(5, 'F', ['T', 'F']), [0.5, 0.5, 0.5, 0.5])
+    g = BbnNode(Variable(6, 'G', ['T', 'F']),
+                [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5])
+
+    bbn = Bbn() \
+        .add_node(a) \
+        .add_node(b) \
+        .add_node(c) \
+        .add_node(d) \
+        .add_node(e) \
+        .add_node(f) \
+        .add_node(g) \
+        .add_edge(Edge(a, b, EdgeType.DIRECTED)) \
+        .add_edge(Edge(a, c, EdgeType.DIRECTED)) \
+        .add_edge(Edge(b, d, EdgeType.DIRECTED)) \
+        .add_edge(Edge(b, e, EdgeType.DIRECTED)) \
+        .add_edge(Edge(c, f, EdgeType.DIRECTED)) \
+        .add_edge(Edge(e, g, EdgeType.DIRECTED)) \
+        .add_edge(Edge(d, g, EdgeType.DIRECTED)) \
+        .add_edge(Edge(f, g, EdgeType.DIRECTED))
+
+    join_tree = InferenceController.apply(bbn)
+
+    expected = {
+        'A': [0.5, 0.5],
+        'B': [0.15, 0.85],
+        'C': [0.5, 0.5],
+        'D': [0.5, 0.5],
+        'E': [0.5, 0.5],
+        'F': [0.5, 0.5],
+        'G': [0.5, 0.5]
+    }
+
+    __validate_posterior__(expected, join_tree)
+
+    __print_potentials__(join_tree)
+
+
+@with_setup(setup, teardown)
 def test_inference_controller():
     """
     Tests inference controller.
