@@ -28,6 +28,10 @@ def teardown():
 
 @with_setup(setup, teardown)
 def test_github_issue_4():
+    """
+    Tests issue #4 https://github.com/vangj/py-bbn/issues/4
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'A', ['T', 'F']), [0.5, 0.5])
     b = BbnNode(Variable(1, 'B', ['T', 'F']), [0.2, 0.8, 0.1, 0.9])
     c = BbnNode(Variable(2, 'C', ['T', 'F']), [0.5, 0.5, 0.5, 0.5])
