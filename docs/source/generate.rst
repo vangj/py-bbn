@@ -31,8 +31,8 @@ The key method to use here is ``generate_multi_bbn``.
    :linenos:
    :emphasize-lines: 10
 
-Easy Generation
----------------
+Direct Generation
+-----------------
 
 In the case where you do ``NOT`` need a reference to the BBN objects, use the API's convenience method to generate and serialize the BBN directly to file.
 
