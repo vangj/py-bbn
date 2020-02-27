@@ -1,3 +1,5 @@
+import json
+
 import networkx as nx
 
 from pybbn.graph.edge import Edge, EdgeType
@@ -240,6 +242,32 @@ class Bbn(Dag):
             bbn.add_edge(Edge(pa, ch, EdgeType.DIRECTED))
 
         return bbn
+
+    @staticmethod
+    def to_json(bbn, path):
+        """
+        Serializes BBN to JSON.
+
+        :param bbn: BBN.
+        :param path: Path.
+        :return: None.
+        """
+        s = json.dumps(Bbn.to_dict(bbn))
+        with open(path, 'w') as f:
+            f.write(s)
+
+    @staticmethod
+    def from_json(path):
+        """
+        Deserializes BBN from JSON.
+
+        :param path: Path.
+        :return: BBN.
+        """
+        with open(path, 'r') as f:
+            d = json.loads(f.read())
+            bbn = Bbn.from_dict(d)
+            return bbn
 
 
 class PathDetector(object):

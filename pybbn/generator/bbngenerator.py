@@ -403,3 +403,28 @@ def convert_for_drawing(bbn):
         g.add_edges_from([(pa, ch, {})])
 
     return g
+
+
+def generate_bbn_to_file(n, file_path, bbn_type='singly', max_iter=10, max_values=2, max_alpha=10):
+    """
+    Generates a BBN and saves it to a file.
+
+    :param n: Number of nodes.
+    :param file_path: File path. JSON and CSV supported. Export will be determined by path extension.
+    :param bbn_type: Type: singly or multi.
+    :param max_iter: Maximum iterations.
+    :param max_values: Maximum values.
+    :param max_alpha: Maximum alpha.
+    :return: None.
+    """
+    if bbn_type == 'singly':
+        g, p = generate_singly_bbn(n, max_iter, max_values, max_alpha)
+    else:
+        g, p = generate_multi_bbn(n, max_iter, max_values, max_alpha)
+
+    bbn = convert_for_exact_inference(g, p)
+
+    if file_path.endswith('csv'):
+        Bbn.to_csv(bbn, file_path)
+    else:
+        Bbn.to_json(bbn, file_path)
