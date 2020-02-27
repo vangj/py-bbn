@@ -252,7 +252,7 @@ class Bbn(Dag):
         :param path: Path.
         :return: None.
         """
-        s = json.dumps(Bbn.to_dict(bbn))
+        s = json.dumps(Bbn.to_dict(bbn), indent=2)
         with open(path, 'w') as f:
             f.write(s)
 
