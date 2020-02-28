@@ -572,7 +572,7 @@ def __print_potentials__(join_tree):
     """
     for node in join_tree.get_bbn_nodes():
         potential = join_tree.get_bbn_potential(node)
-        p = ', '.join(['{}'.format(e) for e in potential.entries])
-        s = '{} : {}'.format(node.variable.name, p)
+        p = ', '.join([f'{e}' for e in potential.entries])
+        s = f'{node.variable.name} : {p}'
         total = sum([entry.value for entry in potential.entries])
-        print('{} ==> {}'.format(s, total))
+        print(f'{s} ==> {total:.5f}')
