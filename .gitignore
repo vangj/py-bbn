@@ -13,3 +13,4 @@ build/
 .pypircc
 joblib_memmap/
 .pytest_cache/
+.DS_store
