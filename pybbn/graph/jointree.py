@@ -44,6 +44,29 @@ class JoinTree(Ug):
         jt.parent_info = parent_info
         return jt
 
+    def get_posteriors(self):
+        """
+        Gets the posterior for all nodes.
+
+        :return: Map. Keys are node names; values are map of node values to posterior probabilities.
+        """
+        bbn_nodes = self.get_bbn_nodes()
+
+        posteriors = {}
+
+        for bbn_node in bbn_nodes:
+            potential = self.get_bbn_potential(bbn_node)
+
+            m = {}
+            for potential_entry in potential.entries:
+                k = ''.join([f'{x}={y}' for x, y in potential_entry.entries.items()])
+                m[k] = potential_entry.value
+
+            name = bbn_node.variable.name
+            posteriors[name] = m
+
+        return posteriors
+
     def get_bbn_potential(self, node):
         """
         Gets the potential associated with the specified BBN node.
