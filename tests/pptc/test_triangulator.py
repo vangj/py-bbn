@@ -34,7 +34,17 @@ def test_triangulator():
     ug = Moralizer.moralize(bbn)
     cliques = Triangulator.triangulate(ug)
 
-    # assert later
-    # for clique in cliques:
-    #     print(clique)
-    # assert 1 == 2
+    e_cliques = set([
+        '(d,e,f)',
+        '(e,g,h)',
+        '(c,e,g)',
+        '(a,b,c)',
+        '(b,c,d)',
+        '(c,d,e)'
+    ])
+
+    o_cliques = [str(c) for c in cliques]
+
+    assert len(e_cliques) == len(o_cliques)
+    for c in e_cliques:
+        assert c in o_cliques
