@@ -32,10 +32,22 @@ def test_moralizer():
 
     ug = Moralizer.moralize(bbn)
 
-    # assert later
-    # for node in ug.get_nodes():
-    #     print(node)
-    # for edge in ug.get_edges():
-    #     print(edge)
-    #
-    # assert 1 == 2
+    e_edges = set([
+        '0--1',
+        '0--2',
+        '1--3',
+        '2--4',
+        '3--5',
+        '4--5',
+        '2--6',
+        '4--7',
+        '6--7',
+        '3--4',
+        '4--6'
+    ])
+
+    o_edges = set([str(edge) for edge in ug.get_edges()])
+
+    assert len(e_edges) == len(o_edges)
+    for e in e_edges:
+        assert e in o_edges
