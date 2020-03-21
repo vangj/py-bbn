@@ -127,6 +127,99 @@ def test_huang_inference():
 
 
 @with_setup(setup, teardown)
+def test_huang_inference_with_single_evidence():
+    """
+    Tests inference on the Huang graph with a single evidence.
+    :return: None.
+    """
+    bbn = BbnUtil.get_huang_graph()
+
+    join_tree = InferenceController.apply(bbn)
+
+    expected = {
+        'a': [0.5, 0.5],
+        'b': [0.45, 0.55],
+        'c': [0.45, 0.55],
+        'd': [0.68, 0.32],
+        'e': [0.465, 0.535],
+        'f': [0.176, 0.824],
+        'g': [0.415, 0.585],
+        'h': [0.823, 0.177]
+    }
+
+    __validate_posterior__(expected, join_tree)
+
+    ev = EvidenceBuilder() \
+        .with_node(join_tree.get_bbn_node_by_name('a')) \
+        .with_evidence('on', 1.0) \
+        .build()
+    join_tree.unobserve_all()
+    join_tree.set_observation(ev)
+
+    expected = {
+        'a': [1.0, 0.0],
+        'b': [0.5, 0.5],
+        'c': [0.7, 0.3],
+        'd': [0.7, 0.3],
+        'e': [0.39, 0.61],
+        'f': [0.18934, 0.81066],
+        'g': [0.59, 0.41],
+        'h': [0.7826, 0.2174]
+    }
+
+    __validate_posterior__(expected, join_tree)
+
+
+@with_setup(setup, teardown)
+def test_huang_inference_with_multiple_evidence():
+    """
+    Tests inference on the Huang graph with a multiple evidence.
+    :return: None.
+    """
+    bbn = BbnUtil.get_huang_graph()
+
+    join_tree = InferenceController.apply(bbn)
+
+    expected = {
+        'a': [0.5, 0.5],
+        'b': [0.45, 0.55],
+        'c': [0.45, 0.55],
+        'd': [0.68, 0.32],
+        'e': [0.465, 0.535],
+        'f': [0.176, 0.824],
+        'g': [0.415, 0.585],
+        'h': [0.823, 0.177]
+    }
+
+    __validate_posterior__(expected, join_tree)
+
+    ev1 = EvidenceBuilder() \
+        .with_node(join_tree.get_bbn_node_by_name('a')) \
+        .with_evidence('on', 1.0) \
+        .build()
+    ev2 = EvidenceBuilder() \
+        .with_node(join_tree.get_bbn_node_by_name('f')) \
+        .with_evidence('on', 1.0) \
+        .build()
+
+    join_tree.unobserve_all()
+    join_tree.update_evidences([ev1, ev2])
+
+    expected = {
+        'a': [1.0, 0.0],
+        'b': [0.184, 0.816],
+        'c': [0.798, 0.202],
+        'd': [0.0370, 0.963],
+        'e': [0.0206, 0.979],
+        'f': [1.0, 0.0],
+        'g': [0.658, 0.342],
+        'h': [0.941, 0.0588]
+    }
+
+    __validate_posterior__(expected, join_tree)
+
+
+@with_setup(setup, teardown)
 def test_simple_inference():
     """
     Tests inference on the Huang graph.
