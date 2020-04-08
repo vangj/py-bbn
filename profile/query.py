@@ -42,7 +42,7 @@ if __name__ == '__main__':
         elif value == 'p':
             posteriors = jt.get_posteriors()
             for name, d in posteriors.items():
-                s = name + ' ' + ' '.join([f'{k.split("=")[1]}={v:.5f}' for k, v in d.items()])
+                s = name + ' ' + ' '.join([f'{k}={v:.5f}' for k, v in d.items()])
                 print(s)
         elif value == 'c':
             jt.unobserve_all()

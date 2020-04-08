@@ -59,7 +59,7 @@ class JoinTree(Ug):
 
             m = {}
             for potential_entry in potential.entries:
-                k = ''.join([f'{x.split("=")[1]}={y:.5f}' for x, y in potential_entry.entries.items()])
+                k = ''.join([f'{y}' for _, y in potential_entry.entries.items()])
                 m[k] = potential_entry.value
 
             name = bbn_node.variable.name
