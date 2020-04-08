@@ -1,10 +1,10 @@
 import json
 
+from pybbn.graph.dag import Bbn
 from pybbn.graph.edge import EdgeType, Edge
 from pybbn.graph.jointree import JoinTree
 from pybbn.graph.node import BbnNode
 from pybbn.graph.variable import Variable
-from pybbn.lg.graph import Bbn
 from pybbn.pptc.inferencecontroller import InferenceController
 
 a = BbnNode(Variable(0, 'a', ['t', 'f']), [0.2, 0.8])
