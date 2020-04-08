@@ -1,8 +1,8 @@
+from pybbn.graph.dag import Bbn
 from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.jointree import EvidenceBuilder
 from pybbn.graph.node import BbnNode
 from pybbn.graph.variable import Variable
-from pybbn.lg.graph import Bbn
 from pybbn.pptc.inferencecontroller import InferenceController
 
 # create the nodes
