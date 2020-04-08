@@ -5,7 +5,7 @@ with open('README.rst', 'r') as fh:
 
 setup(
     name='pybbn',
-    version='1.0.8',
+    version='1.0.9',
     author='Jee Vang',
     author_email='vangjee@gmail.com',
     packages=find_packages(),
@@ -16,7 +16,7 @@ setup(
     keywords=' '.join(['bayesian', 'belief', 'network', 'exact', 'approximate', 'inference', 'junction', 'tree',
                        'algorithm', 'pptc', 'dag', 'gibbs', 'sampling', 'multivariate', 'conditional', 'gaussian',
                        'linear', 'causal', 'causality', 'structure', 'parameter']),
-    install_requires=['numpy', 'scipy', 'networkx', 'pandas', 'matplotlib', 'pygraphviz'],
+    install_requires=['numpy', 'scipy', 'networkx', 'pandas'],
     classifiers=[
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
