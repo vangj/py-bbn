@@ -28,6 +28,10 @@ def teardown():
 
 @with_setup(setup, teardown)
 def test_table():
+    """
+    Tests creating table without parent.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
     table = Table(a)
 
@@ -39,6 +43,10 @@ def test_table():
 
 @with_setup(setup, teardown)
 def test_pa_ch_table():
+    """
+    Tests create table with parent.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
     table = Table(b, parents=[a])
@@ -55,6 +63,9 @@ def test_pa_ch_table():
 
 @with_setup(setup, teardown)
 def test_toplogical_sort_huang():
+    """
+    Tests toplogical sorting of Huang graph.
+    """
     bbn = BbnUtil.get_huang_graph()
     sampler = LogicSampler(bbn)
 
@@ -63,6 +74,10 @@ def test_toplogical_sort_huang():
 
 @with_setup(setup, teardown)
 def test_toplogical_sort_reversed():
+    """
+    Tests topological sorting of graph with nodes in reverse order.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.5, 0.5])
@@ -81,6 +96,10 @@ def test_toplogical_sort_reversed():
 
 @with_setup(setup, teardown)
 def test_toplogical_sort_mixed():
+    """
+    Tests topological sort of diverging structure.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5])
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
@@ -99,6 +118,10 @@ def test_toplogical_sort_mixed():
 
 @with_setup(setup, teardown)
 def test_sampler_tables():
+    """
+    Tests sampler creation of tables.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
@@ -135,6 +158,10 @@ def test_sampler_tables():
 
 @with_setup(setup, teardown)
 def test_sampling():
+    """
+    Tests sampling a serial graph.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
@@ -174,6 +201,10 @@ def test_sampling():
 
 @with_setup(setup, teardown)
 def test_sampling_with_rejection():
+    """
+    Tests sampling a serial graph with rejection and evidence set.
+    :return: None.
+    """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
     b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
     c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
