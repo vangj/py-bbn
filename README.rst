@@ -72,49 +72,6 @@ and then set observation evidence. The last line prints the marginal probabiliti
         print(node)
         print(potential)
 
-Approximate Inference Usage
----------------------------
-
-Below is an example to create a linear Gaussian BBN and perform inference.
-
-.. code:: python
-
-    import numpy as np
-    from pybbn.lg.graph import Dag, Parameters, Bbn
-
-    # create the directed acylic graph
-    dag = Dag()
-    dag.add_node(0)
-    dag.add_node(1)
-    dag.add_edge(0, 1)
-
-    # create parameters
-    means = np.array([0, 25])
-    cov = np.array([
-        [1.09, 1.95],
-        [1.95, 4.52]
-    ])
-    params = Parameters(means, cov)
-
-    # create the bayesian belief network
-    bbn = Bbn(dag, params)
-
-    # do the inference
-    M, C = bbn.do_inference()
-    print(M)
-
-    # set the evidence on node 0 to a value of 1
-    bbn.set_evidence(0, 1)
-    M, C = bbn.do_inference()
-    print(M)
-    bbn.clear_evidences()
-
-    # set the evidence on node 1 to a value of 20
-    bbn.set_evidence(1, 20)
-    M, C = bbn.do_inference()
-    print(M)
-    bbn.clear_evidences()
-
 Building
 --------
 
