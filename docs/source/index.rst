@@ -14,6 +14,7 @@ Welcome to PyBBN's documentation!
    exact-inference
    serde
    generate
+   sampling
 
 .. toctree::
    :maxdepth: 2
