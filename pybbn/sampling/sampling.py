@@ -1,9 +1,10 @@
-import itertools
 import bisect
-import numpy as np
-from functools import cmp_to_key
-from numpy.random import uniform
 import copy
+import itertools
+from functools import cmp_to_key
+
+import numpy as np
+from numpy.random import uniform
 
 
 class SortableNode(object):
@@ -111,7 +112,8 @@ class LogicSampler(object):
         """
         nodes = [SortableNode(node.id, set(self.bbn.get_parents_ordered(node.id))) for node in self.bbn.get_nodes()]
         id_sorter = lambda x, y: -1 if x < y else 1 if x > y else 0
-        pa_sorter = lambda x, y: -1 if x.node_id in y.parent_ids else 1 if y.node_id in x.parent_ids else id_sorter(x.node_id, y.node_id)
+        pa_sorter = lambda x, y: -1 if x.node_id in y.parent_ids else 1 if y.node_id in x.parent_ids else id_sorter(
+            x.node_id, y.node_id)
         nodes = sorted(nodes, key=cmp_to_key(pa_sorter))
         nodes = [n.node_id for n in nodes]
         return nodes

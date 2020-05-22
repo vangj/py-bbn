@@ -1,6 +1,6 @@
-from nose import with_setup
 import numpy as np
 import pandas as pd
+from nose import with_setup
 from numpy.testing import assert_almost_equal
 
 from pybbn.graph.dag import BbnUtil, Bbn

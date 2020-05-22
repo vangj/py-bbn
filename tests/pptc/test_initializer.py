@@ -1,7 +1,6 @@
 from nose import with_setup
 
 from pybbn.graph.dag import BbnUtil
-from pybbn.graph.node import SepSet
 from pybbn.pptc.initializer import Initializer
 from pybbn.pptc.moralizer import Moralizer
 from pybbn.pptc.potentialinitializer import PotentialInitializer
