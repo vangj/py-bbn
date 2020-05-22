@@ -4,7 +4,6 @@ import itertools
 from functools import cmp_to_key
 
 import numpy as np
-from numpy.random import uniform
 
 
 class SortableNode(object):
@@ -133,7 +132,7 @@ class LogicSampler(object):
         while True:
             sample = copy.deepcopy(evidence)
 
-            probs = uniform(0.0, 1.0, size=n)
+            probs = np.random.uniform(0.0, 1.0, size=n)
             for p, node_id in zip(probs, self.nodes):
                 table = self.tables[node_id]
                 val = table.get_value(p, sample=sample)
