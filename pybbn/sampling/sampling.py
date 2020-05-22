@@ -42,10 +42,10 @@ class Table(object):
         if len(parents) == 0:
             self.probs = np.array([node.probs]).cumsum()
         else:
-            cartesian = itertools.product(*[node.variable.values for node in parents])
+            cartesian = list(itertools.product(*[node.variable.values for node in self.parents]))
             get_kv = lambda i, v: f'{i}={v}'
-            keys = [','.join([get_kv(node.id, val) for node, val in zip(parents, values)]) for values in cartesian]
-            n = len(keys)
+            keys = [','.join([get_kv(node.id, val) for node, val in zip(self.parents, values)]) for values in cartesian]
+            n = len(node.variable.values)
 
             probs = [node.probs[i:i + n] for i in range(0, len(node.probs), n)]
             probs = [np.array(p).cumsum() for p in probs]

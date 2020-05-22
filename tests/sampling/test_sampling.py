@@ -44,7 +44,7 @@ def test_table():
 @with_setup(setup, teardown)
 def test_pa_ch_table():
     """
-    Tests create table with parent.
+    Tests create table with a single parent.
     :return: None.
     """
     a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
@@ -59,6 +59,38 @@ def test_pa_ch_table():
     assert 'off' == table.get_value(0.7, sample={0: 'on'})
     assert 'on' == table.get_value(0.3, sample={0: 'off'})
     assert 'off' == table.get_value(0.6, sample={0: 'off'})
+
+
+@with_setup(setup, teardown)
+def test_multiple_pa_ch_table():
+    """
+    Tests create table with multiple parent.
+    :return: None.
+    """
+    d_probs = [0.23323615160349853, 0.7667638483965015,
+               0.7563025210084033, 0.24369747899159663]
+    r_probs = [0.31000000000000005, 0.69,
+               0.27, 0.73,
+               0.13, 0.87,
+               0.06999999999999995, 0.93]
+    g_probs = [0.49, 0.51]
+
+    g = BbnNode(Variable(0, 'gender', ['female', 'male']), g_probs)
+    d = BbnNode(Variable(1, 'drug', ['false', 'true']), d_probs)
+    r = BbnNode(Variable(2, 'recovery', ['false', 'true']), r_probs)
+
+    table = Table(r, parents=[d, g])
+
+    assert table.has_parents()
+    lhs = np.array(list(table.probs.values()))
+    rhs = np.array([[0.31, 1.0], [0.27, 1.0], [0.13, 1.0], [0.07, 1.0]])
+    assert_almost_equal(lhs, rhs)
+
+    lhs = list(table.probs.keys())
+    rhs = ['0=female,1=false', '0=female,1=true', '0=male,1=false', '0=male,1=true']
+    assert len(lhs) == len(rhs)
+    for l, r in zip(lhs, rhs):
+        assert l == r
 
 
 @with_setup(setup, teardown)
