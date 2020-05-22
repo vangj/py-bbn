@@ -16,7 +16,7 @@ Full source code is available on `GitHub <https://github.com/vangj/py-bbn>`_.
 PyPi
 ----
 
-You may install ``py-bbn`` from ``PyPi``.
+You may install ``py-bbn`` from `pypi <https://pypi.org/project/pybbn/>`_.
 
 .. code:: bash
 
