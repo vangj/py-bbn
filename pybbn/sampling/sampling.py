@@ -4,6 +4,7 @@ import numpy as np
 from collections import namedtuple
 from functools import cmp_to_key
 from numpy.random import uniform
+import copy
 
 SortableNode = namedtuple('SortableNode', 'node_id parent_ids')
 
@@ -68,10 +69,11 @@ class LogicSampler(object):
         nodes = [n.node_id for n in nodes]
         return nodes
 
-    def get_samples(self, n_samples=100, seed=37):
+    def get_samples(self, evidence={}, n_samples=100, seed=37):
         """
         Gets the samples.
 
+        :param evidence: Evidence. Dictionary. Keys are ids and values are node values.
         :param n_samples: Number of samples.
         :param seed: Seed (default=37).
         :return: Samples.
@@ -80,15 +82,19 @@ class LogicSampler(object):
         n = len(self.nodes)
         samples = []
         while True:
-            sample = {}
+            sample = copy.deepcopy(evidence)
 
             probs = uniform(0.0, 1.0, size=n)
             for p, node_id in zip(probs, self.nodes):
                 table = self.tables[node_id]
                 val = table.get_value(p, sample=sample)
+
+                if node_id in evidence and val != evidence[node_id]:
+                    break
                 sample[node_id] = val
 
-            samples.append(sample)
+            if len(sample) == n:
+                samples.append(sample)
 
             if len(samples) == n_samples:
                 break
