@@ -29,6 +29,7 @@ clean:
 	rm -fr jupyter/.ipynb_checkpoints/
 	rm -fr joblib_memmap/
 	rm -fr docs/build/
+	rm -fr .pytest_cache/
 	rm -f .coverage
 	rm -f .noseids
 
