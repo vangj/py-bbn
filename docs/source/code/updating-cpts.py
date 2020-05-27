@@ -22,16 +22,13 @@ rhs_jt = InferenceController.reapply(lhs_jt, {0: [0.3, 0.7], 1: [0.2, 0.8, 0.8, 
 # let's print out the marginal probabilities and see how things changed
 # print the marginal probabilities for the lhs junction tree
 print('lhs probabilities')
-for node in lhs_jt.get_bbn_nodes():
-    potential = lhs_jt.get_bbn_potential(node)
-    print(node)
-    print(potential)
-    print('>')
+# print the posterior probabilities
+for node, posteriors in lhs_jt.get_posteriors().items():
+    p = ', '.join([f'{val}={prob:.5f}' for val, prob in posteriors.items()])
+    print(f'{node} : {p}')
 
 # print the marginal probabilities for the rhs junction tree
 print('rhs probabilities')
-for node in rhs_jt.get_bbn_nodes():
-    potential = rhs_jt.get_bbn_potential(node)
-    print(node)
-    print(potential)
-    print('>')
+for node, posteriors in rhs_jt.get_posteriors().items():
+    p = ', '.join([f'{val}={prob:.5f}' for val, prob in posteriors.items()])
+    print(f'{node} : {p}')

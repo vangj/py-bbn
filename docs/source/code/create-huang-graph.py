@@ -45,9 +45,7 @@ ev = EvidenceBuilder() \
     .build()
 join_tree.set_observation(ev)
 
-# print the marginal probabilities
-for node in join_tree.get_bbn_nodes():
-    potential = join_tree.get_bbn_potential(node)
-    print(node)
-    print(potential)
-    print('>')
+# print the posterior probabilities
+for node, posteriors in join_tree.get_posteriors().items():
+    p = ', '.join([f'{val}={prob:.5f}' for val, prob in posteriors.items()])
+    print(f'{node} : {p}')
