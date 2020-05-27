@@ -7,6 +7,7 @@ from pybbn.graph.dag import BbnUtil, Bbn
 from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.node import BbnNode
 from pybbn.graph.variable import Variable
+from pybbn.pptc.inferencecontroller import InferenceController
 from pybbn.sampling.sampling import Table, LogicSampler
 
 
@@ -222,13 +223,22 @@ def test_sampling():
     s_b = s_b / s_b.sum()
     s_c = s_c / s_c.sum()
 
-    s_a = s_a.sort_index().values
-    s_b = s_b.sort_index().values
-    s_c = s_c.sort_index().values
+    s_a = s_a.sort_index()
+    s_b = s_b.sort_index()
+    s_c = s_c.sort_index()
 
-    assert_almost_equal(s_a, np.array([0.4985, 0.5015]))
-    assert_almost_equal(s_b, np.array([0.5502, 0.4498]))
-    assert_almost_equal(s_c, np.array([0.5721, 0.4279]))
+    assert_almost_equal(s_a.values, np.array([0.4985, 0.5015]))
+    assert_almost_equal(s_b.values, np.array([0.5502, 0.4498]))
+    assert_almost_equal(s_c.values, np.array([0.5721, 0.4279]))
+
+    join_tree = InferenceController.apply(bbn)
+    posteriors = join_tree.get_posteriors()
+
+    assert_almost_equal(s_a.values, np.array([posteriors['a']['off'], posteriors['a']['on']]), decimal=1)
+    assert_almost_equal(s_b.values, np.array([posteriors['b']['off'], posteriors['b']['on']]), decimal=1)
+    assert_almost_equal(s_c.values, np.array([posteriors['c']['off'], posteriors['c']['on']]), decimal=1)
+
+    assert(1 == 1)
 
 
 @with_setup(setup, teardown)
