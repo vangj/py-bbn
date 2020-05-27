@@ -5,6 +5,7 @@ from numpy.testing import assert_almost_equal
 
 from pybbn.graph.dag import BbnUtil, Bbn
 from pybbn.graph.edge import Edge, EdgeType
+from pybbn.graph.jointree import EvidenceBuilder
 from pybbn.graph.node import BbnNode
 from pybbn.graph.variable import Variable
 from pybbn.pptc.inferencecontroller import InferenceController
@@ -238,8 +239,6 @@ def test_sampling():
     assert_almost_equal(s_b.values, np.array([posteriors['b']['off'], posteriors['b']['on']]), decimal=1)
     assert_almost_equal(s_c.values, np.array([posteriors['c']['off'], posteriors['c']['on']]), decimal=1)
 
-    assert(1 == 1)
-
 
 @with_setup(setup, teardown)
 def test_sampling_with_rejection():
@@ -282,3 +281,15 @@ def test_sampling_with_rejection():
     assert_almost_equal(s_a, np.array([1.0]))
     assert_almost_equal(s_b, np.array([0.5006, 0.4994]))
     assert_almost_equal(s_c, np.array([0.5521, 0.4479]))
+
+    join_tree = InferenceController.apply(bbn)
+    ev = EvidenceBuilder() \
+        .with_node(join_tree.get_bbn_node_by_name('a')) \
+        .with_evidence('on', 1.0) \
+        .build()
+    join_tree.set_observation(ev)
+    posteriors = join_tree.get_posteriors()
+
+    assert_almost_equal(s_a, np.array([posteriors['a']['on']]), decimal=1)
+    assert_almost_equal(s_b, np.array([posteriors['b']['off'], posteriors['b']['on']]), decimal=1)
+    assert_almost_equal(s_c, np.array([posteriors['c']['off'], posteriors['c']['on']]), decimal=1)
