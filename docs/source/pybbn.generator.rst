@@ -1,10 +1,13 @@
-Bayesian Belief Network Generator Package
-=========================================
+Generator Package
+=================
 
-pybbn.generator.bbngenerator module
------------------------------------
+Generator
+---------
+
+Used this package to create realistic Bayesian belief networks.
 
 .. automodule:: pybbn.generator.bbngenerator
     :members:
     :undoc-members:
     :show-inheritance:
+    :special-members: __init__
