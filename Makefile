@@ -13,6 +13,9 @@ test: clean lint
 build: test
 	python setup.py bdist_egg
 
+build-dist:
+	python setup.py bdist_egg sdist bdist_wheel
+
 install: build
 	python setup.py install
 

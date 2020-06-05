@@ -1,2 +1,2 @@
-include requirements.txt
-recursive-exclude tests *
+include requirements.txt README.md
+prune tests*

@@ -8,7 +8,7 @@ setup(
     version='1.1.1',
     author='Jee Vang',
     author_email='vangjee@gmail.com',
-    packages=find_packages(),
+    packages=find_packages(exclude=('*.tests', '*.tests.*', 'tests.*', 'tests')),
     description='Learning and Inference in Bayesian Belief Networks',
     long_description=long_desc,
     long_description_content_type='text/x-rst',
@@ -26,5 +26,6 @@ setup(
         'Intended Audience :: Science/Research',
         'Development Status :: 5 - Production/Stable'
     ],
-    include_package_data=True
+    include_package_data=True,
+    test_suite='nose.collector'
 )
