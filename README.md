@@ -10,6 +10,13 @@ the ability to generate singly- and multi-connected graphs, which is taken from 
 There is also the option to generate sample data from your BBN. This synthetic data may be summarized to generate 
 your posterior marginal probabilities and work as a form of approximate inference.
 
+# Power Up, Next Level
+
+If you like py-bbn, please inquire about our next-generation products below!
+
+* [turing_bbn](https://turing-bbn.oneoffcoder.com/) is a C++17 implementation of py-bbn; take your causal and probabilistic inferences to the next computing level!
+* [pyspark-bbn](https://pyspark-bbn.oneoffcoder.com/) is a is a scalable, massively parallel processing MPP framework for learning structures and parameters of Bayesian Belief Networks BBNs using [Apache Spark](https://spark.apache.org/).
+
 # Exact Inference Usage
 
 Below is an example code to create a Bayesian Belief Network, transform it into a join tree, 
