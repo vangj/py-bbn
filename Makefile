@@ -24,6 +24,7 @@ publish: build
 
 clean:
 	find . -type f -name '*.pyc' -delete
+	find . -type d -name '__pycache__' -delete
 	rm -fr coverage/
 	rm -fr dist/
 	rm -fr build/
