@@ -14,7 +14,7 @@ posterior marginal probabilities and work as a form of approximate inference.
 Power Up, Next Level
 --------------------
 
-If you like py-bbn, please inquire about our next-generation products below!
+If you like py-bbn, please inquire about our next-generation products below! info@oneoffcoder.com
 
 * `turing_bbn <https://turing-bbn.oneoffcoder.com/>`_ is a C++17 implementation of py-bbn; take your causal and probabilistic inferences to the next computing level!
 * `pyspark-bbn <https://pyspark-bbn.oneoffcoder.com/>`_ is a is a scalable, massively parallel processing MPP framework for learning structures and parameters of Bayesian Belief Networks BBNs using `Apache Spark <https://spark.apache.org/>`_.
