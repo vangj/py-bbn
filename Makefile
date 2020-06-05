@@ -13,7 +13,7 @@ test: clean lint
 build: test
 	python setup.py bdist_egg
 
-build-dist:
+build-dist: compile
 	python setup.py bdist_egg sdist bdist_wheel
 
 install: build
@@ -21,6 +21,9 @@ install: build
 
 publish: build
 	python setup.py sdist upload -r pypi
+
+compile:
+	python -m compileall -f ./pysparkbbn
 
 clean:
 	find . -type f -name '*.pyc' -delete
