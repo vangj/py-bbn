@@ -12,6 +12,10 @@ your posterior marginal probabilities and work as a form of approximate inferenc
 
 # Power Up, Next Level
 
+turing_bbn                               |  pyspark-bbn
+:---------------------------------------:|:----------------------------------------:
+![](misc/turing-bbn-50x50.png?raw=true)  |  ![](misc/pyspark-bbn-50x50.png?raw=true)
+
 If you like py-bbn, please inquire about our next-generation products below! info@oneoffcoder.com
 
 * [turing_bbn](https://turing-bbn.oneoffcoder.com/) is a C++17 implementation of py-bbn; take your causal and probabilistic inferences to the next computing level!
