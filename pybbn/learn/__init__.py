@@ -1,3 +1,0 @@
-"""
-Bayesian Belief Network Learning
-"""

@@ -1,3 +1,0 @@
-"""
-Linear Gaussian Models
-"""
