@@ -19,6 +19,24 @@ class Dag(Graph):
         """
         Graph.__init__(self)
 
+    def get_n2i(self):
+        """
+        Gets a map of node names to identifiers.
+
+        :return: Dictionary.
+        """
+        n2i = {node.variable.name: k for k, node in self.nodes.items()}
+        return n2i
+
+    def get_i2n(self):
+        """
+        Gets a map of node identifiers to names.
+
+        :return: Dictionary.
+        """
+        i2n = {k: node.variable.name for k, node in self.nodes.items()}
+        return i2n
+
     def get_parents(self, id):
         """
         Gets the parent IDs of the specified node.
