@@ -18,11 +18,12 @@ reach for success!
    :caption: Contents
 
    intro
-   exact-inference
+   probabilistic-inference
+   causal-inference
    serde
    generate
    sampling
-   causality
+
 
 .. toctree::
    :maxdepth: 2

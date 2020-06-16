@@ -1,5 +1,8 @@
-Exact Inference
-===============
+Probabilistic Inference
+=======================
+
+The probabilistic inference algorithm used by py-bbn is an exact inference algorithm. Let's go through
+an example on how to conduct exact inference.
 
 Huang Graph
 -----------
