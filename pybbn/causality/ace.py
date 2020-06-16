@@ -29,6 +29,7 @@ class Ace(object):
         :param y_val: Y value.
         :return: Dictionary of ACE over X values.
         """
+
         def get_evidence(n, v):
             return EvidenceBuilder() \
                 .with_node(self.jt.get_bbn_node_by_name(n)) \
@@ -75,4 +76,3 @@ class Ace(object):
             results[x_val] = total
 
         return results
-
