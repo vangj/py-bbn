@@ -10,3 +10,4 @@ Subpackages
     pybbn.pptc
     pybbn.sampling
     pybbn.generator
+    pybbn.causality

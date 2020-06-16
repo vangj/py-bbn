@@ -22,6 +22,7 @@ reach for success!
    serde
    generate
    sampling
+   causality
 
 .. toctree::
    :maxdepth: 2
