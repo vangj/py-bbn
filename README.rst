@@ -9,7 +9,8 @@ pp. 225--263, 1999 <http://pages.cs.wisc.edu/~dpage/ijar95.pdf>`_. Additionally,
 the ability to generate singly- and multi-connected graphs, which is taken from `JS Ide and FG Cozman,
 "Random Generation of Bayesian Network," in Advances in Artificial Intelligence, Lecture Notes in Computer Science, vol 2507 <https://pdfs.semanticscholar.org/5273/2fb57129443592024b0e7e46c2a1ec36639c.pdf>`_.
 There is also the option to generate sample data from your BBN. This synthetic data may be summarized to generate your
-posterior marginal probabilities and work as a form of approximate inference.
+posterior marginal probabilities and work as a form of approximate inference. Lastly, we have
+added Pearl's `do-operator` for causal inference.
 
 Power Up, Next Level
 --------------------

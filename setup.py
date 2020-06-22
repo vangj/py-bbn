@@ -15,7 +15,7 @@ setup(
     url='https://github.com/vangj/py-bbn',
     keywords=' '.join(['bayesian', 'belief', 'network', 'exact', 'approximate', 'inference', 'junction', 'tree',
                        'algorithm', 'pptc', 'dag', 'gibbs', 'sampling', 'multivariate', 'conditional', 'gaussian',
-                       'linear', 'causal', 'causality', 'structure', 'parameter']),
+                       'linear', 'causal', 'causality', 'structure', 'parameter', 'causal', 'causality']),
     install_requires=['numpy', 'scipy', 'networkx', 'pandas'],
     classifiers=[
         'Programming Language :: Python :: 3',
