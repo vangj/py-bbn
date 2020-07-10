@@ -40,7 +40,7 @@ del .noseids
 goto :eof
 
 :build
-python setup.py bdist_egg
+python setup.py bdist_egg sdist bdist_wheel
 goto :eof
 
 :install
