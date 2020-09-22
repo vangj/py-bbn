@@ -182,6 +182,10 @@ This Python code base is a port of the [original Java code](https://github.com/v
 
 [Documentation](https://py-bbn.readthedocs.io/en/latest/) available online!
 
+# Gitter
+
+[Chat Room](https://gitter.im/py-bbn/py-bbn)
+
 # Citation
 
 ```
