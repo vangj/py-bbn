@@ -14,6 +14,25 @@ Below is the code to create the `Huang Graph <http://pages.cs.wisc.edu/~dpage/ij
 - assert evidence
 - print out the marginal probabilities
 
+.. graphviz::
+   :align: center
+   :alt: Huang Bayesian Belief Network structure.
+   :caption: Huang Bayesian Belief Network structure.
+
+   digraph {
+        node [fixedsize=true, width=0.3, shape=circle, fontname="Helvetica-Outline", color=crimson, style=filled]
+
+        A -> B
+        A -> C
+        B -> D
+        C -> E
+        D -> F
+        E -> F
+        C -> G
+        E -> H
+        G -> H
+   }
+
 .. literalinclude:: code/create-huang-graph.py
    :language: python
    :linenos:
