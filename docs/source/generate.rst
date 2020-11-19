@@ -10,6 +10,37 @@ There are two types of BBNs you may generate.
 A singly-connected BBN is one, where ignoring the direction of the edges, there is at most one path between any two nodes.
 A multi-connected BBN is one that is ``not`` singly-connected.
 
+.. graphviz::
+   :align: center
+   :alt: Singly-connected network structure.
+   :caption: Singly-connected network structure.
+
+   digraph {
+        node [fixedsize=true, width=0.3, shape=circle, fontname="Helvetica-Outline", color=crimson, style=filled]
+
+        A -> C
+        B -> C
+        C -> D
+        C -> E
+        E -> F
+   }
+
+.. graphviz::
+   :align: center
+   :alt: Multi-connected network structure.
+   :caption: Multi-connected network structure. There are two paths between C and F: (C, D, F) and (C, E, F).
+
+   digraph {
+        node [fixedsize=true, width=0.3, shape=circle, fontname="Helvetica-Outline", color=crimson, style=filled]
+
+        A -> C
+        B -> C
+        C -> D
+        C -> E
+        D -> F
+        E -> F
+   }
+
 Singly-Connected
 ----------------
 
