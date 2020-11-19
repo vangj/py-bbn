@@ -1,10 +1,14 @@
 FROM continuumio/anaconda3
-LABEL Jee Vang, Ph.D. "vangjee@gmail.com"
+LABEL author="Jee Vang, Ph.D."
+LABEL email="vangjee@gmail.com"
+
 ARG APYBBN_VERSION
 ARG APYPI_REPO
+
 ENV PYBBN_VERSION=$APYBBN_VERSION
 ENV PYPI_REPO=$APYPI_REPO
 ENV PATH /opt/conda/bin:$PATH
+
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install build-essential -y
