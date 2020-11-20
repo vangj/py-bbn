@@ -145,7 +145,7 @@ pip list | grep pybbn
 Make sure you [install GraphViz](https://graphviz.gitlab.io/download/) on your system.
 
 * CentOS: `yum install graphviz*`
-* Ubuntu: `sudo apt-get install libgraphviz-dev`
+* Ubuntu: `sudo apt-get install graphviz libgraphviz-dev`
 * Mac OSX: `brew install graphviz` and when you install pygraphviz `pip install pygraphviz --install-option="--include-path=/usr/local/lib/graphviz/" --install-option="--library-path=/usr/local/lib/graphviz/"`
 * Windows: use the [msi installer](https://graphviz.gitlab.io/_pages/Download/windows/graphviz-2.38.msi)
   * For Anaconda + Windows, install pygraphviz from this [channel](https://anaconda.org/alubbock/pygraphviz) `conda install -c alubbock pygraphviz`
