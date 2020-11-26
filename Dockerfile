@@ -1,4 +1,5 @@
-FROM continuumio/anaconda3
+FROM oneoffcoder/python-java:latest
+
 LABEL author="Jee Vang, Ph.D."
 LABEL email="vangjee@gmail.com"
 
@@ -7,11 +8,9 @@ ARG APYPI_REPO
 
 ENV PYBBN_VERSION=$APYBBN_VERSION
 ENV PYPI_REPO=$APYPI_REPO
-ENV PATH /opt/conda/bin:$PATH
 
 RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install build-essential -y
+    && apt-get upgrade -y
 COPY . /py-bbn
-RUN conda install --file /py-bbn/requirements.txt -y
+RUN pip install -r /py-bbn/requirements.txt
 RUN /py-bbn/publish.sh
