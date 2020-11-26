@@ -1,5 +1,7 @@
 # PyBBN
 
+[![Join the chat at https://gitter.im/dataflava/py-bbn](https://badges.gitter.im/dataflava/py-bbn.svg)](https://gitter.im/dataflava/py-bbn?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 PyBBN is Python library for Bayesian Belief Networks (BBNs) exact inference using the 
 [junction tree algorithm](https://en.wikipedia.org/wiki/Junction_tree_algorithm) or Probability
 Propagation in Trees of Clusters. The implementation is taken directly from [C. Huang and A. Darwiche, "Inference in
@@ -145,7 +147,7 @@ pip list | grep pybbn
 Make sure you [install GraphViz](https://graphviz.gitlab.io/download/) on your system.
 
 * CentOS: `yum install graphviz*`
-* Ubuntu: `sudo apt-get install libgraphviz-dev`
+* Ubuntu: `sudo apt-get install graphviz libgraphviz-dev`
 * Mac OSX: `brew install graphviz` and when you install pygraphviz `pip install pygraphviz --install-option="--include-path=/usr/local/lib/graphviz/" --install-option="--library-path=/usr/local/lib/graphviz/"`
 * Windows: use the [msi installer](https://graphviz.gitlab.io/_pages/Download/windows/graphviz-2.38.msi)
   * For Anaconda + Windows, install pygraphviz from this [channel](https://anaconda.org/alubbock/pygraphviz) `conda install -c alubbock pygraphviz`
@@ -181,6 +183,10 @@ This Python code base is a port of the [original Java code](https://github.com/v
 # Read the Docs
 
 [Documentation](https://py-bbn.readthedocs.io/en/latest/) available online!
+
+# Gitter
+
+[Chat Room](https://gitter.im/py-bbn/py-bbn)
 
 # Citation
 
