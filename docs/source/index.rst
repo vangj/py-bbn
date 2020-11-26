@@ -119,7 +119,7 @@ Help
 
 .. |Source_Link| raw:: html
 
-   <a href="https://github.com/oneoffcoder/py-pair" target="_blank">GitHub</a>: source code
+   <a href="https://github.com/oneoffcoder/py-bbn" target="_blank">GitHub</a>: source code
 
 .. |Gitter_Link| raw:: html
 
