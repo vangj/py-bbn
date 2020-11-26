@@ -184,7 +184,7 @@ This Python code base is a port of the [original Java code](https://github.com/v
 
 # Gitter
 
-[Chat Room](https://gitter.im/py-bbn/py-bbn)
+[Chat Room](https://gitter.im/dataflava/py-bbn)
 
 # Citation
 

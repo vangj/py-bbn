@@ -1,17 +1,17 @@
 .. meta::
    :description: An exact probabilistic and causal inference API using Bayesian Belief Networks (BBNs).
-   :keywords: python, statistics, causal, causality, probabilistic, exact inference, bayesian, bayesian belief networks, logic sampling, sampling, graph, synthetic data
+   :keywords: python, statistics, causal, causality, probabilistic, exact inference, bayesian, bayesian belief networks, logic sampling, sampling, graph, synthetic data, causal inference
    :robots: index, follow
    :abstract: Exact probabilistic inference is accomplished using the Junction Tree Algorithm. Causal inference is accomplished using the average causal effect (ACE). Simulation features for generating synthetic data is also available. Feature to generate synthetic BBNs is also built in. Comes with batteries for experimentation and production-ready use.
-   :author: Jee Vang
+   :author: Jee Vang, Ph.D.
    :contact: vangjee@gmail.com
-   :copyright: Jee Vang
+   :copyright: Jee Vang, Ph.D.
    :content: global
    :generator: Sphinx
    :language: English
    :rating: general
    :reply-to: vangjee@gmail.com
-   :web_author: Jee Vang
+   :web_author: Jee Vang, Ph.D.
    :revisit-after: 1 days
 
 .. PyBBN documentation master file, created by
@@ -68,3 +68,59 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+Copyright
+=========
+
+::
+
+    Copyright 2017 Jee Vang
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+Citation
+========
+
+::
+
+    @misc{vang_2017,
+    title={PyBBN},
+    url={https://github.com/vangj/py-bbn/},
+    author={Vang, Jee},
+    year={2017},
+    month={Jan}}
+
+Author
+======
+
+Jee Vang, Ph.D.
+
+- |Patreon_Link|
+
+.. |Patreon_Link| raw:: html
+
+   <a href="https://www.patreon.com/vangj" target="_blank">Patreon</a>: support is appreciated
+
+Help
+====
+
+- |Source_Link|
+- |Gitter_Link|
+
+.. |Source_Link| raw:: html
+
+   <a href="https://github.com/oneoffcoder/py-pair" target="_blank">GitHub</a>: source code
+
+.. |Gitter_Link| raw:: html
+
+   <a href="https://gitter.im/dataflava/py-bbn" target="_blank">Gitter</a>: chat
