@@ -1,3 +1,5 @@
+![pybbn logo](https://py-bbn.readthedocs.io/_images/logo-250.png)
+
 # PyBBN
 
 PyBBN is Python library for Bayesian Belief Networks (BBNs) exact inference using the 
