@@ -15,9 +15,9 @@ added Pearl's `do-operator` for causal inference.
 
 # Power Up, Next Level
 
-turing_bbn                               |  pyspark-bbn
-:---------------------------------------:|:----------------------------------------:
-![](misc/turing-bbn-50x50.png?raw=true)  |  ![](misc/pyspark-bbn-50x50.png?raw=true)
+turing_bbn                                                                            |  pyspark-bbn
+:------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------:
+![turing_bbn logo](https://turing-bbn.oneoffcoder.com/_images/turing-bbn-150x150.png) |![pyspark-bbn logo](https://pyspark-bbn.oneoffcoder.com/_images/pyspark-bbn-150x150.png)
 
 If you like py-bbn, please inquire about our next-generation products below! info@oneoffcoder.com
 
