@@ -1,3 +1,5 @@
+![pybbn logo](https://py-bbn.readthedocs.io/_images/logo.png)
+
 PyBBN
 -----
 

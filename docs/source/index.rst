@@ -22,19 +22,9 @@
 py-bbn
 ======
 
-.. graphviz::
-   :align: center
-   :alt: Converging network structure.
+.. image:: _static/images/logo-250.png
+   :alt: pybbn logo.
 
-   digraph {
-      node [shape=circle, fontname="Helvetica-Outline"]
-      A [color=crimson, style=filled]
-      B [color=crimson, style=filled]
-      C [color=crimson, style=filled]
-
-      A -> B
-      C -> B
-   }
 
 ``py-bbn`` is a Python implementation of exact inference in Bayesian Belief Networks. If you like py-bbn,
 you might be interested in our next-generation products. Please contact us at info@oneoffcoder.com. Let's
@@ -72,6 +62,9 @@ Indices and tables
 Copyright
 =========
 
+Software
+--------
+
 ::
 
     Copyright 2017 Jee Vang
@@ -87,6 +80,14 @@ Copyright
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+Art
+---
+
+::
+
+   Copyright 2020 Daytchia Vang
+
 
 Citation
 ========
