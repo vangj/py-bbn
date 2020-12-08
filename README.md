@@ -113,15 +113,6 @@ To build the documents, go into the docs sub-directory and type in the following
 make html
 ```
 
-# Publishing
-
-To publish, make sure you have `.pypirc` with the correct credentials stored. Then type in the following.
-
-```bash
-./build.sh -r testpypi -v 1.0.4 # for testing
-./build.sh -r pypi -v 1.0.4 # the real thing
-```
-
 # Installing
 
 ## From PyPi
@@ -180,13 +171,10 @@ But I am coming from the Java mothership and I want to use Bayesian Belief Netwo
 
 This Python code base is a port of the [original Java code](https://github.com/vangj/jbayes).
 
-# Read the Docs
+# Help
 
-[Documentation](https://py-bbn.readthedocs.io/en/latest/) available online!
-
-# Gitter
-
-[Chat Room](https://gitter.im/dataflava/py-bbn)
+- [Documentation](https://py-bbn.readthedocs.io/en/latest/)
+- [Chat Room](https://gitter.im/dataflava/py-bbn)
 
 # Citation
 
@@ -201,6 +189,8 @@ month={Jan}}
 ```
 
 # Copyright Stuff
+
+## Software
 
 ```
 Copyright 2017 Jee Vang
@@ -217,3 +207,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+## Art Copyright
+
+Copyright 2020 Daytchia Vang
+
+# Sponsor, Love
+
+- [Patreon](https://www.patreon.com/vangj)
+- [GitHub](https://github.com/sponsors/vangj)
