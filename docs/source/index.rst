@@ -23,6 +23,7 @@ py-bbn
 ======
 
 .. image:: _static/images/logo-250.png
+   :align: center
    :alt: pybbn logo.
 
 
