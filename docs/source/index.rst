@@ -108,10 +108,15 @@ Author
 Jee Vang, Ph.D.
 
 - |Patreon_Link|
+- |Github_Link|
 
 .. |Patreon_Link| raw:: html
 
    <a href="https://www.patreon.com/vangj" target="_blank">Patreon</a>: support is appreciated
+
+.. |Github_Link| raw:: html
+
+   <a href="https://github.com/sponsors/vangj" target="_blank">GitHub</a>: sponsorship will help us change the world for the better
 
 Help
 ====
