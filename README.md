@@ -2,6 +2,8 @@
 
 # PyBBN
 
+[![Join the chat at https://gitter.im/dataflava/py-bbn](https://badges.gitter.im/dataflava/py-bbn.svg)](https://gitter.im/dataflava/py-bbn?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 PyBBN is Python library for Bayesian Belief Networks (BBNs) exact inference using the 
 [junction tree algorithm](https://en.wikipedia.org/wiki/Junction_tree_algorithm) or Probability
 Propagation in Trees of Clusters. The implementation is taken directly from [C. Huang and A. Darwiche, "Inference in
@@ -175,6 +177,10 @@ This Python code base is a port of the [original Java code](https://github.com/v
 
 - [Documentation](https://py-bbn.readthedocs.io/en/latest/)
 - [Chat Room](https://gitter.im/dataflava/py-bbn)
+
+# Gitter
+
+[Chat Room](https://gitter.im/py-bbn/py-bbn)
 
 # Citation
 
