@@ -41,6 +41,7 @@ reach for success!
 
    intro
    probabilistic-inference
+   gaussian-inference
    causal-inference
    serde
    generate
