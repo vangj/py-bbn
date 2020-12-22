@@ -2,13 +2,31 @@ import numpy as np
 
 
 class GaussianInference(object):
+    """
+    Gaussian inference.
+    """
+
     def __init__(self, H, M, E):
+        """
+        ctor.
+
+        :param H: Headers.
+        :param M: Means.
+        :param E: Covariance matrix.
+        """
         self.H = H
         self.M = M
         self.E = E
         self.I = {h: i for i, h in enumerate(H)}
 
     def do_inference(self, name, observation):
+        """
+        Performs inference.
+
+        :param name: Name of variable.
+        :param observation: Observation value.
+        :return: GaussianInference.
+        """
         z_index = [self.I[name]]
         y_index = [i for i in range(self.E.shape[1]) if i not in z_index]
 
@@ -26,4 +44,3 @@ class GaussianInference(object):
         E = S_YY - S_YZ.dot(S_ZZ).dot(S_YZ.T)
 
         return GaussianInference(H, M, E)
-

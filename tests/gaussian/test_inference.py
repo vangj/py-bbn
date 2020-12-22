@@ -1,8 +1,8 @@
 import random
 
 import numpy as np
-from numpy.testing import assert_almost_equal
 from nose import with_setup
+from numpy.testing import assert_almost_equal
 
 from pybbn.gaussian.inference import GaussianInference
 
