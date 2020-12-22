@@ -44,3 +44,16 @@ class GaussianInference(object):
         E = S_YY - S_YZ.dot(S_ZZ).dot(S_YZ.T)
 
         return GaussianInference(H, M, E)
+
+    def get_inference(self, observations):
+        """
+        Conducts inference on a set of observations.
+
+        :param observations: List of observation. Each observation is tuple (name, value).
+        :return: GaussianInference.
+        """
+        o = observations[0]
+        g = self.do_inference(o[0], o[1])
+        for o in observations[1:]:
+            g = g.do_inference(o[0], o[1])
+        return g

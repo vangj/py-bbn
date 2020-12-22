@@ -43,10 +43,26 @@ def get_cowell_data():
     return D, ['Y', 'X', 'Z']
 
 
+def get_castillo_data():
+    """
+    Gets Castillo data.
+
+    :return: Data and headers.
+    """
+    n = 10000
+    A = np.random.normal(0, 1, n)
+    B = np.random.normal(0, 1, n)
+    C = np.random.normal(A, 1, n)
+    D = np.random.normal(0.2 * A + 0.8 * B, 1, n)
+
+    E = np.vstack([A, B, C, D]).T
+    return E, ['A', 'B', 'C', 'D']
+
+
 @with_setup(setup, teardown)
 def test_cowell_x():
     """
-    Test inference with Cowell example (X=1.5).
+    Tests inference with Cowell example (X=1.5).
     """
     X, H = get_cowell_data()
     M = X.mean(axis=0)
@@ -73,7 +89,7 @@ def test_cowell_x():
 @with_setup(setup, teardown)
 def test_cowell_z():
     """
-    Test inference with Cowell example (z=1.5).
+    Tests inference with Cowell example (z=1.5).
     """
     X, H = get_cowell_data()
     M = X.mean(axis=0)
@@ -100,7 +116,7 @@ def test_cowell_z():
 @with_setup(setup, teardown)
 def test_cowell_y():
     """
-    Test inference with Cowell example (Y=1.5).
+    Tests inference with Cowell example (Y=1.5).
     """
     X, H = get_cowell_data()
     M = X.mean(axis=0)
@@ -122,3 +138,29 @@ def test_cowell_y():
     assert_almost_equal(g.M, [-1.5175865285, -1.5280767750])
     assert_almost_equal(g.E, [[1.0099559400, 1.0160891744],
                               [1.0160891744, 2.0066503668]])
+
+
+@with_setup(setup, teardown)
+def test_castillo_abc():
+    """
+    Tests inference with Castillo example (A=1, B=2, C=3).
+    """
+    X, H = get_castillo_data()
+    M = X.mean(axis=0)
+    E = np.cov(X.T)
+
+    g = GaussianInference(H, M, E)
+    print(g.H)
+    print(g.I)
+    print(g.M)
+    print(g.E)
+    print('-' * 15)
+
+    g = g.get_inference([('A', 1), ('B', 2), ('C', 3)])
+    print(g.H)
+    print(g.I)
+    print(g.M)
+    print(g.E)
+
+    assert_almost_equal(g.M, [-1.8750908711])
+    assert_almost_equal(g.E, [[1.0141480877]])
