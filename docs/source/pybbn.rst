@@ -11,3 +11,4 @@ Subpackages
     pybbn.sampling
     pybbn.generator
     pybbn.causality
+    pybbn.gaussian
