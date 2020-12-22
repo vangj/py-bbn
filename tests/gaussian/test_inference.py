@@ -73,6 +73,7 @@ def test_cowell_x():
     print(g.I)
     print(g.M)
     print(g.E)
+    print(g.P)
     print('-' * 15)
 
     g = g.do_inference('X', 1.5)
@@ -80,6 +81,8 @@ def test_cowell_x():
     print(g.I)
     print(g.M)
     print(g.E)
+    print(g.meta)
+    print(g.P)
 
     assert_almost_equal(g.M, [-0.7447794831, -1.5222039705])
     assert_almost_equal(g.E, [[0.4962114580, 0.0020891582],
@@ -107,6 +110,8 @@ def test_cowell_z():
     print(g.I)
     print(g.M)
     print(g.E)
+    print(g.meta)
+    print(g.P)
 
     assert_almost_equal(g.M, [-0.4978580082, -1.0141860551])
     assert_almost_equal(g.E, [[0.6552719951, 0.3226010216],
@@ -134,6 +139,8 @@ def test_cowell_y():
     print(g.I)
     print(g.M)
     print(g.E)
+    print(g.meta)
+    print(g.P)
 
     assert_almost_equal(g.M, [-1.5175865285, -1.5280767750])
     assert_almost_equal(g.E, [[1.0099559400, 1.0160891744],
@@ -161,6 +168,8 @@ def test_castillo_abc():
     print(g.I)
     print(g.M)
     print(g.E)
+    print(g.meta)
+    print(g.P)
 
     assert_almost_equal(g.M, [-1.8750908711])
     assert_almost_equal(g.E, [[1.0141480877]])
