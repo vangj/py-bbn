@@ -1,5 +1,5 @@
-Junction Tree Algorithm Package
-===============================
+Junction Tree Algorithm
+=======================
 
 Inference Control
 -----------------

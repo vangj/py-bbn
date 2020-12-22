@@ -1,8 +1,5 @@
-Sampling Package
-================
-
 Sampling
---------
+========
 
 Use this module for sampling.
 

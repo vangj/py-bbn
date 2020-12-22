@@ -1,5 +1,5 @@
-Graph Package
-=============
+Graph
+=====
 
 Variable
 --------

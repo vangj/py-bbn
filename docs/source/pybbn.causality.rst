@@ -1,5 +1,5 @@
-Causality Package
-=================
+Causality
+=========
 
 Average Causal Effect
 ---------------------

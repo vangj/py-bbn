@@ -1,8 +1,5 @@
-Generator Package
-=================
-
 Generator
----------
+=========
 
 Used this package to create realistic Bayesian belief networks.
 
