@@ -28,6 +28,8 @@ M = X.mean(axis=0)
 E = np.cov(X.T)
 
 # the means and covariance matrix are all we need for gaussian inference
+# notice how we keep `g` around?
+# we'll use `g` over and over to do inference with evidence/observations
 g = GaussianInference(H, M, E)
 # {'Y': (-0.01834, 0.98414), 'X': (-0.01602, 2.02482), 'Z': (-0.01133, 3.00646)}
 print(g.P)
