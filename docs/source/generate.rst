@@ -1,7 +1,7 @@
 Generating Bayesian Belief Networks
 ===================================
 
-Let's generate some Bayesian Belief Networks (BBNs). The algorithms are taken from `Random Generation of Bayesian Networks <https://www.semanticscholar.org/paper/Random-Generation-of-Bayesian-Networks-Ide-Cozman/52732fb57129443592024b0e7e46c2a1ec36639c>`_.
+Let's generate some Bayesian Belief Networks (BBNs). The algorithms are taken from `Random Generation of Bayesian Networks <https://www.semanticscholar.org/paper/Random-Generation-of-Bayesian-Networks-Ide-Cozman/52732fb57129443592024b0e7e46c2a1ec36639c>`_ :cite:`2002:ide`.
 There are two types of BBNs you may generate.
 
 - singly-connected

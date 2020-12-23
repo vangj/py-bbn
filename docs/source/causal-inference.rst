@@ -4,7 +4,7 @@ Causal Inference
 Average Causal Effect
 ---------------------
 
-Here's how you may estimate the Average Causal Effect ``ACE`` using Pearl's ``do-operator``.
+Here's how you may estimate the Average Causal Effect ``ACE`` using Pearl's ``do-operator`` :cite:`1988:pearl,2000:pearl,2016:pearl,2018:pearl`.
 In this example, we want to estimate the ACE of drug on recovery where recovery is true.
 
 .. graphviz::

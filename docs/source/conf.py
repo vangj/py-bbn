@@ -38,10 +38,13 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
     'sphinx.ext.githubpages',
+    'sphinxcontrib.bibtex',
     'sphinxcontrib.blockdiag',
     'sphinx.ext.graphviz',
     'sphinx_sitemap'
 ]
+
+bibtex_bibfiles = ['refs.bib']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

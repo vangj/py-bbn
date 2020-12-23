@@ -1,7 +1,8 @@
 Gaussian Inference
 ==================
 
-Inference on a Gaussian Bayesian Network (GBN) is accomplished through updating the means and covariance matrix incrementally.
+Inference on a Gaussian Bayesian Network (GBN) is accomplished through updating the means and covariance matrix incrementally :cite:`1997:castillo`. The
+following GBN comes from :cite:`1988:cowell`.
 
 .. graphviz::
    :align: center

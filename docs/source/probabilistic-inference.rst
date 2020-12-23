@@ -7,7 +7,7 @@ an example on how to conduct exact inference.
 Huang Graph
 -----------
 
-Below is the code to create the `Huang Graph <http://pages.cs.wisc.edu/~dpage/ijar95.pdf>`_. Note the typical procedure as follows.
+Below is the code to create the `Huang Graph <http://pages.cs.wisc.edu/~dpage/ijar95.pdf>`_ :cite:`1999:huang`. Note the typical procedure as follows.
 
 - create a Bayesian Belief Network (BBN)
 - create a junction tree from the graph

@@ -27,7 +27,7 @@ py-bbn
    :alt: pybbn logo.
 
 
-``py-bbn`` is a Python implementation of exact inference in Bayesian Belief Networks. If you like py-bbn,
+``py-bbn`` is a Python implementation of exact inference in Bayesian Belief Networks :cite:`1999:huang,2009:koller`. If you like py-bbn,
 you might be interested in our next-generation products. Please contact us at info@oneoffcoder.com. Let's
 reach for success!
 
@@ -46,6 +46,7 @@ reach for success!
    serde
    generate
    sampling
+   zzz-bib
 
 
 .. toctree::
