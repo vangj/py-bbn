@@ -2,16 +2,10 @@
 
 # PyBBN
 
-PyBBN is Python library for Bayesian Belief Networks (BBNs) exact inference using the 
-[junction tree algorithm](https://en.wikipedia.org/wiki/Junction_tree_algorithm) or Probability
-Propagation in Trees of Clusters. The implementation is taken directly from [C. Huang and A. Darwiche, "Inference in
+PyBBN is Python library for Bayesian Belief Networks (BBNs) exact inference using the [junction tree algorithm](https://en.wikipedia.org/wiki/Junction_tree_algorithm) or Probability Propagation in Trees of Clusters (PPTC). The implementation is taken directly from [C. Huang and A. Darwiche, "Inference in
 Belief Networks: A Procedural Guide," in International Journal of Approximate Reasoning, vol. 15,
-pp. 225--263, 1999](http://pages.cs.wisc.edu/~dpage/ijar95.pdf). Additionally, there is
-the ability to generate singly- and multi-connected graphs, which is taken from [JS Ide and FG Cozman, 
-"Random Generation of Bayesian Network," in Advances in Artificial Intelligence, Lecture Notes in Computer Science, vol 2507](https://pdfs.semanticscholar.org/5273/2fb57129443592024b0e7e46c2a1ec36639c.pdf).
-There is also the option to generate sample data from your BBN. This synthetic data may be summarized to generate 
-your posterior marginal probabilities and work as a form of approximate inference. Lastly, we have
-added Pearl's `do-operator` for causal inference.
+pp. 225--263, 1999](http://pages.cs.wisc.edu/~dpage/ijar95.pdf). In this API, PPTC is applied to BBNs with all discrete variables. When dealing with a BBN with all Gaussian variables (or a Gaussian Belief Network, GBN), exact inference is conducted through an incremental algorithm manipulating the means and covariance matrix. Additionally, there is the ability to generate singly- and multi-connected graphs, which is taken from [JS Ide and FG Cozman, 
+"Random Generation of Bayesian Network," in Advances in Artificial Intelligence, Lecture Notes in Computer Science, vol 2507](https://pdfs.semanticscholar.org/5273/2fb57129443592024b0e7e46c2a1ec36639c.pdf). There is also the option to generate sample data from your BBN. This synthetic data may be summarized to generate your posterior marginal probabilities and work as a form of approximate inference. Lastly, we have added Pearl's `do-operator` for causal inference.
 
 # Power Up, Next Level
 
@@ -24,10 +18,9 @@ If you like py-bbn, please inquire about our next-generation products below! inf
 * [turing_bbn](https://turing-bbn.oneoffcoder.com/) is a C++17 implementation of py-bbn; take your causal and probabilistic inferences to the next computing level!
 * [pyspark-bbn](https://pyspark-bbn.oneoffcoder.com/) is a is a scalable, massively parallel processing MPP framework for learning structures and parameters of Bayesian Belief Networks BBNs using [Apache Spark](https://spark.apache.org/).
 
-# Exact Inference Usage
+# Exact Inference, Discrete Variables
 
-Below is an example code to create a Bayesian Belief Network, transform it into a join tree, 
-and then set observation evidence. The last line prints the marginal probabilities for each node.
+Below is an example code to create a Bayesian Belief Network, transform it into a join tree, and then set observation evidence. The last line prints the marginal probabilities for each node.
 
 ```python
 from pybbn.graph.dag import Bbn
@@ -82,6 +75,56 @@ for node in join_tree.get_bbn_nodes():
     potential = join_tree.get_bbn_potential(node)
     print(node)
     print(potential)
+```
+
+# Exact Inference, Gaussian Variables
+
+```python
+import numpy as np
+
+from pybbn.gaussian.inference import GaussianInference
+
+
+def get_cowell_data():
+    """
+    Gets Cowell data.
+
+    :return: Data and headers.
+    """
+    n = 10000
+    Y = np.random.normal(0, 1, n)
+    X = np.random.normal(Y, 1, n)
+    Z = np.random.normal(X, 1, n)
+
+    D = np.vstack([Y, X, Z]).T
+    return D, ['Y', 'X', 'Z']
+
+
+# assume we have data and headers (variable names per column)
+# X is the data (rows are observations, columns are variables)
+# H is just a list of variable names
+X, H = get_cowell_data()
+
+# then we can compute the means and covariance matrix easily
+M = X.mean(axis=0)
+E = np.cov(X.T)
+
+# the means and covariance matrix are all we need for gaussian inference
+# notice how we keep `g` around?
+# we'll use `g` over and over to do inference with evidence/observations
+g = GaussianInference(H, M, E)
+# {'Y': (-0.01834, 0.98414), 'X': (-0.01602, 2.02482), 'Z': (-0.01133, 3.00646)}
+print(g.P)
+
+# we can make a single observation with do_inference()
+g1 = g.do_inference('X', 1.5)
+# {'X': (1.5, 0), 'Y': (-0.76331, 0.49519), 'Z': (-1.51893, 1.00406)}
+print(g1.P)
+
+# we can make multiple observations with get_inference()
+g2 = g.get_inference([('Z', 1.5), ('X', 2.0)])
+# {'Z': (1.5, 0), 'X': (2.0, 0), 'Y': (-1.97926, 0.49509)}
+print(g2.P)
 ```
 
 # Building
