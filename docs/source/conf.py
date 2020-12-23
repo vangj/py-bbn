@@ -166,6 +166,7 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
+html_baseurl = 'https://py-bbn.readthedocs.io/'
 html_extra_path = ['robots.txt']
 html_show_sourcelink = False
 html_show_sphinx = False
