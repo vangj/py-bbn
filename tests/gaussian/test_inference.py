@@ -203,3 +203,29 @@ def test_repr():
         assert_almost_equal(act['mean'], obs['mean'])
         assert_almost_equal(act['var'], obs['var'])
 
+    marginals = g.sample_marginals(size=10000)
+    a = marginals['A']
+    b = marginals['B']
+    c = marginals['C']
+    d = marginals['D']
+
+    print(a.mean())
+    print(b.mean())
+    print(c.mean())
+    print(d.mean())
+
+    assert_almost_equal(a.mean(), e[0]['mean'], decimal=0.001)
+    assert_almost_equal(b.mean(), e[1]['mean'], decimal=0.001)
+    assert_almost_equal(c.mean(), e[2]['mean'], decimal=0.001)
+    assert_almost_equal(d.mean(), e[3]['mean'], decimal=0.001)
+
+    print(a.var())
+    print(b.var())
+    print(c.var())
+    print(d.var())
+
+    assert_almost_equal(a.var(), e[0]['var'], decimal=0.001)
+    assert_almost_equal(b.var(), e[1]['var'], decimal=0.001)
+    assert_almost_equal(c.var(), e[2]['var'], decimal=0.001)
+    assert_almost_equal(d.var(), e[3]['var'], decimal=0.001)
+

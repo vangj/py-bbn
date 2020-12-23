@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 
 class GaussianInference(object):
@@ -29,6 +30,10 @@ class GaussianInference(object):
         meta = '{' + ','.join([f'{k}={v:.3f}' for k, v in self.meta.items()]) + '}'
         s = f'GaussianInference[H=[{H}], M=[{M}], E={E}, meta={meta}]'
         return s
+
+    def sample_marginals(self, size=1000):
+        return {m['name']: pd.Series(np.random.normal(m['mean'], np.sqrt(m['var']), size=size))
+                for m in self.marginals}
 
     @property
     def marginals(self):
