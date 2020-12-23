@@ -231,6 +231,7 @@ def test_sample_marginals():
     print(b.mean())
     print(c.mean())
     print(d.mean())
+    print('-' * 15)
 
     assert_almost_equal(a.mean(), e[0]['mean'], decimal=0.001)
     assert_almost_equal(b.mean(), e[1]['mean'], decimal=0.001)
@@ -241,8 +242,19 @@ def test_sample_marginals():
     print(b.var())
     print(c.var())
     print(d.var())
+    print('-' * 15)
 
     assert_almost_equal(a.var(), e[0]['var'], decimal=0.001)
     assert_almost_equal(b.var(), e[1]['var'], decimal=0.001)
     assert_almost_equal(c.var(), e[2]['var'], decimal=0.001)
     assert_almost_equal(d.var(), e[3]['var'], decimal=0.001)
+
+    gg = g.do_inference('A', 0.0)
+    print(gg.marginals)
+    print('-' * 15)
+
+    m = gg.sample_marginals()
+    print(m['A'].mean(), m['A'].var())
+    print(m['B'].mean(), m['B'].var())
+    print(m['C'].mean(), m['C'].var())
+    print(m['D'].mean(), m['D'].var())

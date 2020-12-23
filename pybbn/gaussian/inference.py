@@ -32,7 +32,14 @@ class GaussianInference(object):
         return s
 
     def sample_marginals(self, size=1000):
-        return {m['name']: pd.Series(np.random.normal(m['mean'], np.sqrt(m['var']), size=size))
+        def get_samples(m, v):
+            if v == 0.0:
+                s = 0.01
+            else:
+                s = np.sqrt(v)
+            return pd.Series(np.random.normal(m, s, size=size))
+
+        return {m['name']: get_samples(m['mean'], m['var'])
                 for m in self.marginals}
 
     @property
