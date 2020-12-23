@@ -31,15 +31,15 @@ E = np.cov(X.T)
 # notice how we keep `g` around?
 # we'll use `g` over and over to do inference with evidence/observations
 g = GaussianInference(H, M, E)
-# {'Y': (-0.01834, 0.98414), 'X': (-0.01602, 2.02482), 'Z': (-0.01133, 3.00646)}
+# {'Y': (0.00967, 0.98414), 'X': (0.01836, 2.02482), 'Z': (0.02373, 3.00646)}
 print(g.P)
 
 # we can make a single observation with do_inference()
 g1 = g.do_inference('X', 1.5)
-# {'X': (1.5, 0), 'Y': (-0.76331, 0.49519), 'Z': (-1.51893, 1.00406)}
+# {'X': (1.5, 0), 'Y': (0.76331, 0.49519), 'Z': (1.51893, 1.00406)}
 print(g1.P)
 
 # we can make multiple observations with get_inference()
 g2 = g.get_inference([('Z', 1.5), ('X', 2.0)])
-# {'Z': (1.5, 0), 'X': (2.0, 0), 'Y': (-1.97926, 0.49509)}
+# {'Z': (1.5, 0), 'X': (2.0, 0), 'Y': (1.97926, 0.49509)}
 print(g2.P)

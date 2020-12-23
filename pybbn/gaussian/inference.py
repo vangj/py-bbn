@@ -30,7 +30,7 @@ class GaussianInference(object):
         """
         params = {k: (v, 0) for k, v in self.meta.items()}
         for i, (k, v) in enumerate(zip(self.H, self.M)):
-            params[k] = (v, self.E[i][i])
+            params[k] = (-v, self.E[i][i])
         return params
 
     def do_inference(self, name, observation):
