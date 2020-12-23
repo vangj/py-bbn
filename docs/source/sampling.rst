@@ -1,7 +1,7 @@
 Sampling Data
 =============
 
-Sampling data from a BBN is possible. The algorithm uses ``logic sampling with rejection``.
+Sampling data from a BBN is possible. The algorithm uses ``logic sampling with rejection`` :cite:`1988:henrion`.
 
 Simple Sampling
 ---------------
