@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='pybbn',
-    version='2.0.3',
+    version='3.0.0',
     author='Jee Vang',
     author_email='vangjee@gmail.com',
     packages=find_packages(exclude=('*.tests', '*.tests.*', 'tests.*', 'tests')),
