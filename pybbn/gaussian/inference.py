@@ -21,6 +21,20 @@ class GaussianInference(object):
         self.I = {h: i for i, h in enumerate(H)}
         self.meta = meta
 
+    def __repr__(self):
+        H = ','.join(self.H)
+        M = ','.join([f'{m:.3f}' for m in self.M])
+        E = '[' + '|'.join(['[' + ','.join([f'{self.E[r][c]:.3f}' for c in range(self.E.shape[1])]) + ']'
+                            for r in range(self.E.shape[0])]) + ']'
+        meta = '{' + ','.join([f'{k}={v:.3f}' for k, v in self.meta.items()]) + '}'
+        s = f'GaussianInference[H=[{H}], M=[{M}], E={E}, meta={meta}]'
+        return s
+
+    @property
+    def marginals(self):
+        return [{'name': name, 'mean': mean, 'var': var}
+                for name, (mean, var) in self.P.items()]
+
     @property
     def P(self):
         """

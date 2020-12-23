@@ -173,3 +173,33 @@ def test_castillo_abc():
 
     assert_almost_equal(g.M, [-1.8750908711])
     assert_almost_equal(g.E, [[1.0141480877]])
+
+
+@with_setup(setup, teardown)
+def test_repr():
+    """
+    Tests GaussianInference repr function.
+    """
+    X, H = get_castillo_data()
+    M = X.mean(axis=0)
+    E = np.cov(X.T)
+
+    g = GaussianInference(H, M, E)
+    print(g)
+    o = str(g)
+    e = 'GaussianInference[H=[A,B,C,D], M=[0.002,-0.009,0.007,-0.018], E=[[0.991,0.008,1.001,0.204]|[0.008,1.010,' \
+        '0.014,0.799]|[1.001,0.014,1.996,0.225]|[0.204,0.799,0.225,1.685]], meta={}]'
+    assert o == e
+
+    print(g.marginals)
+    o = g.marginals
+    e = [{'name': 'A', 'mean': -0.0017234068142374496, 'var': 0.9907002440358944},
+         {'name': 'B', 'mean': 0.009171006220968045, 'var': 1.0100180410420976},
+         {'name': 'C', 'mean': -0.006711963688230272, 'var': 1.9957039315017837},
+         {'name': 'D', 'mean': 0.018085596717747506, 'var': 1.6851371822157823}]
+    assert len(e) == len(o)
+    for act, obs in zip(e, o):
+        assert act['name'] == obs['name']
+        assert_almost_equal(act['mean'], obs['mean'])
+        assert_almost_equal(act['var'], obs['var'])
+
