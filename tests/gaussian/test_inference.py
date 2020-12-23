@@ -203,6 +203,24 @@ def test_repr():
         assert_almost_equal(act['mean'], obs['mean'])
         assert_almost_equal(act['var'], obs['var'])
 
+
+@with_setup(setup, teardown)
+def test_sample_marginals():
+    """
+    Tests sampling marginals.
+    """
+    X, H = get_castillo_data()
+    M = X.mean(axis=0)
+    E = np.cov(X.T)
+
+    g = GaussianInference(H, M, E)
+    print(g)
+
+    e = [{'name': 'A', 'mean': -0.0017234068142374496, 'var': 0.9907002440358944},
+         {'name': 'B', 'mean': 0.009171006220968045, 'var': 1.0100180410420976},
+         {'name': 'C', 'mean': -0.006711963688230272, 'var': 1.9957039315017837},
+         {'name': 'D', 'mean': 0.018085596717747506, 'var': 1.6851371822157823}]
+
     marginals = g.sample_marginals(size=10000)
     a = marginals['A']
     b = marginals['B']
@@ -228,4 +246,3 @@ def test_repr():
     assert_almost_equal(b.var(), e[1]['var'], decimal=0.001)
     assert_almost_equal(c.var(), e[2]['var'], decimal=0.001)
     assert_almost_equal(d.var(), e[3]['var'], decimal=0.001)
-
