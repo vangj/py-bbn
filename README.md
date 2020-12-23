@@ -216,7 +216,7 @@ This Python code base is a port of the [original Java code](https://github.com/v
 
 # Help
 
-- [Documentation](https://py-bbn.readthedocs.io/en/latest/)
+- [Documentation](https://py-bbn.readthedocs.io/)
 - [Chat Room](https://gitter.im/dataflava/py-bbn)
 
 # Citation
