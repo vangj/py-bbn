@@ -27,19 +27,34 @@ py-bbn
    :alt: pybbn logo.
 
 
-``py-bbn`` is a Python implementation of exact inference in Bayesian Belief Networks :cite:`1999:huang,2009:koller`. If you like py-bbn,
-you might be interested in our next-generation products. Please contact us at info@oneoffcoder.com. Let's
-reach for success!
+``py-bbn`` is a Python implementation of probabilistic and causal inference in Bayesian Belief Networks using exact inference algorithms :cite:`1988:cowell,1997:castillo,1999:huang,2009:koller,2012:murphy`.
 
-* `turing_bbn <https://turing-bbn.oneoffcoder.com/>`_ is a C++17 implementation of py-bbn; take your causal and probabilistic inferences to the next computing level!
-* `pyspark-bbn <https://pyspark-bbn.oneoffcoder.com/>`_ is a is a scalable, massively parallel processing MPP framework for learning structures and parameters of Bayesian Belief Networks BBNs using `Apache Spark <https://spark.apache.org/>`_.
+You may install ``py-bbn`` from `pypi <https://pypi.org/project/pybbn/>`_.
 
+.. code:: bash
+
+    pip install pybbn
+
+If you like py-bbn, you might be interested in our next-generation products.
+
+`turing_bbn <https://turing-bbn.oneoffcoder.com/>`_ is a C++17 implementation of py-bbn; take your causal and probabilistic inferences to the next computing level!
+
+.. image:: https://turing-bbn.oneoffcoder.com/_images/turing-bbn-150x150.png
+   :align: center
+   :alt: turing_bbn logo.
+
+`pyspark-bbn <https://pyspark-bbn.oneoffcoder.com/>`_ is a is a scalable, massively parallel processing MPP framework for learning structures and parameters of Bayesian Belief Networks BBNs using `Apache Spark <https://spark.apache.org/>`_.
+
+.. image:: https://pyspark-bbn.oneoffcoder.com/_images/pyspark-bbn-150x150.png
+   :align: center
+   :alt: pyspark-bbn logo.
+
+Please contact us at info@oneoffcoder.com. Let's reach for success!
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents
 
-   intro
    probabilistic-inference
    gaussian-inference
    causal-inference

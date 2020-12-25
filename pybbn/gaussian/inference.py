@@ -32,6 +32,12 @@ class GaussianInference(object):
         return s
 
     def sample_marginals(self, size=1000):
+        """
+        Samples data from the marginals.
+
+        :param size: Number of samples.
+        :return: Dictionary with keys as names and values as pandas series (sampled data).
+        """
         def get_samples(m, v):
             if v == 0.0:
                 s = 0.01
@@ -44,6 +50,11 @@ class GaussianInference(object):
 
     @property
     def marginals(self):
+        """
+        Gets the marginals.
+
+        :return: List of dictionary. Each element has name, mean and variance.
+        """
         return [{'name': name, 'mean': mean, 'var': var}
                 for name, (mean, var) in self.P.items()]
 
@@ -61,26 +72,7 @@ class GaussianInference(object):
 
     def do_inference(self, name, observation):
         """
-        Performs inference.
-
-        Denote the following.
-
-        - :math:`z` as the variable observed
-        - :math:`y` as the set of other variables
-        - :math:`\\mu` as the vector of means
-            - :math:`\\mu_z` as the partitioned :math:`\\mu`` of length :math:`|z|`
-            - :math:`\\mu_y` as the partitioned :math:`\\mu`` of length :math:`|y|`
-        - :math:`\\Sigma` as the covariance matrix
-            - :math:`\\Sigma_{yz}` as the partitioned :math:`\\Sigma` of :math:`|y|` rows and :math:`|z|` columns
-            - :math:`\\Sigma_{zz}` as the partitioned :math:`\\Sigma` of :math:`|z|` rows and :math:`|z|` columns
-            - :math:`\\Sigma_{yy}` as the partitioned :math:`\\Sigma` of :math:`|y|` rows and :math:`|y|` columns
-
-        If we observe evidence :math:`z_e`, then the new means :math:`\\mu_y^{*}` and
-        covariance matrix :math:`\\Sigma_y^{*}` corresponding to :math:`y`
-        are computed as follows.
-
-        - :math:`\\mu_y^{*} = \\mu_y - \\Sigma_{yz} \\Sigma_{zz} (z_e - \\mu_z)`
-        - :math:`\\Sigma_y^{*} = \\Sigma_{yy} \\Sigma_{zz} \\Sigma_{yz}^{T}`
+        Performs inference. Simply calls the `do_inferences` method.
 
         :param name: Name of variable.
         :param observation: Observation value.
