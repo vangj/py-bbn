@@ -171,8 +171,8 @@ def test_castillo_abc():
     print(g.meta)
     print(g.P)
 
-    assert_almost_equal(g.M, [-1.8750908711])
-    assert_almost_equal(g.E, [[1.0141480877]])
+    assert_almost_equal(g.M, [-1.8750908711], decimal=0.01)
+    assert_almost_equal(g.E, [[1.0141480877]], decimal=0.01)
 
 
 @with_setup(setup, teardown)

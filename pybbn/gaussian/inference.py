@@ -140,8 +140,4 @@ class GaussianInference(object):
         :param observations: List of observation. Each observation is tuple (name, value).
         :return: GaussianInference.
         """
-        o = observations[0]
-        g = self.do_inference(o[0], o[1])
-        for o in observations[1:]:
-            g = g.do_inference(o[0], o[1])
-        return g
+        return self.do_inferences(observations)
