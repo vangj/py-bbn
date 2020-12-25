@@ -41,7 +41,8 @@ extensions = [
     'sphinxcontrib.bibtex',
     'sphinxcontrib.blockdiag',
     'sphinx.ext.graphviz',
-    'sphinx_sitemap'
+    'sphinx_sitemap',
+    'nbsphinx'
 ]
 
 bibtex_bibfiles = ['refs.bib']
