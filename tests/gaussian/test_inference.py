@@ -148,34 +148,6 @@ def test_cowell_y():
 
 
 @with_setup(setup, teardown)
-def test_castillo_abc():
-    """
-    Tests inference with Castillo example (A=1, B=2, C=3).
-    """
-    X, H = get_castillo_data()
-    M = X.mean(axis=0)
-    E = np.cov(X.T)
-
-    g = GaussianInference(H, M, E)
-    print(g.H)
-    print(g.I)
-    print(g.M)
-    print(g.E)
-    print('-' * 15)
-
-    g = g.get_inference([('A', 1), ('B', 2), ('C', 3)])
-    print(g.H)
-    print(g.I)
-    print(g.M)
-    print(g.E)
-    print(g.meta)
-    print(g.P)
-
-    assert_almost_equal(g.M, [-1.8750908711], decimal=0.01)
-    assert_almost_equal(g.E, [[1.0141480877]], decimal=0.01)
-
-
-@with_setup(setup, teardown)
 def test_do_inferences():
     """
     Tests multiple inferences with Castillo example (A=1, B=2, C=3).
@@ -189,12 +161,14 @@ def test_do_inferences():
     print(g.I)
     print(g.M)
     print(g.E)
+    print(g.P)
     print('-' * 15)
 
-    g1 = g.get_inference([('A', 1), ('B', 2), ('C', 3)])
-    g2 = g.do_inferences([('A', 1), ('B', 2), ('C', 3)])
+    g1 = g.do_inferences([('A', 1), ('B', 2), ('C', 3)])
+    print(g1.M)
 
-    assert_almost_equal(g1.E, g2.E, decimal=0.01)
+    e = np.array([-1.8320539239])
+    assert_almost_equal(g1.M, e, decimal=0.001)
 
 
 @with_setup(setup, teardown)

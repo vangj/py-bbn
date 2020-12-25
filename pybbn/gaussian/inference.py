@@ -132,12 +132,3 @@ class GaussianInference(object):
         meta = {**self.meta, **{n: o for n, o in observations}}
 
         return GaussianInference(H, M, E, meta)
-
-    def get_inference(self, observations):
-        """
-        Conducts inference on a set of observations.
-
-        :param observations: List of observation. Each observation is tuple (name, value).
-        :return: GaussianInference.
-        """
-        return self.do_inferences(observations)
