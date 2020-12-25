@@ -176,6 +176,28 @@ def test_castillo_abc():
 
 
 @with_setup(setup, teardown)
+def test_do_inferences():
+    """
+    Tests multiple inferences with Castillo example (A=1, B=2, C=3).
+    """
+    X, H = get_castillo_data()
+    M = X.mean(axis=0)
+    E = np.cov(X.T)
+
+    g = GaussianInference(H, M, E)
+    print(g.H)
+    print(g.I)
+    print(g.M)
+    print(g.E)
+    print('-' * 15)
+
+    g1 = g.get_inference([('A', 1), ('B', 2), ('C', 3)])
+    g2 = g.do_inferences([('A', 1), ('B', 2), ('C', 3)])
+
+    assert_almost_equal(g1.E, g2.E, decimal=0.01)
+
+
+@with_setup(setup, teardown)
 def test_repr():
     """
     Tests GaussianInference repr function.
