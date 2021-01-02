@@ -32,6 +32,12 @@ class GaussianInference(object):
         return s
 
     def sample_marginals(self, size=1000):
+        """
+        Samples data from the marginals.
+
+        :param size: Number of samples.
+        :return: Dictionary with keys as names and values as pandas series (sampled data).
+        """
         def get_samples(m, v):
             if v == 0.0:
                 s = 0.01
@@ -44,6 +50,11 @@ class GaussianInference(object):
 
     @property
     def marginals(self):
+        """
+        Gets the marginals.
+
+        :return: List of dictionary. Each element has name, mean and variance.
+        """
         return [{'name': name, 'mean': mean, 'var': var}
                 for name, (mean, var) in self.P.items()]
 
@@ -60,6 +71,16 @@ class GaussianInference(object):
         return params
 
     def do_inference(self, name, observation):
+        """
+        Performs inference. Simply calls the `do_inferences` method.
+
+        :param name: Name of variable.
+        :param observation: Observation value.
+        :return: GaussianInference.
+        """
+        return self.do_inferences([(name, observation)])
+
+    def do_inferences(self, observations):
         """
         Performs inference.
 
@@ -82,38 +103,24 @@ class GaussianInference(object):
         - :math:`\\mu_y^{*} = \\mu_y - \\Sigma_{yz} \\Sigma_{zz} (z_e - \\mu_z)`
         - :math:`\\Sigma_y^{*} = \\Sigma_{yy} \\Sigma_{zz} \\Sigma_{yz}^{T}`
 
-        :param name: Name of variable.
-        :param observation: Observation value.
+        :param observations: List of observation. Each observation is tuple (name, value).
         :return: GaussianInference.
         """
-        z_index = [self.I[name]]
+        z_index = [self.I[name] for name, _ in observations]
         y_index = [i for i in range(self.E.shape[1]) if i not in z_index]
 
         m_Z = np.array([m for i, m in enumerate(self.M) if i in z_index])
         m_Y = np.array([m for i, m in enumerate(self.M) if i in y_index])
 
-        z = np.array([observation])
+        z = np.array([o for _, o in observations])
 
         S_YZ = self.E[y_index][:, z_index]
         S_ZZ = np.linalg.inv(self.E[z_index][:, z_index])
         S_YY = self.E[y_index][:, y_index]
 
-        H = [h for i, h in enumerate(self.H) if h != name]
+        H = [name for i, name in enumerate(self.H) if i in y_index]
         M = m_Y - S_YZ.dot(S_ZZ).dot(z - m_Z)
         E = S_YY - S_YZ.dot(S_ZZ).dot(S_YZ.T)
-        meta = {**self.meta, **{name: observation}}
+        meta = {**self.meta, **{n: o for n, o in observations}}
 
         return GaussianInference(H, M, E, meta)
-
-    def get_inference(self, observations):
-        """
-        Conducts inference on a set of observations.
-
-        :param observations: List of observation. Each observation is tuple (name, value).
-        :return: GaussianInference.
-        """
-        o = observations[0]
-        g = self.do_inference(o[0], o[1])
-        for o in observations[1:]:
-            g = g.do_inference(o[0], o[1])
-        return g

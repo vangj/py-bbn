@@ -123,8 +123,8 @@ g1 = g.do_inference('X', 1.5)
 # {'X': (1.5, 0), 'Y': (0.76331, 0.49519), 'Z': (1.51893, 1.00406)}
 print(g1.P)
 
-# we can make multiple observations with get_inference()
-g2 = g.get_inference([('Z', 1.5), ('X', 2.0)])
+# we can make multiple observations with do_inferences()
+g2 = g.do_inferences([('Z', 1.5), ('X', 2.0)])
 # {'Z': (1.5, 0), 'X': (2.0, 0), 'Y': (1.97926, 0.49509)}
 print(g2.P)
 ```

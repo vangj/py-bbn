@@ -148,9 +148,9 @@ def test_cowell_y():
 
 
 @with_setup(setup, teardown)
-def test_castillo_abc():
+def test_do_inferences():
     """
-    Tests inference with Castillo example (A=1, B=2, C=3).
+    Tests multiple inferences with Castillo example (A=1, B=2, C=3).
     """
     X, H = get_castillo_data()
     M = X.mean(axis=0)
@@ -161,18 +161,14 @@ def test_castillo_abc():
     print(g.I)
     print(g.M)
     print(g.E)
+    print(g.P)
     print('-' * 15)
 
-    g = g.get_inference([('A', 1), ('B', 2), ('C', 3)])
-    print(g.H)
-    print(g.I)
-    print(g.M)
-    print(g.E)
-    print(g.meta)
-    print(g.P)
+    g1 = g.do_inferences([('A', 1), ('B', 2), ('C', 3)])
+    print(g1.M)
 
-    assert_almost_equal(g.M, [-1.8750908711])
-    assert_almost_equal(g.E, [[1.0141480877]])
+    e = np.array([-1.8320539239])
+    assert_almost_equal(g1.M, e, decimal=0.001)
 
 
 @with_setup(setup, teardown)
