@@ -14,3 +14,4 @@ build/
 joblib_memmap/
 .pytest_cache/
 .DS_store
+.vscode/
