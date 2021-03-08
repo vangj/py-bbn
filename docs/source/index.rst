@@ -61,6 +61,7 @@ Please contact us at info@oneoffcoder.com. Let's reach for success!
    serde
    generate
    sampling
+   structure-data
    exact-inference-widgets
    gaussian-inference-widgets
    zzz-bib

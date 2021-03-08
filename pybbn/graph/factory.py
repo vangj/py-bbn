@@ -134,11 +134,11 @@ class Factory(object):
         return bbn
 
     @staticmethod
-    def from_data(parents, df):
+    def from_data(structure, df):
         """
         Creates a BBN.
 
-        :param parents: A dictionary where keys are names of children and values are list of parent names.
+        :param structure: A dictionary where keys are names of children and values are list of parent names.
         :param df: A dataframe.
         :return: BBN.
         """
@@ -198,7 +198,7 @@ class Factory(object):
 
         n2v = get_profile(df)
         n2i = get_n2i(df)
-        n2c = {n: get_cpt(n, parents[n], n2v, df) for n in parents}
+        n2c = {n: get_cpt(n, structure[n], n2v, df) for n in structure}
 
         bbn = Bbn()
 
@@ -213,7 +213,7 @@ class Factory(object):
             nodes[name] = node
             bbn.add_node(node)
 
-        for ch, parents in parents.items():
+        for ch, parents in structure.items():
             ch_node = nodes[ch]
             for pa in parents:
                 pa_node = nodes[pa]
