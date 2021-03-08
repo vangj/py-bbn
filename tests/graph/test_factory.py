@@ -2,8 +2,14 @@ import json
 
 from nose import with_setup
 
+from pybbn.graph.dag import Bbn
+from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.factory import Factory
+from pybbn.graph.node import BbnNode
+from pybbn.graph.variable import Variable
 from pybbn.pptc.inferencecontroller import InferenceController
+from pybbn.sampling.sampling import LogicSampler
+import pandas as pd
 
 
 def setup():
@@ -124,6 +130,55 @@ def test_from_libpgm_discrete_dictionary():
         'SAT': [0.725, 0.275],
         'Letter': [0.498, 0.502]
     }, join_tree, debug=True)
+
+
+@with_setup(setup, teardown)
+def test_from_data_simple():
+    """
+    Tests create BBN from data.
+    :return: None.
+    """
+    a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
+    b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
+    c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
+
+    bbn1 = Bbn() \
+        .add_node(a) \
+        .add_node(b) \
+        .add_node(c) \
+        .add_edge(Edge(a, b, EdgeType.DIRECTED)) \
+        .add_edge(Edge(b, c, EdgeType.DIRECTED))
+
+    sampler = LogicSampler(bbn1)
+    samples = sampler.get_samples(n_samples=10000, seed=37)
+
+    i2n = {n.variable.id: n.variable.name for n in bbn1.get_nodes()}
+    samples = pd.DataFrame(samples).rename(columns=i2n)
+
+    parents = {
+        'a': [],
+        'b': ['a'],
+        'c': ['b']
+    }
+
+    bbn2 = Factory.from_data(parents, samples)
+
+    join_tree1 = InferenceController.apply(bbn1)
+    join_tree2 = InferenceController.apply(bbn2)
+
+    posteriors1 = join_tree1.get_posteriors()
+    posteriors2 = join_tree2.get_posteriors()
+
+    for k, v1 in posteriors1.items():
+        assert k in posteriors2
+
+        v2 = posteriors2[k]
+        assert len(v1) == len(v2)
+
+        for k2 in v1:
+            assert k2 in v2
+            diff = abs(v1[k2] - v2[k2])
+            assert diff < 0.01
 
 
 def __validate_posterior__(expected, join_tree, debug=False):
