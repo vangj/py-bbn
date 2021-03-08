@@ -38,6 +38,7 @@ class GaussianInference(object):
         :param size: Number of samples.
         :return: Dictionary with keys as names and values as pandas series (sampled data).
         """
+
         def get_samples(m, v):
             if v == 0.0:
                 s = 0.01

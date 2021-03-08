@@ -1,16 +1,15 @@
 import itertools
 import json
+from itertools import product
 
 import networkx as nx
+import pandas as pd
+from networkx.algorithms.dag import topological_sort
 
 from pybbn.graph.dag import Bbn
 from pybbn.graph.edge import Edge, EdgeType
 from pybbn.graph.node import BbnNode
 from pybbn.graph.variable import Variable
-
-from networkx.algorithms.dag import topological_sort
-from itertools import product
-import pandas as pd
 
 
 class Factory(object):
@@ -143,6 +142,7 @@ class Factory(object):
         :param df: A dataframe.
         :return: BBN.
         """
+
         def get_profile(df):
             profile = {}
             for c in df.columns:

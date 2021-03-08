@@ -1,5 +1,6 @@
 import json
 
+import pandas as pd
 from nose import with_setup
 
 from pybbn.graph.dag import Bbn
@@ -9,7 +10,6 @@ from pybbn.graph.node import BbnNode
 from pybbn.graph.variable import Variable
 from pybbn.pptc.inferencecontroller import InferenceController
 from pybbn.sampling.sampling import LogicSampler
-import pandas as pd
 
 
 def setup():
