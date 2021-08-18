@@ -23,7 +23,7 @@ publish: build
 	python setup.py sdist upload -r pypi
 
 compile:
-	python -m compileall -f ./pysparkbbn
+	python -m compileall -f ./pybbn
 
 clean:
 	find . -type f -name '*.pyc' -delete

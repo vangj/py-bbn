@@ -233,6 +233,12 @@ year={2017},
 month={Jan}}
 ```
 
+## Online Articles
+I found these online articles using PyBBN.
+
+- [BBN: Bayesian Belief Networks — How to Build Them Effectively in Python](https://towardsdatascience.com/bbn-bayesian-belief-networks-how-to-build-them-effectively-in-python-6b7f93435bba)
+- [Introduction to Bayesian Belief Networks](https://towardsdatascience.com/introduction-to-bayesian-belief-networks-c012e3f59f1b)
+
 # Copyright Stuff
 
 ## Software
