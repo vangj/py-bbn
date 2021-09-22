@@ -31,3 +31,5 @@ results = ace.get_ace('drug', 'recovery', 'true')
 t = results['true']
 f = results['false']
 average_causal_impact = t - f
+
+print(average_causal_impact)
