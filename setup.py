@@ -25,13 +25,10 @@ class CustomBuildExt(build_ext):
         shutil.copyfile(str(source_dir / path), str(destination_dir / path))
 
 
-modules = ['causality', 'gaussian', 'generator', 'graph', 'pptc', 'sampling']
-module_list = [Extension('pybbn.*', ['pybbn/*.py'])] + [Extension(f'pybbn.{f}', [f'pybbn/{f}/*.py']) for f in modules]
-
 setup(
     packages=[],
     ext_modules=cythonize(
-        module_list=module_list,
+        module_list=[Extension('pybbn.*', ['pybbn/**/*.py'])],
         build_dir='build',
         compiler_directives={
             'always_allow_keywords': False,
