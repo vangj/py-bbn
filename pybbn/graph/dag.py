@@ -287,6 +287,47 @@ class Bbn(Dag):
             bbn = Bbn.from_dict(d)
             return bbn
 
+    @staticmethod
+    def to_dne(bbn, bnet_name='network'):
+        d = Bbn.to_dict(bbn)
+
+        def get_dne_node(id):
+            node = d['nodes'][id]
+            name = node['variable']['name']
+            states = f"({','.join(node['variable']['values'])})"
+            probs = f"({','.join([f'{p}' for p in node['probs']])})"
+            parents = [d['nodes'][e['pa']]['variable']['name']
+                       for e in d['edges'] if e['ch'] == id]
+            parents = sorted(list(set(parents)))
+            if len(parents) == 0:
+                parents = '()'
+            else:
+                parents = f"({','.join(parents)})"
+
+            return f'''node {name} {{
+                discrete = TRUE;
+                states = {states};
+                kind = NATURE;
+                chance = CHANCE;
+                parents = {parents};
+                probs = {probs};
+            }};
+            '''
+
+        dnet_nodes = [get_dne_node(i) for i in d['nodes']]
+        dnet_nodes = '\n'.join(dnet_nodes)
+
+        dnet = f'''// ~->[DNET-1]->~
+        bnet {bnet_name} {{
+        AutoCompile = TRUE;
+        autoupdate = TRUE;
+        
+        {dnet_nodes}
+        }};
+        '''
+
+        return dnet
+
 
 class PathDetector(object):
     """

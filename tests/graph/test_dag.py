@@ -331,3 +331,18 @@ def test_from_dict():
 
     assert len(e_bbn.get_nodes()) == len(o_bbn.get_nodes())
     assert len(e_bbn.get_edges()) == len(o_bbn.get_edges())
+
+
+@with_setup(setup, teardown)
+def test_to_dne():
+    """
+    Tests exporting to DNE format.
+    :return: None
+    """
+
+    bbn = BbnUtil.get_huang_graph()
+    observed = Bbn.to_dne(bbn)
+
+    for n in 'abcdefgh':
+        assert observed.find(f'node {n}') != -1
+
