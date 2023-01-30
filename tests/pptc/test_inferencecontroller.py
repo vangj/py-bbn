@@ -631,9 +631,9 @@ def test_reapply():
 
 
 @with_setup(setup, teardown)
-def test_six_parameters_parents():
+def test_six_values_parents():
     """
-    Tests inference on the Huang graph.
+    Tests inference on simple graph having a parent with 6 values.
     :return: None.
     """
     a = BbnNode(Variable(0, 'a', ['s1', 's2', 's3', 's4', 's5', 's6']), [0.1, 0.1, 0.1, 0.1, 0.1, 0.5])
@@ -654,9 +654,9 @@ def test_six_parameters_parents():
 
 
 @with_setup(setup, teardown)
-def test_six_parameters_child():
+def test_six_values_child():
     """
-    Tests inference on the Huang graph.
+    Tests inference on simple graph having a child with 6 values.
     :return: None.
     """
     a = BbnNode(Variable(0, 'a', ['t', 'f']), [0.1, 0.9])
