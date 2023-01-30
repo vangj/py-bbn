@@ -1,4 +1,4 @@
-.PHONY: init clean lint test build build-dist install publish compile docker-test
+.PHONY: init clean lint test build build-dist install publish compile docker-test docker-test-inspect
 .DEFAULT_GOAL := build
 
 init:
@@ -42,3 +42,6 @@ clean:
 
 docker-test:
 	docker build -t pybbn-test:local -f Dockerfile.test .
+
+docker-test-inspect:
+	docker run --rm -it pybbn-test:local /bin/bash
