@@ -1,4 +1,4 @@
-.PHONY: init clean lint test
+.PHONY: init clean lint test build build-dist install publish compile docker-test
 .DEFAULT_GOAL := build
 
 init:
@@ -40,3 +40,5 @@ clean:
 	rm -f .coverage
 	rm -f .noseids
 
+docker-test:
+	docker build -t pybbn-test:local -f Dockerfile.test .
