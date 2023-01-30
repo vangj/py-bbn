@@ -158,6 +158,14 @@ To build the documents, go into the docs sub-directory and type in the following
 make html
 ```
 
+## Testing
+
+You can do a fresh test with Docker as follows.
+
+```bash
+docker build -t pybbn-test:local -f Dockerfile.test .
+```
+
 # Installing
 
 ## From PyPi
@@ -244,7 +252,7 @@ I found these online articles using PyBBN.
 ## Software
 
 ```
-Copyright 2017 Jee Vang
+Copyright 2017 -- 2023 Jee Vang
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

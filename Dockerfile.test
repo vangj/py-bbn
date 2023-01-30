@@ -1,0 +1,10 @@
+FROM python:3.9.16-slim
+
+WORKDIR /py-bbn
+COPY . .
+RUN apt-get update -y \
+    && apt-get upgrade -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get install graphviz libgraphviz-dev pkg-config build-essential -y \
+    && apt-get clean \
+    && pip install -r requirements.txt
+RUN make test
