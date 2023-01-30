@@ -630,6 +630,52 @@ def test_reapply():
         assert_almost_equals(prob, rhs_d[k], 0.001)
 
 
+@with_setup(setup, teardown)
+def test_six_parameters_parents():
+    """
+    Tests inference on the Huang graph.
+    :return: None.
+    """
+    a = BbnNode(Variable(0, 'a', ['s1', 's2', 's3', 's4', 's5', 's6']), [0.1, 0.1, 0.1, 0.1, 0.1, 0.5])
+    b = BbnNode(Variable(1, 'b', ['t', 'f']), [0.2, 0.8, 0.8, 0.2, 0.8, 0.2, 0.8, 0.2, 0.8, 0.2, 0.2, 0.8])
+    bbn = Bbn().add_node(a).add_node(b) \
+        .add_edge(Edge(a, b, EdgeType.DIRECTED))
+
+    join_tree = InferenceController.apply(bbn)
+
+    expected = {
+        'a': [0.1, 0.1, 0.1, 0.1, 0.1, 0.5],
+        'b': [0.44, 0.56]
+    }
+
+    __validate_posterior__(expected, join_tree)
+
+    __print_potentials__(join_tree)
+
+
+@with_setup(setup, teardown)
+def test_six_parameters_child():
+    """
+    Tests inference on the Huang graph.
+    :return: None.
+    """
+    a = BbnNode(Variable(0, 'a', ['t', 'f']), [0.1, 0.9])
+    b = BbnNode(Variable(1, 'b', ['s1', 's2', 's3', 's4', 's5', 's6']), [0.1, 0.1, 0.1, 0.1, 0.1, 0.5, 0.2, 0.2, 0.2, 0.2, 0.1, 0.1])
+    bbn = Bbn().add_node(a).add_node(b) \
+        .add_edge(Edge(a, b, EdgeType.DIRECTED))
+
+    join_tree = InferenceController.apply(bbn)
+
+    expected = {
+        'a': [0.1, 0.9],
+        'b': [0.19, 0.19, 0.19, 0.19, 0.1, 0.14]
+    }
+
+    __validate_posterior__(expected, join_tree)
+
+    __print_potentials__(join_tree)
+
+
 def __validate_posterior__(expected, join_tree, debug=False):
     """
     Validates the posterior probabilities of a join tree.
