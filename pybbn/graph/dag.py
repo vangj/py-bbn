@@ -321,7 +321,7 @@ class Bbn(Dag):
         bnet {bnet_name} {{
         AutoCompile = TRUE;
         autoupdate = TRUE;
-        
+
         {dnet_nodes}
         }};
         '''
