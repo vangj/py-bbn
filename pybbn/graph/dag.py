@@ -1,4 +1,5 @@
 import json
+import itertools
 
 import networkx as nx
 
@@ -224,7 +225,7 @@ class Bbn(Dag):
         """
         return {
             'nodes': {n.id: n.to_dict() for n in bbn.get_nodes()},
-            'edges': [{'pa': edge.i.id, 'ch': edge.j.id} for _, edge in bbn.edges.items()]
+            'edges': list(itertools.chain(*[[{'pa': pa, 'ch': ch} for pa in parents] for ch, parents in bbn.parents.items()]))
         }
 
     @staticmethod
@@ -298,7 +299,7 @@ class Bbn(Dag):
             probs = f"({','.join([f'{p}' for p in node['probs']])})"
             parents = [d['nodes'][e['pa']]['variable']['name']
                        for e in d['edges'] if e['ch'] == id]
-            parents = sorted(list(set(parents)))
+            # parents = sorted(list(set(parents)))
             if len(parents) == 0:
                 parents = '()'
             else:

@@ -14,7 +14,7 @@ class PotentialInitializer(object):
         :param bbn: BBN graph.
         """
         for node in bbn.get_nodes():
-            parents = [bbn.get_node(parent_id) for parent_id in bbn.get_parents_ordered(node.id)]
+            parents = [bbn.get_node(parent_id) for parent_id in bbn.parents[node.id]] if node.id in bbn.parents else []
             potential = PotentialUtil.get_potential(node, parents)
             node.potential = potential
 
