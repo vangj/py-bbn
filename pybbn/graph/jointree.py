@@ -104,9 +104,13 @@ class JoinTree(Ug):
 
         :return: Map. Keys are node ID and values are list of nodes.
         """
+        def get_parents(node_id):
+            if node_id in self.parent_info:
+                return [pa for pa_id, pa in bbn_nodes.items() if pa_id in self.parent_info[node_id]]
+            else:
+                return []
         bbn_nodes = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
-        result = {node: [pa for pa_id, pa in bbn_nodes.items() if pa_id in self.parent_info[node_id]]
-                  for node_id, node in bbn_nodes.items()}
+        result = {node: get_parents(node_id) for node_id, node in bbn_nodes.items()}
         return result
 
     def __get_bbn_nodes__(self):
@@ -382,11 +386,12 @@ class JoinTree(Ug):
         return self
 
     @staticmethod
-    def to_dict(jt):
+    def to_dict(jt, bbn):
         """
         Converts a junction tree to a serializable dictionary.
 
         :param jt: Junction tree.
+        :param bbn: BBN.
         :return: Dictionary.
         """
 
@@ -418,7 +423,7 @@ class JoinTree(Ug):
             'jt': {
                 'nodes': jt_nodes,
                 'edges': jt_edges,
-                'parent_info': jt.parent_info
+                'parent_info': {str(k): v for k, v in bbn.parents.items()}
             }
         }
 

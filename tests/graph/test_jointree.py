@@ -130,7 +130,7 @@ def test_to_dict():
         .add_edge(Edge(n0, n1, EdgeType.DIRECTED)) \
         .add_edge(Edge(n1, n2, EdgeType.DIRECTED))
     jt = InferenceController.apply(bbn)
-    d = JoinTree.to_dict(jt)
+    d = JoinTree.to_dict(jt, bbn)
     lhs = json.dumps(d, sort_keys=True, indent=2)
     rhs = """{
   "bbn_nodes": {
@@ -207,7 +207,6 @@ def test_to_dict():
       }
     },
     "parent_info": {
-      "0": [],
       "1": [
         0
       ],
@@ -301,7 +300,6 @@ def test_from_dict():
       }
     },
     "parent_info": {
-      "0": [],
       "1": [
         0
       ],
@@ -347,7 +345,7 @@ def test_simple_serde():
         .add_edge(Edge(a, b, EdgeType.DIRECTED))
     lhs = InferenceController.apply(bbn)
 
-    d = JoinTree.to_dict(lhs)
+    d = JoinTree.to_dict(lhs, bbn)
 
     rhs = JoinTree.from_dict(d)
     rhs = InferenceController.apply_from_serde(rhs)

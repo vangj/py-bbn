@@ -14,6 +14,6 @@ bbn = Bbn().add_node(a).add_node(b) \
 jt = InferenceController.apply(bbn)
 
 with open('simple-join-tree.json', 'w') as f:
-    d = JoinTree.to_dict(jt)
+    d = JoinTree.to_dict(jt, bbn)
     j = json.dumps(d, sort_keys=True, indent=2)
     f.write(j)
