@@ -307,7 +307,7 @@ def test_to_dict():
 def test_generated_serde():
     """
     Tests serde of generated BBN.
-    :return: Nonde.
+    :return: None.
     """
     g, p = generate_singly_bbn(100, max_iter=10)
     e_bbn = convert_for_exact_inference(g, p)
