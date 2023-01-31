@@ -83,6 +83,9 @@ class BbnNode(Node):
     def __str__(self):
         return '{}|{}|{}'.format(self.id, self.variable.name, str.join(',', self.variable.values))
 
+    def __repr__(self):
+        return self.variable.name
+
 
 class Clique(Node):
     """

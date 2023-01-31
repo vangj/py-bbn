@@ -106,7 +106,7 @@ class JoinTree(Ug):
         """
         def get_parents(node_id):
             if node_id in self.parent_info:
-                return [pa for pa_id, pa in bbn_nodes.items() if pa_id in self.parent_info[node_id]]
+                return [bbn_nodes[pa_id] for pa_id in self.parent_info[node_id]]
             else:
                 return []
         bbn_nodes = {node.id: node for clique in self.get_cliques() for node in clique.nodes}

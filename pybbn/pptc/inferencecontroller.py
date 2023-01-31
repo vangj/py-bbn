@@ -27,7 +27,7 @@ class InferenceController(JoinTreeListener):
         ug = Moralizer.moralize(bbn)
         cliques = Triangulator.triangulate(ug)
         join_tree = Transformer.transform(cliques)
-        join_tree.parent_info = {node.id: bbn.get_parents_ordered(node.id) for node in bbn.get_nodes()}
+        join_tree.parent_info = {node.id: bbn.parents[node.id] for node in bbn.get_nodes() if node.id in bbn.parents}
 
         Initializer.initialize(join_tree)
         Propagator.propagate(join_tree)
