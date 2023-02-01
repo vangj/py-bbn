@@ -187,7 +187,12 @@ class Factory(object):
 
                         numer = df.query(numer_q).shape[0] / n
                         denom = df.query(denom_q).shape[0] / n
-                        prob = numer / denom
+
+                        if denom == 0:
+                            prob = 1e-5
+                        else:
+                            prob = numer / denom
+                            
                         probs.append(prob)
                     probs = pd.Series(probs)
                     probs = probs / probs.sum()
