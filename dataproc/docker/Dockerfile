@@ -74,7 +74,7 @@ RUN ${CONDA_HOME}/bin/conda install mamba -n base -c conda-forge \
       sqlalchemy \
       sympy \
       virtualenv \
-      pybbn
+    && ${CONDA_HOME}/bin/pip install pybbn
 
 # (Required) Create the 'spark' group/user.
 # The GID and UID must be 1099. Home directory is required.
