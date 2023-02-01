@@ -192,7 +192,6 @@ class Factory(object):
                             prob = 1e-5
                         else:
                             prob = numer / denom
-                            
                         probs.append(prob)
                     probs = pd.Series(probs)
                     probs = probs / probs.sum()

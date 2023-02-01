@@ -181,6 +181,118 @@ def test_from_data_simple():
             assert diff < 0.01
 
 
+@with_setup(setup, teardown)
+def test_ordered():
+    """
+    Tests learn parameters from DataFrame when columns of DataFrame are ordered.
+    :return: None.
+    """
+    df = pd.DataFrame([['0', '1', '0', '0'],
+                       ['1', '0', '1', '1'],
+                       ['1', '0', '1', '1'],
+                       ['1', '0', '0', '0'],
+                       ['2', '1', '1', '2']],
+                      columns=['a', 'b', 'c', 'd'])
+    structure = {
+        'a': [],
+        'b': ['a'],
+        'c': ['a'],
+        'd': ['b', 'c']
+    }
+
+    bbn = Factory.from_data(structure, df)
+    jt = InferenceController.apply(bbn)
+
+    observed = jt.get_posteriors()
+    observed = {k: v for k, v in sorted([(k, v) for k, v in observed.items()], key=lambda tup: tup[0])}
+
+    expected = {
+         'a': {
+          '0': 0.2,
+          '1': 0.60,
+          '2': 0.2
+         },
+         'b': {
+          '0': 0.60,
+          '1': 0.4
+         },
+         'c': {
+          '0': 0.4,
+          '1': 0.60
+         },
+         'd': {
+          '0': 0.4,
+          '1': 0.4,
+          '2': 0.2
+         }
+        }
+
+    for k in expected:
+        assert k in observed
+        for v in expected[k]:
+            assert v in observed[k]
+            assert expected[k][v] - observed[k][v] < 1e-5
+
+    # import json
+    # print(json.dumps(observed, indent=1))
+
+
+def test_not_ordered():
+    """
+    Tests learning parameters from DataFrame when columns are not ordered.
+    :return: None.
+    """
+    # instead of the columns being: a, b, c, d
+    # now we swap b and c: a, c, b, d
+    # the order of the columns in the dataframe should not affect learning the parameters
+    # this is the same unit test as above with simply rearranging the columns
+    df = pd.DataFrame([['0', '1', '0', '0'],
+                       ['1', '0', '1', '1'],
+                       ['1', '0', '1', '1'],
+                       ['1', '0', '0', '0'],
+                       ['2', '1', '1', '2']],
+                      columns=['a', 'b', 'c', 'd'])[['a', 'c', 'b', 'd']]
+    structure = {
+        'a': [],
+        'b': ['a'],
+        'c': ['a'],
+        'd': ['b', 'c']
+    }
+
+    bbn = Factory.from_data(structure, df)
+    jt = InferenceController.apply(bbn)
+
+    observed = jt.get_posteriors()
+    observed = {k: v for k, v in sorted([(k, v) for k, v in observed.items()], key=lambda tup: tup[0])}
+
+    expected = {
+        'a': {
+            '0': 0.2,
+            '1': 0.60,
+            '2': 0.2
+        },
+        'b': {
+            '0': 0.60,
+            '1': 0.4
+        },
+        'c': {
+            '0': 0.4,
+            '1': 0.60
+        },
+        'd': {
+            '0': 0.4,
+            '1': 0.4,
+            '2': 0.2
+        }
+    }
+
+    for k in expected:
+        assert k in observed
+        for v in expected[k]:
+            assert v in observed[k]
+            assert expected[k][v] - observed[k][v] < 1e-5
+
+
 def __validate_posterior__(expected, join_tree, debug=False):
     for node in join_tree.get_bbn_nodes():
         potential = join_tree.get_bbn_potential(node)
