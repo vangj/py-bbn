@@ -78,7 +78,7 @@ jt_dict = get_jt_dict()
 
 rdd = df.rdd.map(lambda r: do_inference(r, fields, jt_dict, 'covid'))
 
-output = sqlContext.createDataFrame(rdd, verifySchema=False)
+output = sqlContext.createDataFrame(rdd, verifySchema=False, samplingRatio=1.0)
 output.write \
     .format('bigquery') \
     .mode('overwrite') \
