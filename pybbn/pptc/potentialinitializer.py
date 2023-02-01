@@ -29,3 +29,4 @@ class PotentialInitializer(object):
         for node, parents in jt.get_bbn_node_and_parents().items():
             potential = PotentialUtil.get_potential(node, parents)
             node.potential = potential
+            node.metadata['parents'] = parents
