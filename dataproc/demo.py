@@ -96,8 +96,8 @@ target_values = rdd \
 print(f'target values: {target_values}')
 
 print('creating schema')
-struct_fields = [StructField(f, StringType(), False) for f in fields] + \
-  [StructField(f, FloatType(), False) for f in target_values]
+struct_fields = [StructField(f, StringType(), True) for f in fields] + \
+  [StructField(f, FloatType(), True) for f in target_values]
 schema = StructType(struct_fields)
   
 
