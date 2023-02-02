@@ -1,5 +1,6 @@
 from typing import Any, List
 from pyspark.sql import SparkSession, SQLContext, Row
+from pyspark.sql.types import StructType, StructField, StringType, FloatType
 from pybbn.graph.dag import Bbn
 from pybbn.graph.jointree import JoinTree, EvidenceBuilder
 from pybbn.pptc.inferencecontroller import InferenceController
@@ -57,6 +58,7 @@ def do_inference(r: Row, fields: List[str], jt_dict: Any, target: str) -> Row:
   row = Row(**m)
   return row
 
+print('starting')
 spark = SparkSession \
         .builder \
         .appName('Py-BBN Inference Demo') \
@@ -67,6 +69,7 @@ spark = SparkSession \
         .getOrCreate()
 sqlContext = SQLContext(spark)
 
+print('reading in SQL data')
 sql = '''SELECT *
 FROM `vangjee.pybbn.covid`
 LIMIT 100
@@ -74,12 +77,37 @@ LIMIT 100
 df = spark.read.format('bigquery').load(sql)
 
 fields = df.columns
+
+print('acquiring junction tree')
 jt_dict = get_jt_dict()
 
-rdd = df.rdd.map(lambda r: do_inference(r, fields, jt_dict, 'covid'))
+print('creating rdd')
+rdd = df.rdd.map(lambda r: do_inference(r, fields, jt_dict, 'covid')).cache()
 
-output = sqlContext.createDataFrame(rdd, verifySchema=False, samplingRatio=1.0)
+print(f'rdd count = {rdd.count()}')
+
+print('getting target values')
+target_values = rdd \
+  .flatMap(lambda r: [(k, 1) for k, _ in r.asDict().items() if k.startswith('covid')]) \
+  .reduceByKey(lambda a, b: a + b) \
+  .sortByKey() \
+  .map(lambda tup: tup[0]) \
+  .collect()
+print(f'target values: {target_values}')
+
+print('creating schema')
+struct_fields = [StructField(f, StringType(), False) for f in fields] + \
+  [StructField(f, FloatType(), False) for f in target_values]
+schema = StructType(struct_fields)
+  
+
+print('creating data frame')
+output = sqlContext.createDataFrame(rdd, schema=schema)
+
+print('persisting data frame')
 output.write \
     .format('bigquery') \
     .mode('overwrite') \
     .save('vangjee.pybbn.covid_inference')
+
+print('done')
