@@ -38,7 +38,7 @@ def get_jt(d=None) -> JoinTree:
   jt = InferenceController.apply_from_serde(jt)
   return jt
 
-def do_inference(r: Row, fields: List[str], jt_dict: Any, target: str) -> Row:
+def do_inference(r: Row, fields: List[str], target: str, jt_dict: Any = None, jt: JoinTree = None) -> Row:
   def get_evidence(name):
     ev = EvidenceBuilder() \
       .with_node(jt.get_bbn_node_by_name(name)) \
@@ -46,8 +46,12 @@ def do_inference(r: Row, fields: List[str], jt_dict: Any, target: str) -> Row:
       .build()
     return ev
 
-  jt = get_jt(jt_dict)
+  if jt is None:
+    jt = get_jt(jt_dict)
+  
   evidences = [get_evidence(n) for n in fields if n != target and pd.notna(r[n])]
+
+  jt.unobserve_all()
   jt.update_evidences(evidences)
 
   posteriors = jt.get_posteriors()
@@ -77,14 +81,17 @@ df = spark.read.format('bigquery').load(sql)
 
 fields = df.columns
 
-print('acquiring junction tree')
+print('acquiring join tree dictionary')
 jt_dict = get_jt_dict()
+
+print('acquiring join tree')
+jt = get_jt(jt_dict)
 
 print('creating rdd')
 rdd = df \
   .rdd \
   .repartition(80) \
-  .map(lambda r: do_inference(r, fields, jt_dict, 'covid')) \
+  .map(lambda r: do_inference(r, fields, 'covid', jt_dict, jt)) \
   .cache()
 
 print(f'rdd count = {rdd.count()}')
