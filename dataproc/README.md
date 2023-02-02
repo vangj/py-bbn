@@ -13,4 +13,6 @@ gcloud dataproc batches submit pyspark demo.py \
   --region='us-central1' \
   --deps-bucket=gs://pybbn \
   --jars=gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.26.0.jar
+
+gcloud dataproc batches cancel pybbn-demo-3 --region=us-central1
 ```
