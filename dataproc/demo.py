@@ -72,7 +72,6 @@ sqlContext = SQLContext(spark)
 print('reading in SQL data')
 sql = '''SELECT *
 FROM `vangjee.pybbn.covid`
-LIMIT 10
 '''
 df = spark.read.format('bigquery').load(sql)
 
