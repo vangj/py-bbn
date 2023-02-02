@@ -81,7 +81,11 @@ print('acquiring junction tree')
 jt_dict = get_jt_dict()
 
 print('creating rdd')
-rdd = df.rdd.map(lambda r: do_inference(r, fields, jt_dict, 'covid')).cache()
+rdd = df \
+  .rdd \
+  .repartition(80) \
+  .map(lambda r: do_inference(r, fields, jt_dict, 'covid')) \
+  .cache()
 
 print(f'rdd count = {rdd.count()}')
 
