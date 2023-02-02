@@ -70,6 +70,12 @@ spark = SparkSession \
         .config('temporaryGcsBucket', 'pybbn') \
         .config('viewsEnabled', 'true') \
         .config('materializationDataset', 'pybbn') \
+        .config('spark.driver.cores', '4') \
+        .config('spark.executor.cores', '4') \
+        .config('spark.executor.instances', '20') \
+        .config('spark.dynamicAllocation.initialExecutors', '20') \
+        .config('spark.dynamicAllocation.minExecutors', '10') \
+        .config('spark.dynamicAllocation.maxExecutors', '20') \
         .getOrCreate()
 sqlContext = SQLContext(spark)
 
