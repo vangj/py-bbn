@@ -10,18 +10,6 @@ gcloud dataproc batches submit pyspark demo.py \
   --jars=gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.26.0.jar \
   --history-server-cluster=projects/vangjee/regions/us-central1/clusters/mutipurpose-phs-cluster \
   --version=1.0
-
-gcloud dataproc batches submit pyspark demo.py \
-  --properties=spark.driver.cores=4,park.executor.cores=4,spark.executor.instances=20,spark.dynamicAllocation.initialExecutors=20,spark.dynamicAllocation.minExecutors=10,spark.dynamicAllocation.maxExecutors=20,spark.dataproc.driver.disk.size=250g,spark.dataproc.executor.disk.size=250g \
-  --batch=pybbn-demo \
-  --container-image=gcr.io/vangjee/pybbn \
-  --region='us-central1' \
-  --deps-bucket=gs://pybbn \
-  --jars=gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.26.0.jar \
-  --history-server-cluster=projects/vangjee/regions/us-central1/clusters/mutipurpose-phs-cluster \
-  --version=1.0 \
-  --master-machine-type c2-standard-4 \
-  --worker-machine-type c2-standard-4
   
 
 gcloud dataproc batches describe pybbn-demo
