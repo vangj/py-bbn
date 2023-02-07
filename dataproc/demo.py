@@ -82,7 +82,7 @@ sqlContext = SQLContext(spark)
 print('reading in SQL data')
 sql = '''SELECT *
 FROM `vangjee.pybbn.covid`
-LIMIT 800
+LIMIT 2000
 '''
 df = spark.read.format('bigquery').load(sql)
 
