@@ -18,3 +18,4 @@ gcloud dataproc batches delete pybbn-demo --region=us-central1
 ```
 
 - [Dataproc Serverless runtime versions](https://cloud.google.com/dataproc-serverless/docs/concepts/versions/dataproc-serverless-versions)
+- [Supported machine types](https://cloud.google.com/dataproc/docs/concepts/compute/supported-machine-types)
