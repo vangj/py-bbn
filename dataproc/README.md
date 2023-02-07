@@ -8,7 +8,8 @@ gcloud dataproc batches submit pyspark demo.py \
   --region='us-central1' \
   --deps-bucket=gs://pybbn \
   --jars=gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.26.0.jar \
-  --history-server-cluster=projects/vangjee/regions/us-central1/clusters/mutipurpose-phs-cluster
+  --history-server-cluster=projects/vangjee/regions/us-central1/clusters/mutipurpose-phs-cluster \
+  --version=1.0
   
 
 gcloud dataproc batches describe pybbn-demo
