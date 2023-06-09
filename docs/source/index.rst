@@ -66,6 +66,11 @@ Please contact us at info@oneoffcoder.com. Let's reach for success!
    gaussian-inference-widgets
    zzz-bib
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Gotcha's
+
+   edge-ordering
 
 .. toctree::
    :maxdepth: 2
