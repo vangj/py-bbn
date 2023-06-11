@@ -8,7 +8,7 @@ lint:
 	python -m flake8 ./pybbn
 
 test: clean lint
-	nosetests tests
+	nose2 tests
 
 build: test
 	python setup.py bdist_egg
