@@ -1,6 +1,13 @@
 .PHONY: init clean lint test build build-dist install publish compile docker-test docker-test-inspect
 .DEFAULT_GOAL := build
 
+CLEAN_OP :=
+ifeq ($(OS),Windows_NT)
+	CLEAN_OP += clean-win
+else
+	CLEAN_OP += clean-nix
+endif
+
 init:
 	pip install -r requirements.txt
 
@@ -22,7 +29,9 @@ publish: build
 compile:
 	python -m compileall -f ./pybbn
 
-clean:
+clean: $(CLEAN_OP)
+
+clean-nix:
 	find . -type f -name '*.pyc' -delete
 	find . -type d -name '__pycache__' -delete
 	rm -fr coverage/
