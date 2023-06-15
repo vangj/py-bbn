@@ -7,13 +7,10 @@ init:
 lint:
 	python -m flake8 ./pybbn
 
-test: clean lint
+test:
 	nose2
 
-build: test
-	python setup.py bdist_egg
-
-build-dist: compile
+build:
 	python setup.py bdist_egg sdist bdist_wheel
 
 install: build
@@ -39,6 +36,20 @@ clean:
 	rm -fr .pytest_cache/
 	rm -f .coverage
 	rm -f .noseids
+
+clean-win:
+	del /S *.pyc
+	if exist coverage rmdir /S /Q coverage
+	if exist dist rmdir /S /Q dist
+	if exist build rmdir /S /Q build
+	if exist pybbn.egg-info rmdir /S /Q pybbn.egg-info
+	if exist pybbn/pybbn.egg-info rmdir /S /Q pybbn/pybbn.egg-info
+	if exist jupyter/.ipynb_checkpoints rmdir /S /Q jupyter/.ipynb_checkpoints
+	if exist docs/build rmdir /S /Q docs/build
+	if exist joblib_memmap rmdir /S /Q joblib_memmap
+	if exist .pytest_cache rmdir /S /Q .pytest_cache
+	del .coverage
+	del .noseids
 
 docker-test:
 	docker build -t pybbn-test:local -f Dockerfile.test .
