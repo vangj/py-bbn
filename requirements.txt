@@ -1,5 +1,4 @@
 # TEST
-nose
 nose2
 coverage
 # LINT OR DIE
