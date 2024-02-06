@@ -9,15 +9,15 @@ pp. 225--263, 1999](http://pages.cs.wisc.edu/~dpage/ijar95.pdf). In this API, PP
 
 # Power Up, Next Level
 
-Rocket Vector                                                                               |  turing_bbn                                                                            |  pyspark-bbn
+Rocket Vector                                                                               |  Autonosis                                                                            |  pyspark-bbn
 :-------------------------------------------------------------------------------------------|  :------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------:
-![Rocket Vector logo](https://www.rocketvector.io/assets/img/logo/rocketvector-150x150.png) |  ![turing_bbn logo](https://turing-bbn.oneoffcoder.com/_images/turing-bbn-150x150.png) |![pyspark-bbn logo](https://pyspark-bbn.oneoffcoder.com/_images/pyspark-bbn-150x150.png)
+![Rocket Vector logo](https://rocketvector.io/assets/img/logo/rocketvector-150x150.png) |  ![Autonosis logo](https://autonosis.io/assets/img/android-chrome-512x512.png) |![pyspark-bbn logo](https://sdk.rocketvector.io/_images/pyspark-bbn-150x150.png)
 
 If you like py-bbn, please inquire about our next-generation products below! info@oneoffcoder.com
 
-* [Rocket Vector](https://www.rocketvector.io) is a causal learning platform in the cloud!
-* [turing_bbn](https://turing-bbn.oneoffcoder.com/) is a C++17 implementation of py-bbn; take your causal and probabilistic inferences to the next computing level!
-* [pyspark-bbn](https://pyspark-bbn.oneoffcoder.com/) is a is a scalable, massively parallel processing MPP framework for learning structures and parameters of Bayesian Belief Networks BBNs using [Apache Spark](https://spark.apache.org/).
+* [Rocket Vector](https://rocketvector.io) is a causal learning platform in the cloud!
+* [Autonosis](https://autonosis.io) is a GenAI + CausalAI capabable platform.
+* [pyspark-bbn](https://sdk.rocketvector.io) is a is a scalable, massively parallel processing MPP framework for learning structures and parameters of Bayesian Belief Networks BBNs using [Apache Spark](https://spark.apache.org/).
 
 
 # Exact Inference, Discrete Variables
