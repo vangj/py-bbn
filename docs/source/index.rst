@@ -37,19 +37,19 @@ You may install ``py-bbn`` from `pypi <https://pypi.org/project/pybbn/>`_.
 
 If you like py-bbn, you might be interested in our next-generation products.
 
-`turing_bbn <https://turing-bbn.oneoffcoder.com/>`_ is a C++17 implementation of py-bbn; take your causal and probabilistic inferences to the next computing level!
+`Autonosis <https://turing-bbn.oneoffcoder.com/>`_ is a GenAI + CausalAI capable platform.
 
-.. image:: https://turing-bbn.oneoffcoder.com/_images/turing-bbn-150x150.png
+.. image:: https://autonosis.io/assets/img/android-chrome-150x-150.png
    :align: center
-   :alt: turing_bbn logo.
+   :alt: autonosis logo.
 
-`pyspark-bbn <https://pyspark-bbn.oneoffcoder.com/>`_ is a is a scalable, massively parallel processing MPP framework for learning structures and parameters of Bayesian Belief Networks BBNs using `Apache Spark <https://spark.apache.org/>`_.
+`pyspark-bbn <https://sdk.rocketvector.io/>`_ is a is a scalable, massively parallel processing MPP framework for learning structures and parameters of Bayesian Belief Networks BBNs using `Apache Spark <https://spark.apache.org/>`_.
 
-.. image:: https://pyspark-bbn.oneoffcoder.com/_images/pyspark-bbn-150x150.png
+.. image:: https://sdk.rocketvector.io/_images/pyspark-bbn-150x150.png
    :align: center
    :alt: pyspark-bbn logo.
 
-Please contact us at info@oneoffcoder.com. Let's reach for success!
+Please contact us at info@rocketvector.io. Let's reach for success!
 
 .. toctree::
    :maxdepth: 2
