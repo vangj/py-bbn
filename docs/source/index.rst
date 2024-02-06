@@ -37,11 +37,17 @@ You may install ``py-bbn`` from `pypi <https://pypi.org/project/pybbn/>`_.
 
 If you like py-bbn, you might be interested in our next-generation products.
 
-`Autonosis <https://turing-bbn.oneoffcoder.com/>`_ is a GenAI + CausalAI capable platform.
+`Rocket Vector <https://rocketvector.io>`_ is a CausalAI platform in the cloud.
+
+.. image:: https://rocketvector.io/assets/img/logo/rocketvector-150x150.png
+   :align: center
+   :alt: Rocket Vector logo.
+
+`Autonosis <https://autonosis.io/>`_ is a GenAI + CausalAI capable platform.
 
 .. image:: https://autonosis.io/assets/img/android-chrome-150x-150.png
    :align: center
-   :alt: autonosis logo.
+   :alt: Autonosis logo.
 
 `pyspark-bbn <https://sdk.rocketvector.io/>`_ is a is a scalable, massively parallel processing MPP framework for learning structures and parameters of Bayesian Belief Networks BBNs using `Apache Spark <https://spark.apache.org/>`_.
 
