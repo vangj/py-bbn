@@ -11,7 +11,7 @@ pp. 225--263, 1999](http://pages.cs.wisc.edu/~dpage/ijar95.pdf). In this API, PP
 
 Rocket Vector                                                                               |  Autonosis                                                                            |  pyspark-bbn
 :-------------------------------------------------------------------------------------------|  :------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------:
-![Rocket Vector logo](https://rocketvector.io/assets/img/logo/rocketvector-150x150.png) |  ![Autonosis logo](https://autonosis.io/assets/img/android-chrome-150x150.png) |![pyspark-bbn logo](https://sdk.rocketvector.io/_images/pyspark-bbn-150x150.png)
+![Rocket Vector logo](https://rocketvector.io/assets/img/logo/rocketvector-150x150.png) |  ![Autonosis logo](https://autonosis.io/assets/img/android-chrome-150x-150.png) |![pyspark-bbn logo](https://sdk.rocketvector.io/_images/pyspark-bbn-150x150.png)
 
 If you like py-bbn, please inquire about our next-generation products below! info@oneoffcoder.com
 
