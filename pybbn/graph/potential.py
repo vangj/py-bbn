@@ -44,6 +44,9 @@ class Potential(object):
     def __str__(self):
         return str.join('\n', [entry.__str__() for entry in self.entries])
 
+    def __repr__(self):
+        return self.__str__()
+
 
 class PotentialEntry(object):
     """
@@ -115,6 +118,9 @@ class PotentialEntry(object):
         arr = ['{}={}'.format(tup[0], tup[1]) for tup in arr]
         s = str.join(',', arr)
         return '{}|{:.5f}'.format(s, self.value)
+
+    def __repr__(self):
+        return self.__str__()
 
 
 class PotentialUtil(object):
