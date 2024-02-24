@@ -23,6 +23,9 @@ build:
 install: build
 	python setup.py install
 
+uninstall:
+	pip uninstall pybbn -y
+
 publish: build
 	python setup.py sdist upload -r pypi
 
