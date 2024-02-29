@@ -22,6 +22,8 @@
 py-bbn
 ======
 
+End of Life: This version of py-bbn is no longer maintained. For a new version please go `here <https://pybbn.rocketvector.io>`_.
+
 .. image:: _static/images/logo-250.png
    :align: center
    :alt: pybbn logo.
