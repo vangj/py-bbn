@@ -1,5 +1,9 @@
 ![pybbn logo](https://py-bbn.readthedocs.io/_images/logo-250.png)
 
+# End of Life
+
+Note: This codebase is no longer being maintained. It will be sunset and archived soon. A new and re-written library (under the same name) is available [here](https://pybbn.rocketvector.io/).
+
 # PyBBN
 
 PyBBN is Python library for Bayesian Belief Networks (BBNs) exact inference using the [junction tree algorithm](https://en.wikipedia.org/wiki/Junction_tree_algorithm) or Probability Propagation in Trees of Clusters (PPTC). The implementation is taken directly from [C. Huang and A. Darwiche, "Inference in
