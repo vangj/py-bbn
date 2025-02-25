@@ -20,10 +20,11 @@ test:
 	nose2
 
 build:
-	python setup.py bdist_egg sdist bdist_wheel
+	python -m build --skip-dependency-check --no-isolation
+	python setup.py bdist_egg
 
 install:
-	python setup.py install
+	pip install dist/*.whl
 
 uninstall:
 	pip uninstall pybbn -y
