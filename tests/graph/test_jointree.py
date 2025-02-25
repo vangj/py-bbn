@@ -209,7 +209,10 @@ class TestJoinTree(unittest.TestCase):
       }
     }
   }"""
-        assert lhs == rhs
+        lhs = json.loads(lhs)
+        rhs = json.loads(rhs)
+
+        self.assertEqual(lhs, rhs)
 
     def test_from_dict(self):
         """

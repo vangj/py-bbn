@@ -296,8 +296,9 @@ class TestDag(unittest.TestCase):
     }
   }"""
 
-        assert len(j) == len(e)
-        assert j == e
+        j = json.loads(j)
+        e = json.loads(e)
+        self.assertEqual(j, e)
 
     def test_generated_serde(self):
         """
