@@ -20,7 +20,7 @@ test:
 build:
 	python setup.py bdist_egg sdist bdist_wheel
 
-install: build
+install:
 	python setup.py install
 
 uninstall:
