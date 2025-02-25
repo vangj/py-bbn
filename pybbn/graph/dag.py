@@ -1,5 +1,5 @@
-import json
 import itertools
+import json
 
 import networkx as nx
 
@@ -72,7 +72,10 @@ class Dag(Graph):
         if parent.id == child.id:
             return False
 
-        if child.id not in self.edge_map[parent.id] and parent.id not in self.edge_map[child.id]:
+        if (
+            child.id not in self.edge_map[parent.id]
+            and parent.id not in self.edge_map[child.id]
+        ):
             if not PathDetector(self, child.id, parent.id).exists():
                 return True
 
@@ -160,20 +163,20 @@ class Bbn(Dag):
         :param path: Path to file.
         :return: None.
         """
-        with open(path, 'w') as f:
+        with open(path, "w") as f:
             for node in bbn.get_nodes():
                 v = node.variable
-                vals = ','.join(v.values)
-                probs = ','.join([str(p) for p in node.probs])
-                s_node = f'{v.id},{v.name},{vals},|,{probs}'
+                vals = ",".join(v.values)
+                probs = ",".join([str(p) for p in node.probs])
+                s_node = f"{v.id},{v.name},{vals},|,{probs}"
                 f.write(s_node)
-                f.write('\n')
+                f.write("\n")
 
             for _, edge in bbn.edges.items():
-                t = 'directed' if edge.type == EdgeType.DIRECTED else 'undirected'
-                s_edge = f'{edge.i.id},{edge.j.id},{t}'
+                t = "directed" if edge.type == EdgeType.DIRECTED else "undirected"
+                s_edge = f"{edge.i.id},{edge.j.id},{t}"
                 f.write(s_edge)
-                f.write('\n')
+                f.write("\n")
 
     @staticmethod
     def from_csv(path):
@@ -182,19 +185,27 @@ class Bbn(Dag):
         :param path: Path to CSV file.
         :return: BBN.
         """
-        with open(path, 'r') as f:
+        with open(path, "r") as f:
             nodes = {}
             edges = []
 
             for line in f:
-                tokens = line.split(',')
+                tokens = line.split(",")
                 if 3 == len(tokens):
                     edge = int(tokens[0]), int(tokens[1])
                     edges.append(edge)
                 else:
-                    tokens = line.split('|')
-                    v_part = [item.strip() for item in tokens[0].split(',') if len(item.strip()) > 0]
-                    p_part = [item.strip() for item in tokens[1].split(',') if len(item.strip()) > 0]
+                    tokens = line.split("|")
+                    v_part = [
+                        item.strip()
+                        for item in tokens[0].split(",")
+                        if len(item.strip()) > 0
+                    ]
+                    p_part = [
+                        item.strip()
+                        for item in tokens[1].split(",")
+                        if len(item.strip()) > 0
+                    ]
 
                     i = int(v_part[0])
                     v = Variable(i, v_part[1], v_part[2:])
@@ -224,8 +235,15 @@ class Bbn(Dag):
         :return: Dictionary.
         """
         return {
-            'nodes': {n.id: n.to_dict() for n in bbn.get_nodes()},
-            'edges': list(itertools.chain(*[[{'pa': pa, 'ch': ch} for pa in parents] for ch, parents in bbn.parents.items()]))
+            "nodes": {n.id: n.to_dict() for n in bbn.get_nodes()},
+            "edges": list(
+                itertools.chain(
+                    *[
+                        [{"pa": pa, "ch": ch} for pa in parents]
+                        for ch, parents in bbn.parents.items()
+                    ]
+                )
+            ),
         }
 
     @staticmethod
@@ -238,13 +256,13 @@ class Bbn(Dag):
         """
 
         def get_variable(d):
-            return Variable(d['id'], d['name'], d['values'])
+            return Variable(d["id"], d["name"], d["values"])
 
         def get_bbn_node(d):
-            return BbnNode(get_variable(d['variable']), d['probs'])
+            return BbnNode(get_variable(d["variable"]), d["probs"])
 
-        nodes = {k: get_bbn_node(n) for k, n in d['nodes'].items()}
-        edges = d['edges']
+        nodes = {k: get_bbn_node(n) for k, n in d["nodes"].items()}
+        edges = d["edges"]
 
         bbn = Bbn()
 
@@ -252,8 +270,8 @@ class Bbn(Dag):
             bbn.add_node(n)
 
         for e in edges:
-            pa_id = e['pa']
-            ch_id = e['ch']
+            pa_id = e["pa"]
+            ch_id = e["ch"]
 
             pa = nodes[pa_id] if pa_id in nodes else nodes[str(pa_id)]
             ch = nodes[ch_id] if ch_id in nodes else nodes[str(ch_id)]
@@ -272,7 +290,7 @@ class Bbn(Dag):
         :return: None.
         """
         s = json.dumps(Bbn.to_dict(bbn), indent=2)
-        with open(path, 'w') as f:
+        with open(path, "w") as f:
             f.write(s)
 
     @staticmethod
@@ -283,29 +301,32 @@ class Bbn(Dag):
         :param path: Path.
         :return: BBN.
         """
-        with open(path, 'r') as f:
+        with open(path, "r") as f:
             d = json.loads(f.read())
             bbn = Bbn.from_dict(d)
             return bbn
 
     @staticmethod
-    def to_dne(bbn, bnet_name='network'):
+    def to_dne(bbn, bnet_name="network"):
         d = Bbn.to_dict(bbn)
 
         def get_dne_node(id):
-            node = d['nodes'][id]
-            name = node['variable']['name']
+            node = d["nodes"][id]
+            name = node["variable"]["name"]
             states = f"({','.join(node['variable']['values'])})"
             probs = f"({','.join([f'{p}' for p in node['probs']])})"
-            parents = [d['nodes'][e['pa']]['variable']['name']
-                       for e in d['edges'] if e['ch'] == id]
+            parents = [
+                d["nodes"][e["pa"]]["variable"]["name"]
+                for e in d["edges"]
+                if e["ch"] == id
+            ]
             # parents = sorted(list(set(parents)))
             if len(parents) == 0:
-                parents = '()'
+                parents = "()"
             else:
                 parents = f"({','.join(parents)})"
 
-            return f'''node {name} {{
+            return f"""node {name} {{
                 discrete = TRUE;
                 states = {states};
                 kind = NATURE;
@@ -313,19 +334,19 @@ class Bbn(Dag):
                 parents = {parents};
                 probs = {probs};
             }};
-            '''
+            """
 
-        dnet_nodes = [get_dne_node(i) for i in d['nodes']]
-        dnet_nodes = '\n'.join(dnet_nodes)
+        dnet_nodes = [get_dne_node(i) for i in d["nodes"]]
+        dnet_nodes = "\n".join(dnet_nodes)
 
-        dnet = f'''// ~->[DNET-1]->~
+        dnet = f"""// ~->[DNET-1]->~
         bnet {bnet_name} {{
         AutoCompile = TRUE;
         autoupdate = TRUE;
 
         {dnet_nodes}
         }};
-        '''
+        """
 
         return dnet
 
@@ -390,33 +411,41 @@ class BbnUtil(object):
 
         :return: BBN.
         """
-        a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
-        b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
-        c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
-        d = BbnNode(Variable(3, 'd', ['on', 'off']), [0.9, 0.1, 0.5, 0.5])
-        e = BbnNode(Variable(4, 'e', ['on', 'off']), [0.3, 0.7, 0.6, 0.4])
-        f = BbnNode(Variable(5, 'f', ['on', 'off']), [0.01, 0.99, 0.01, 0.99, 0.01, 0.99, 0.99, 0.01])
-        g = BbnNode(Variable(6, 'g', ['on', 'off']), [0.8, 0.2, 0.1, 0.9])
-        h = BbnNode(Variable(7, 'h', ['on', 'off']), [0.05, 0.95, 0.95, 0.05, 0.95, 0.05, 0.95, 0.05])
+        a = BbnNode(Variable(0, "a", ["on", "off"]), [0.5, 0.5])
+        b = BbnNode(Variable(1, "b", ["on", "off"]), [0.5, 0.5, 0.4, 0.6])
+        c = BbnNode(Variable(2, "c", ["on", "off"]), [0.7, 0.3, 0.2, 0.8])
+        d = BbnNode(Variable(3, "d", ["on", "off"]), [0.9, 0.1, 0.5, 0.5])
+        e = BbnNode(Variable(4, "e", ["on", "off"]), [0.3, 0.7, 0.6, 0.4])
+        f = BbnNode(
+            Variable(5, "f", ["on", "off"]),
+            [0.01, 0.99, 0.01, 0.99, 0.01, 0.99, 0.99, 0.01],
+        )
+        g = BbnNode(Variable(6, "g", ["on", "off"]), [0.8, 0.2, 0.1, 0.9])
+        h = BbnNode(
+            Variable(7, "h", ["on", "off"]),
+            [0.05, 0.95, 0.95, 0.05, 0.95, 0.05, 0.95, 0.05],
+        )
 
-        bbn = Bbn() \
-            .add_node(a) \
-            .add_node(b) \
-            .add_node(c) \
-            .add_node(d) \
-            .add_node(e) \
-            .add_node(f) \
-            .add_node(g) \
-            .add_node(h) \
-            .add_edge(Edge(a, b, EdgeType.DIRECTED)) \
-            .add_edge(Edge(a, c, EdgeType.DIRECTED)) \
-            .add_edge(Edge(b, d, EdgeType.DIRECTED)) \
-            .add_edge(Edge(c, e, EdgeType.DIRECTED)) \
-            .add_edge(Edge(d, f, EdgeType.DIRECTED)) \
-            .add_edge(Edge(e, f, EdgeType.DIRECTED)) \
-            .add_edge(Edge(c, g, EdgeType.DIRECTED)) \
-            .add_edge(Edge(e, h, EdgeType.DIRECTED)) \
+        bbn = (
+            Bbn()
+            .add_node(a)
+            .add_node(b)
+            .add_node(c)
+            .add_node(d)
+            .add_node(e)
+            .add_node(f)
+            .add_node(g)
+            .add_node(h)
+            .add_edge(Edge(a, b, EdgeType.DIRECTED))
+            .add_edge(Edge(a, c, EdgeType.DIRECTED))
+            .add_edge(Edge(b, d, EdgeType.DIRECTED))
+            .add_edge(Edge(c, e, EdgeType.DIRECTED))
+            .add_edge(Edge(d, f, EdgeType.DIRECTED))
+            .add_edge(Edge(e, f, EdgeType.DIRECTED))
+            .add_edge(Edge(c, g, EdgeType.DIRECTED))
+            .add_edge(Edge(e, h, EdgeType.DIRECTED))
             .add_edge(Edge(g, h, EdgeType.DIRECTED))
+        )
 
         return bbn
 
@@ -427,25 +456,30 @@ class BbnUtil(object):
 
         :return: BBN.
         """
-        a = BbnNode(Variable(0, 'a', ['on', 'off']), [0.5, 0.5])
-        b = BbnNode(Variable(1, 'b', ['on', 'off']), [0.5, 0.5, 0.4, 0.6])
-        c = BbnNode(Variable(2, 'c', ['on', 'off']), [0.7, 0.3, 0.2, 0.8])
-        d = BbnNode(Variable(3, 'd', ['on', 'off']), [0.9, 0.1, 0.5, 0.5])
-        e = BbnNode(Variable(4, 'e', ['on', 'off']), [0.3, 0.7, 0.6, 0.4])
-        f = BbnNode(Variable(5, 'f', ['on', 'off']), [0.01, 0.99, 0.01, 0.99, 0.01, 0.99, 0.99, 0.01])
+        a = BbnNode(Variable(0, "a", ["on", "off"]), [0.5, 0.5])
+        b = BbnNode(Variable(1, "b", ["on", "off"]), [0.5, 0.5, 0.4, 0.6])
+        c = BbnNode(Variable(2, "c", ["on", "off"]), [0.7, 0.3, 0.2, 0.8])
+        d = BbnNode(Variable(3, "d", ["on", "off"]), [0.9, 0.1, 0.5, 0.5])
+        e = BbnNode(Variable(4, "e", ["on", "off"]), [0.3, 0.7, 0.6, 0.4])
+        f = BbnNode(
+            Variable(5, "f", ["on", "off"]),
+            [0.01, 0.99, 0.01, 0.99, 0.01, 0.99, 0.99, 0.01],
+        )
 
-        bbn = Bbn() \
-            .add_node(a) \
-            .add_node(b) \
-            .add_node(c) \
-            .add_node(d) \
-            .add_node(e) \
-            .add_node(f) \
-            .add_edge(Edge(a, b, EdgeType.DIRECTED)) \
-            .add_edge(Edge(a, c, EdgeType.DIRECTED)) \
-            .add_edge(Edge(b, d, EdgeType.DIRECTED)) \
-            .add_edge(Edge(c, e, EdgeType.DIRECTED)) \
-            .add_edge(Edge(d, f, EdgeType.DIRECTED)) \
+        bbn = (
+            Bbn()
+            .add_node(a)
+            .add_node(b)
+            .add_node(c)
+            .add_node(d)
+            .add_node(e)
+            .add_node(f)
+            .add_edge(Edge(a, b, EdgeType.DIRECTED))
+            .add_edge(Edge(a, c, EdgeType.DIRECTED))
+            .add_edge(Edge(b, d, EdgeType.DIRECTED))
+            .add_edge(Edge(c, e, EdgeType.DIRECTED))
+            .add_edge(Edge(d, f, EdgeType.DIRECTED))
             .add_edge(Edge(e, f, EdgeType.DIRECTED))
+        )
 
         return bbn

@@ -45,13 +45,17 @@ class EvidenceDistributor(object):
         Starts the evidence distribution.
         """
         self.start_clique.mark()
-        sepsets, cliques = self.__get_neighboring_cliques__(self.join_tree, self.start_clique)
+        sepsets, cliques = self.__get_neighboring_cliques__(
+            self.join_tree, self.start_clique
+        )
 
         for clique in cliques:
             clique[1].mark()
 
         for s, c in zip(sepsets, cliques):
-            PotentialUtil.pass_single_message(self.join_tree, self.start_clique, s[1], c[1])
+            PotentialUtil.pass_single_message(
+                self.join_tree, self.start_clique, s[1], c[1]
+            )
             self.__walk__(self.start_clique, s[1], c[1])
 
     def __walk__(self, x, s, y):

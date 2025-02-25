@@ -40,7 +40,9 @@ class EvidenceCollector(object):
         """
         self.start_clique.mark()
 
-        sepsets, cliques = self.__get_neighboring_cliques__(self.join_tree, self.start_clique)
+        sepsets, cliques = self.__get_neighboring_cliques__(
+            self.join_tree, self.start_clique
+        )
 
         for clique in cliques:
             clique[1].mark()

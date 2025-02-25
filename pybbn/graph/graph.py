@@ -109,7 +109,10 @@ class Graph(object):
             return False
 
         if EdgeType.UNDIRECTED == edge.type:
-            if lhs.id not in self.edge_map[rhs.id] or rhs.id not in self.edge_map[lhs.id]:
+            if (
+                lhs.id not in self.edge_map[rhs.id]
+                or rhs.id not in self.edge_map[lhs.id]
+            ):
                 return True
         else:
             if rhs.id not in self.edge_map[lhs.id]:
@@ -150,9 +153,9 @@ class Graph(object):
                 v.remove(id)
 
     def __str__(self):
-        nodes = str.join('\n', [x.__str__() for x in self.nodes.values()])
-        edges = str.join('\n', [x.__str__() for x in self.edges.values()])
-        return nodes + '\n' + edges
+        nodes = str.join("\n", [x.__str__() for x in self.nodes.values()])
+        edges = str.join("\n", [x.__str__() for x in self.edges.values()])
+        return nodes + "\n" + edges
 
     def __copy__(self):
         cls = self.__class__

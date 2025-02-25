@@ -298,9 +298,12 @@ def __generate_parameters__(g, max_values=2, max_alpha=10):
         parents = list(g.predecessors(i))
         params = __generate_dirichlet_parameters__(i, parents, num_values, max_alpha)
         g_params[i] = {
-            'parents': parents,
-            'params': params,
-            'shape': [__get_num_parent_instantiations__(parents, num_values), num_values[i]]
+            "parents": parents,
+            "params": params,
+            "shape": [
+                __get_num_parent_instantiations__(parents, num_values),
+                num_values[i],
+            ],
         }
     return g_params
 
@@ -315,13 +318,13 @@ def to_json(g, params, pretty=False):
     :return: None.
     """
     j = {
-        'nodes': list(g.nodes),
-        'edges': [{'pa': e[0], 'ch': e[1]} for e in g.edges],
-        'parameters': [{
-            'node': k,
-            'params': list(v['params'].flatten()),
-            'shape': v['shape']} for k, v in params.items()
-        ]}
+        "nodes": list(g.nodes),
+        "edges": [{"pa": e[0], "ch": e[1]} for e in g.edges],
+        "parameters": [
+            {"node": k, "params": list(v["params"].flatten()), "shape": v["shape"]}
+            for k, v in params.items()
+        ],
+    }
 
     return json.dumps(j, indent=2, sort_keys=False) if pretty is True else json.dumps(j)
 
@@ -370,8 +373,8 @@ def convert_for_exact_inference(g, p):
 
     for node in g.nodes:
         id = node
-        params = p[id]['params'].flatten()
-        states = ['state{}'.format(state) for state in range(p[id]['shape'][1])]
+        params = p[id]["params"].flatten()
+        states = ["state{}".format(state) for state in range(p[id]["shape"][1])]
         v = Variable(id, str(id), states)
         n = BbnNode(v, params)
         bbn.add_node(n)
@@ -405,7 +408,9 @@ def convert_for_drawing(bbn):
     return g
 
 
-def generate_bbn_to_file(n, file_path, bbn_type='singly', max_iter=10, max_values=2, max_alpha=10):
+def generate_bbn_to_file(
+    n, file_path, bbn_type="singly", max_iter=10, max_values=2, max_alpha=10
+):
     """
     Generates a BBN and saves it to a file.
 
@@ -417,14 +422,14 @@ def generate_bbn_to_file(n, file_path, bbn_type='singly', max_iter=10, max_value
     :param max_alpha: Maximum alpha.
     :return: None.
     """
-    if bbn_type == 'singly':
+    if bbn_type == "singly":
         g, p = generate_singly_bbn(n, max_iter, max_values, max_alpha)
     else:
         g, p = generate_multi_bbn(n, max_iter, max_values, max_alpha)
 
     bbn = convert_for_exact_inference(g, p)
 
-    if file_path.endswith('csv'):
+    if file_path.endswith("csv"):
         Bbn.to_csv(bbn, file_path)
     else:
         Bbn.to_json(bbn, file_path)

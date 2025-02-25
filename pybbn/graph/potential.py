@@ -39,10 +39,13 @@ class Potential(object):
         :param potentials: Potential.
         :return: Dictionary representation. Keys are entries and values are probabilities.
         """
-        return {tup[0]: tup[1] for tup in [pe.get_kv() for p in potentials for pe in p.entries]}
+        return {
+            tup[0]: tup[1]
+            for tup in [pe.get_kv() for p in potentials for pe in p.entries]
+        }
 
     def __str__(self):
-        return str.join('\n', [entry.__str__() for entry in self.entries])
+        return str.join("\n", [entry.__str__() for entry in self.entries])
 
     def __repr__(self):
         return self.__str__()
@@ -110,14 +113,24 @@ class PotentialEntry(object):
 
         :return: Key-value pair.
         """
-        return '|'.join(list(map(lambda tup: '{}={}'.format(tup[0], tup[1]), self.get_entry_keys()))), self.value
+        return (
+            "|".join(
+                list(
+                    map(
+                        lambda tup: "{}={}".format(tup[0], tup[1]),
+                        self.get_entry_keys(),
+                    )
+                )
+            ),
+            self.value,
+        )
 
     def __str__(self):
         arr = [(k, v) for k, v in self.entries.items()]
         arr = sorted(arr, key=lambda tup: tup[0])
-        arr = ['{}={}'.format(tup[0], tup[1]) for tup in arr]
-        s = str.join(',', arr)
-        return '{}|{:.5f}'.format(s, self.value)
+        arr = ["{}={}".format(tup[0], tup[1]) for tup in arr]
+        s = str.join(",", arr)
+        return "{}|{:.5f}".format(s, self.value)
 
     def __repr__(self):
         return self.__str__()
@@ -161,7 +174,9 @@ class PotentialUtil(object):
 
         for entry in potential.entries:
             matched_entries = clique_potential.get_matching_entries(entry)
-            entry.value = sum([matched_entry.value for matched_entry in matched_entries])
+            entry.value = sum(
+                [matched_entry.value for matched_entry in matched_entries]
+            )
 
         return potential
 
@@ -194,9 +209,11 @@ class PotentialUtil(object):
         potential = Potential()
         for i, entry in enumerate(numerator.entries):
             e = denominator.entries[i]
-            d = 0.0 \
-                if PotentialUtil.is_zero(entry.value) or PotentialUtil.is_zero(e.value) \
+            d = (
+                0.0
+                if PotentialUtil.is_zero(entry.value) or PotentialUtil.is_zero(e.value)
                 else (entry.value / e.value)
+            )
             new_entry = entry.duplicate()
             new_entry.value = d
             potential.add_entry(new_entry)
@@ -234,7 +251,9 @@ class PotentialUtil(object):
         :param parents: Parents of the BBN node (that themselves are also BBN nodes).
         :return: Potential.
         """
-        potential = PotentialUtil.get_potential_from_nodes(PotentialUtil.merge(node, parents))
+        potential = PotentialUtil.get_potential_from_nodes(
+            PotentialUtil.merge(node, parents)
+        )
         for i in range(len(potential.entries)):
             prob = node.probs[i]
             potential.entries[i].value = prob

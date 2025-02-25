@@ -69,8 +69,15 @@ class Triangulator(object):
         def get_edges_to_add(node, m):
             return Triangulator.get_edges_to_add(node, m)
 
-        return (NodeClique(node, get_neighbors(node, m), get_weight(node, m), get_edges_to_add(node, m))
-                for node in m.get_nodes())
+        return (
+            NodeClique(
+                node,
+                get_neighbors(node, m),
+                get_weight(node, m),
+                get_edges_to_add(node, m),
+            )
+            for node in m.get_nodes()
+        )
 
     @staticmethod
     def select_node(m):
@@ -80,7 +87,10 @@ class Triangulator(object):
         :param m: Graph.
         :return: Clique.
         """
-        return sorted(Triangulator.generate_cliques(m), key=lambda x: (len(x.edges), x.weight, x.node.id))[0]
+        return sorted(
+            Triangulator.generate_cliques(m),
+            key=lambda x: (len(x.edges), x.weight, x.node.id),
+        )[0]
 
     @staticmethod
     def get_weight(n, m):
@@ -94,7 +104,10 @@ class Triangulator(object):
         """
         if len(m.neighbors[n.id]) == 0:
             return n.get_weight()
-        weights = (m.get_node(neighbor_id).get_weight() for neighbor_id in m.get_neighbors(n.id))
+        weights = (
+            m.get_node(neighbor_id).get_weight()
+            for neighbor_id in m.get_neighbors(n.id)
+        )
         return n.get_weight() * reduce(lambda x, y: x * y, weights)
 
     @staticmethod
@@ -107,9 +120,11 @@ class Triangulator(object):
         :return: Array of edges.
         """
         neighbors = [m.get_node(i) for i in m.get_neighbors(n.id)]
-        return [Edge(neighbors[i], neighbors[j], EdgeType.UNDIRECTED)
-                for i, j in combinations(range(len(neighbors)), 2)
-                if not m.edge_exists(neighbors[i].id, neighbors[j].id)]
+        return [
+            Edge(neighbors[i], neighbors[j], EdgeType.UNDIRECTED)
+            for i, j in combinations(range(len(neighbors)), 2)
+            if not m.edge_exists(neighbors[i].id, neighbors[j].id)
+        ]
 
     @staticmethod
     def is_subset(cliques, clique):
@@ -155,4 +170,4 @@ class NodeClique:
         return neighbors
 
     def __str__(self):
-        return f'{self.node.id}|weight={self.weight}|edges={len(self.edges)}|neighbors={len(self.neighbors)}'
+        return f"{self.node.id}|weight={self.weight}|edges={len(self.edges)}|neighbors={len(self.neighbors)}"

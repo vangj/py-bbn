@@ -31,10 +31,12 @@ class Ace(object):
         """
 
         def get_evidence(n, v):
-            return EvidenceBuilder() \
-                .with_node(self.jt.get_bbn_node_by_name(n)) \
-                .with_evidence(v, 1.0) \
+            return (
+                EvidenceBuilder()
+                .with_node(self.jt.get_bbn_node_by_name(n))
+                .with_evidence(v, 1.0)
                 .build()
+            )
 
         def get_evidences(Z):
             return [get_evidence(n, v) for n, v in Z]
@@ -58,7 +60,9 @@ class Ace(object):
 
         Z = self.bbn.get_parents(n2i[x])
         Z_names = [i2n[z] for z in Z]
-        Z_values = list(itertools.product(*[self.bbn.get_node(z).variable.values for z in Z]))
+        Z_values = list(
+            itertools.product(*[self.bbn.get_node(z).variable.values for z in Z])
+        )
         Z_values = [[(z, v) for z, v in zip(Z_names, tup)] for tup in Z_values]
         x_values = [(x, v) for v in self.bbn.get_node(n2i[x]).variable.values]
 

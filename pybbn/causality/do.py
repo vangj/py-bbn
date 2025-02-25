@@ -1,10 +1,11 @@
-from typing import Any, List, Dict
+import itertools
+from collections import namedtuple
+from typing import Any, Dict, List
 
 import networkx as nx
-from collections import namedtuple
-import itertools
 
-Graph = namedtuple('Graph', 'u, d')
+Graph = namedtuple("Graph", "u, d")
+
 
 def get_undirected_graph(d: nx.DiGraph) -> nx.Graph:
     u = nx.Graph()
@@ -16,6 +17,7 @@ def get_undirected_graph(d: nx.DiGraph) -> nx.Graph:
         u.add_edge(p, c)
 
     return u
+
 
 def get_graph(d: nx.DiGraph) -> Graph:
     u = get_undirected_graph(d)
@@ -31,7 +33,7 @@ def get_path_triplets(path: List[Any]) -> List[List[Any]]:
     if len(path) < 3:
         return [path]
     else:
-        return [path[i:i + 3] for i in range(0, len(path) - 2)]
+        return [path[i : i + 3] for i in range(0, len(path) - 2)]
 
 
 def get_triplet_type(g: Graph, x: Any, z: Any, y: Any) -> str:
@@ -40,20 +42,20 @@ def get_triplet_type(g: Graph, x: Any, z: Any, y: Any) -> str:
     y_children = set(g.d.successors(y))
 
     if z in x_children and y in z_children:
-        return 'serial'
+        return "serial"
     if z in y_children and x in z_children:
-        return 'serial'
+        return "serial"
     if x in z_children and y in z_children:
-        return 'diverging'
+        return "diverging"
     if z in x_children and z in y_children:
-        return 'converging'
-    raise Exception(f'cannot determine triplet configuration: x={x}, z={z}, y={y}')
+        return "converging"
+    raise Exception(f"cannot determine triplet configuration: x={x}, z={z}, y={y}")
 
 
 def is_active_triplet(g: Graph, x: Any, z: Any, y: Any, evidence=set()):
     triplet_type = get_triplet_type(g, x, z, y)
 
-    if triplet_type in {'serial', 'diverging'}:
+    if triplet_type in {"serial", "diverging"}:
         if z in evidence:
             return False
         else:
@@ -88,7 +90,9 @@ def get_colliders(g: Graph, path: List[Any]):
         return []
 
     path_triplets = get_path_triplets(path)
-    return [z for x, z, y in path_triplets if get_triplet_type(g, x, z, y) == 'converging']
+    return [
+        z for x, z, y in path_triplets if get_triplet_type(g, x, z, y) == "converging"
+    ]
 
 
 def get_paths(g: Graph, x: Any, y: Any) -> List[Dict[str, Any]]:
@@ -108,14 +112,14 @@ def get_paths(g: Graph, x: Any, y: Any) -> List[Dict[str, Any]]:
         confounders = list(set(p) - xy - set(colliders))
 
         return {
-            'x': x,
-            'y': y,
-            'z': confounders,
-            'path': p,
-            'is_active': is_active_path(g, p),
-            'colliders': colliders,
-            'backdoor': is_backdoor_path(p),
-            'frontdoor': is_frontdoor_path(p)
+            "x": x,
+            "y": y,
+            "z": confounders,
+            "path": p,
+            "is_active": is_active_path(g, p),
+            "colliders": colliders,
+            "backdoor": is_backdoor_path(p),
+            "frontdoor": is_frontdoor_path(p),
         }
 
     paths = get_all_paths(g, x, y)
@@ -125,7 +129,11 @@ def get_paths(g: Graph, x: Any, y: Any) -> List[Dict[str, Any]]:
 def get_all_confounders(g: Graph, x: Any, y: Any) -> set[Any]:
     paths = get_paths(g, x, y)
 
-    colliders = [p['colliders'] for p in paths if p['is_active'] == False and p['backdoor'] == True]
+    colliders = [
+        p["colliders"]
+        for p in paths
+        if p["is_active"] is False and p["backdoor"] is True
+    ]
     colliders = itertools.chain(*colliders)
     colliders = set(colliders)
     # print(f'{colliders=}')
@@ -136,8 +144,11 @@ def get_all_confounders(g: Graph, x: Any, y: Any) -> set[Any]:
     exclude = colliders | descendants | {x, y}
     # print(f'{exclude=}')
 
-    candidates = [[n for n in p['path'] if n not in exclude] for p in paths if
-                  p['is_active'] == True and p['backdoor'] == True]
+    candidates = [
+        [n for n in p["path"] if n not in exclude]
+        for p in paths
+        if p["is_active"] is True and p["backdoor"] is True
+    ]
     # print(f'{candidates=}')
     candidates = itertools.chain(*candidates)
     candidates = set(candidates)
@@ -145,7 +156,9 @@ def get_all_confounders(g: Graph, x: Any, y: Any) -> set[Any]:
     return candidates
 
 
-def find_minimal_confounders(g: Graph, path: List[Any], x: Any, y: Any, z: Any) -> List[Any]:
+def find_minimal_confounders(
+    g: Graph, path: List[Any], x: Any, y: Any, z: Any
+) -> List[Any]:
     keep = []
     for _i, _c in enumerate(z):
         _z = keep + [_c]
@@ -160,15 +173,17 @@ def find_minimal_confounders(g: Graph, path: List[Any], x: Any, y: Any, z: Any) 
 
 def get_minimal_confounders(g: Graph, x: Any, y: Any) -> List[Any]:
     paths = get_paths(g, x, y)
-    paths = filter(lambda p: p['is_active'] == True and p['backdoor'] == True, paths)
+    paths = filter(lambda p: p["is_active"] is True and p["backdoor"] is True, paths)
 
-    confounders = [find_minimal_confounders(g, p['path'], x, y, p['z']) for p in paths]
+    confounders = [find_minimal_confounders(g, p["path"], x, y, p["z"]) for p in paths]
     confounders = itertools.chain(*confounders)
     confounders = set(confounders)
     return list(confounders)
 
 
-def find_minimal_mediator(g: Graph, path: List[Any], x: Any, y: Any, z: Any) -> List[Any]:
+def find_minimal_mediator(
+    g: Graph, path: List[Any], x: Any, y: Any, z: Any
+) -> List[Any]:
     colliders = get_colliders(g, path)
     exclude = {x, y} | set(colliders)
     candidates = set(path) - exclude
@@ -187,13 +202,17 @@ def find_minimal_mediator(g: Graph, path: List[Any], x: Any, y: Any, z: Any) -> 
 
 def get_minimal_mediators(g: Graph, x: Any, y: Any) -> List[Any]:
     all_paths = get_paths(g, x, y)
-    fontdoor_paths = filter(lambda p: p['is_active'] == True and p['frontdoor'] == True, all_paths)
+    fontdoor_paths = filter(
+        lambda p: p["is_active"] is True and p["frontdoor"] is True, all_paths
+    )
 
-    mediators = [find_minimal_mediator(g, p['path'], x, y, p['z']) for p in fontdoor_paths]
+    mediators = [
+        find_minimal_mediator(g, p["path"], x, y, p["z"]) for p in fontdoor_paths
+    ]
     mediators = itertools.chain(*mediators)
     mediators = set(mediators)
 
-    colliders = [p['colliders'] for p in all_paths]
+    colliders = [p["colliders"] for p in all_paths]
     colliders = itertools.chain(*colliders)
     colliders = set(colliders)
 

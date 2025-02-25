@@ -6,6 +6,7 @@ class EdgeType(Enum):
     """
     Edge type.
     """
+
     UNDIRECTED = 1
     DIRECTED = 2
 
@@ -37,10 +38,10 @@ class Edge(object):
         a = min(self.i.id, self.j.id)
         b = max(self.i.id, self.j.id)
 
-        edge = '--'
+        edge = "--"
         if EdgeType.DIRECTED == self.type:
-            edge = '->'
-            return '{}{}{}'.format(self.i.id, edge, self.j.id)
+            edge = "->"
+            return "{}{}{}".format(self.i.id, edge, self.j.id)
 
         return "{}{}{}".format(a, edge, b)
 
@@ -83,7 +84,7 @@ class SepSetEdge(Edge):
         lhs = self.i.__str__() if a == self.i.id else self.j.__str__()
         rhs = self.j.__str__() if b == self.j.id else self.i.__str__()
 
-        edge = '--'
+        edge = "--"
 
         return "{}{}{}".format(lhs, edge, rhs)
 
@@ -119,4 +120,8 @@ class JtEdge(Edge):
         return SepSetEdge(self.sep_set.right, self.sep_set)
 
     def __str__(self):
-        return '{}--{}--{}'.format(self.sep_set.left.__str__(), self.sep_set.__str__(), self.sep_set.right.__str__())
+        return "{}--{}--{}".format(
+            self.sep_set.left.__str__(),
+            self.sep_set.__str__(),
+            self.sep_set.right.__str__(),
+        )

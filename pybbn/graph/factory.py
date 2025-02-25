@@ -44,7 +44,7 @@ class Factory(object):
                 self.E = E
                 self.Vdata = Vdata
 
-        bn = LibpgmBBN(d['V'], d['E'], d['Vdata'])
+        bn = LibpgmBBN(d["V"], d["E"], d["Vdata"])
         return Factory.from_libpgm_discrete_object(bn)
 
     @staticmethod
@@ -58,14 +58,14 @@ class Factory(object):
 
         def get_nodes(bn, domain_spaces=True):
             def get_parent_domains(name, bn):
-                parents = bn.Vdata[name]['parents']
+                parents = bn.Vdata[name]["parents"]
                 domains = []
 
                 if parents is None or len(parents) == 0:
                     return domains
 
                 for parent in parents:
-                    domain = bn.Vdata[parent]['vals'][:]
+                    domain = bn.Vdata[parent]["vals"][:]
                     domains.append(domain)
                 return domains
 
@@ -80,30 +80,32 @@ class Factory(object):
                 return products
 
             def stringify_cross_product(pa_domains, domain_spaces=True):
-                joiner_delim = ', ' if domain_spaces is True else ','
+                joiner_delim = ", " if domain_spaces is True else ","
                 s = []
                 for pa_domain in pa_domains:
                     r = joiner_delim.join(["'{}'".format(v) for v in pa_domain])
-                    r = '[{}]'.format(r)
+                    r = "[{}]".format(r)
                     s.append(r)
                 return s
 
             def get_cond_probs(name, bn, domain_spaces=True):
                 probs = []
-                pa_domains = stringify_cross_product(cross_product(get_parent_domains(name, bn)), domain_spaces)
+                pa_domains = stringify_cross_product(
+                    cross_product(get_parent_domains(name, bn)), domain_spaces
+                )
                 if len(pa_domains) == 0:
-                    probs = bn.Vdata[name]['cprob'][:]
+                    probs = bn.Vdata[name]["cprob"][:]
                 else:
                     for pa_domain in pa_domains:
-                        cprob = bn.Vdata[name]['cprob'][pa_domain]
+                        cprob = bn.Vdata[name]["cprob"][pa_domain]
                         probs.extend(cprob)
 
                 return probs
 
             nodes = {}
             for name in bn.V:
-                domain = bn.Vdata[name]['vals'][:]
-                order = bn.Vdata[name]['ord']
+                domain = bn.Vdata[name]["vals"][:]
+                order = bn.Vdata[name]["ord"]
                 probs = get_cond_probs(name, bn, domain_spaces)
                 node = BbnNode(Variable(order, name, domain), probs)
                 nodes[name] = node
@@ -113,8 +115,8 @@ class Factory(object):
             edges = []
             for k, v in bn.Vdata.items():
                 ch = nodes[k]
-                if v['parents'] is not None and len(v['parents']) > 0:
-                    parents = [nodes[pa] for pa in v['parents']]
+                if v["parents"] is not None and len(v["parents"]) > 0:
+                    parents = [nodes[pa] for pa in v["parents"]]
                     for pa in parents:
                         edge = Edge(pa, ch, EdgeType.DIRECTED)
                         edges.append(edge)
@@ -181,7 +183,9 @@ class Factory(object):
 
                 for values in domains:
                     probs = []
-                    denom_q = ' and '.join([f'{n}=="{v}"' for n, v in zip(domain_names, values)])
+                    denom_q = " and ".join(
+                        [f'{n}=="{v}"' for n, v in zip(domain_names, values)]
+                    )
                     for v in n2v[name]:
                         numer_q = f'{name}=="{v}" and {denom_q}'
 

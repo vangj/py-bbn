@@ -40,7 +40,7 @@ class Node(object):
         return result
 
     def __str__(self):
-        return '{}'.format(self.id)
+        return "{}".format(self.id)
 
 
 class BbnNode(Node):
@@ -75,13 +75,12 @@ class BbnNode(Node):
 
         :return: Dictionary.
         """
-        return {
-            'probs': [p for p in self.probs],
-            'variable': self.variable.to_dict()
-        }
+        return {"probs": [p for p in self.probs], "variable": self.variable.to_dict()}
 
     def __str__(self):
-        return '{}|{}|{}'.format(self.id, self.variable.name, str.join(',', self.variable.values))
+        return "{}|{}|{}".format(
+            self.id, self.variable.name, str.join(",", self.variable.values)
+        )
 
     def __repr__(self):
         return self.variable.name
@@ -100,7 +99,7 @@ class Clique(Node):
         """
         nids = [n.id for n in nodes]
         nids.sort()
-        sid = str.join('-', [str(x) for x in nids])
+        sid = str.join("-", [str(x) for x in nids])
         Node.__init__(self, sid)
         self.nodes = nodes
         self.marked = False
@@ -130,7 +129,7 @@ class Clique(Node):
 
         :return: String ID composed of the sorted corresponding variables in each node.
         """
-        sids = '-'.join(sorted([n.variable.name for n in self.nodes]))
+        sids = "-".join(sorted([n.variable.name for n in self.nodes]))
         return sids
 
     def is_marked(self):
@@ -207,7 +206,7 @@ class Clique(Node):
 
     def __str__(self):
         names = sorted([node.variable.name for node in self.nodes])
-        return '({})'.format(str.join(',', names))
+        return "({})".format(str.join(",", names))
 
 
 class SepSet(Clique):
@@ -225,7 +224,7 @@ class SepSet(Clique):
         if lhs is None or rhs is None or intersection is None:
             _, lhs, rhs, intersection = left.intersects(right)
 
-        sid = '-'.join(str(x) for arr in [lhs, intersection, rhs] for x in arr)
+        sid = "-".join(str(x) for arr in [lhs, intersection, rhs] for x in arr)
         Node.__init__(self, sid)
         self.nodes = [x for x in left.nodes if x.id in intersection]
         self.marked = False
@@ -278,6 +277,6 @@ class SepSet(Clique):
         return len(self.nodes)
 
     def __str__(self):
-        s = '{}'.format(str.join(',', [node.variable.name for node in self.nodes]))
-        s = '|{} -- {} -- {}|'.format(self.left, s, self.right)
+        s = "{}".format(str.join(",", [node.variable.name for node in self.nodes]))
+        s = "|{} -- {} -- {}|".format(self.left, s, self.right)
         return s

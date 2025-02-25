@@ -38,7 +38,7 @@ class Initializer(object):
 
         for node in nodes:
             for value in node.variable.values:
-                clique = node.metadata['parent.clique']
+                clique = node.metadata["parent.clique"]
                 clique_potential = join_tree.potentials[clique.id]
                 node_potential = join_tree.get_evidence(node, value)
                 PotentialUtil.multiply(clique_potential, node_potential)
@@ -55,10 +55,13 @@ class Initializer(object):
         :param join_tree: Join tree.
         :return: Parent clique.
         """
-        if 'parent.clique' not in node.metadata:
-            cliques = sorted(join_tree.find_cliques_with_node_and_parents(node.id), key=lambda x: x.id)
+        if "parent.clique" not in node.metadata:
+            cliques = sorted(
+                join_tree.find_cliques_with_node_and_parents(node.id),
+                key=lambda x: x.id,
+            )
             clique = cliques[0]
-            node.add_metadata('parent.clique', clique)
+            node.add_metadata("parent.clique", clique)
             return clique
         else:
-            return node.metadata['parent.clique']
+            return node.metadata["parent.clique"]

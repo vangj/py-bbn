@@ -30,6 +30,6 @@ class Moralizer(object):
                     ug.add_edge(Edge(pa1, pa2, EdgeType.UNDIRECTED))
         for node in dag.get_nodes():
             parents = [dag.get_node(pa) for pa in dag.get_parents(node.id)]
-            node.add_metadata('parents', parents)
+            node.add_metadata("parents", parents)
 
         return ug

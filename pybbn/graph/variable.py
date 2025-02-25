@@ -33,7 +33,7 @@ class Variable(object):
         return result
 
     def __str__(self):
-        return '{}|{}|{}'.format(self.id, self.name, self.values)
+        return "{}|{}|{}".format(self.id, self.name, self.values)
 
     def to_dict(self):
         """
@@ -41,8 +41,4 @@ class Variable(object):
 
         :return: Dictionary.
         """
-        return {
-            'id': self.id,
-            'name': self.name,
-            'values': self.values
-        }
+        return {"id": self.id, "name": self.name, "values": self.values}

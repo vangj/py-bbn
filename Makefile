@@ -12,7 +12,9 @@ init:
 	pip install -r requirements.txt
 
 lint:
-	python -m flake8 ./pybbn
+	isort ./pybbn ./tests
+	black ./pybbn ./tests
+	python -m flake8 ./pybbn ./tests
 
 test:
 	nose2

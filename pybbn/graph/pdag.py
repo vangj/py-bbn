@@ -31,7 +31,9 @@ class Pdag(Graph):
         """
         parents = self.get_parents(id)
         neighbors = self.get_neighbors(id)
-        out_nodes = [neighbor_id for neighbor_id in neighbors if neighbor_id not in parents]
+        out_nodes = [
+            neighbor_id for neighbor_id in neighbors if neighbor_id not in parents
+        ]
         return out_nodes
 
     def __shouldadd__(self, edge):
@@ -47,7 +49,10 @@ class Pdag(Graph):
         if parent.id == child.id:
             return False
 
-        if child.id not in self.edge_map[parent.id] and parent.id not in self.edge_map[child.id]:
+        if (
+            child.id not in self.edge_map[parent.id]
+            and parent.id not in self.edge_map[child.id]
+        ):
             if not PathDetector(self, child.id, parent.id).exists():
                 return True
 

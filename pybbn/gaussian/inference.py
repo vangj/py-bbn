@@ -23,12 +23,22 @@ class GaussianInference(object):
         self.meta = meta
 
     def __repr__(self):
-        H = ','.join(self.H)
-        M = ','.join([f'{m:.3f}' for m in self.M])
-        E = '[' + '|'.join(['[' + ','.join([f'{self.E[r][c]:.3f}' for c in range(self.E.shape[1])]) + ']'
-                            for r in range(self.E.shape[0])]) + ']'
-        meta = '{' + ','.join([f'{k}={v:.3f}' for k, v in self.meta.items()]) + '}'
-        s = f'GaussianInference[H=[{H}], M=[{M}], E={E}, meta={meta}]'
+        H = ",".join(self.H)
+        M = ",".join([f"{m:.3f}" for m in self.M])
+        E = (
+            "["
+            + "|".join(
+                [
+                    "["
+                    + ",".join([f"{self.E[r][c]:.3f}" for c in range(self.E.shape[1])])
+                    + "]"
+                    for r in range(self.E.shape[0])
+                ]
+            )
+            + "]"
+        )
+        meta = "{" + ",".join([f"{k}={v:.3f}" for k, v in self.meta.items()]) + "}"
+        s = f"GaussianInference[H=[{H}], M=[{M}], E={E}, meta={meta}]"
         return s
 
     def sample_marginals(self, size=1000):
@@ -46,8 +56,7 @@ class GaussianInference(object):
                 s = np.sqrt(v)
             return pd.Series(np.random.normal(m, s, size=size))
 
-        return {m['name']: get_samples(m['mean'], m['var'])
-                for m in self.marginals}
+        return {m["name"]: get_samples(m["mean"], m["var"]) for m in self.marginals}
 
     @property
     def marginals(self):
@@ -56,8 +65,10 @@ class GaussianInference(object):
 
         :return: List of dictionary. Each element has name, mean and variance.
         """
-        return [{'name': name, 'mean': mean, 'var': var}
-                for name, (mean, var) in self.P.items()]
+        return [
+            {"name": name, "mean": mean, "var": var}
+            for name, (mean, var) in self.P.items()
+        ]
 
     @property
     def P(self):

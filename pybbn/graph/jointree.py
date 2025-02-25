@@ -4,7 +4,7 @@ from enum import Enum
 
 from pybbn.graph.edge import JtEdge
 from pybbn.graph.graph import Ug
-from pybbn.graph.node import SepSet, Clique, BbnNode
+from pybbn.graph.node import BbnNode, Clique, SepSet
 from pybbn.graph.potential import Potential, PotentialEntry, PotentialUtil
 from pybbn.graph.variable import Variable
 
@@ -59,7 +59,7 @@ class JoinTree(Ug):
 
             m = {}
             for potential_entry in potential.entries:
-                k = ''.join([f'{y}' for _, y in potential_entry.entries.items()])
+                k = "".join([f"{y}" for _, y in potential_entry.entries.items()])
                 m[k] = potential_entry.value
 
             name = bbn_node.variable.name
@@ -74,8 +74,10 @@ class JoinTree(Ug):
         :param node: BBN node.
         :return: Potential.
         """
-        clique = node.metadata['parent.clique']
-        potential = PotentialUtil.normalize(PotentialUtil.marginalize_for(self, clique, [node]))
+        clique = node.metadata["parent.clique"]
+        potential = PotentialUtil.normalize(
+            PotentialUtil.marginalize_for(self, clique, [node])
+        )
         return potential
 
     def unmark_cliques(self):
@@ -92,7 +94,9 @@ class JoinTree(Ug):
         :param cpts: Dictionary of CPTs. Keys are ids of BBN node and values are new CPTs.
         :return: None
         """
-        bbn_nodes = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
+        bbn_nodes = {
+            node.id: node for clique in self.get_cliques() for node in clique.nodes
+        }
         for idx, cpt in cpts.items():
             if idx in bbn_nodes:
                 bbn_nodes[idx].probs = cpt
@@ -104,12 +108,16 @@ class JoinTree(Ug):
 
         :return: Map. Keys are node ID and values are list of nodes.
         """
+
         def get_parents(node_id):
             if node_id in self.parent_info:
                 return [bbn_nodes[pa_id] for pa_id in self.parent_info[node_id]]
             else:
                 return []
-        bbn_nodes = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
+
+        bbn_nodes = {
+            node.id: node for clique in self.get_cliques() for node in clique.nodes
+        }
         result = {node: get_parents(node_id) for node_id, node in bbn_nodes.items()}
         return result
 
@@ -122,7 +130,9 @@ class JoinTree(Ug):
         # if self.__all_nodes__ is None:
         #     self.__all_nodes__ = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
         # return self.__all_nodes__
-        result = {node.id: node for clique in self.get_cliques() for node in clique.nodes}
+        result = {
+            node.id: node for clique in self.get_cliques() for node in clique.nodes
+        }
         return result
 
     def get_bbn_nodes(self):
@@ -152,7 +162,11 @@ class JoinTree(Ug):
         :param name: Node name.
         :return: BBN node or None if no such node exists.
         """
-        bbn_nodes = {node.variable.name: node for clique in self.get_cliques() for node in clique.nodes}
+        bbn_nodes = {
+            node.variable.name: node
+            for clique in self.get_cliques()
+            for node in clique.nodes
+        }
         if name in bbn_nodes:
             return bbn_nodes[name]
         return None
@@ -168,7 +182,11 @@ class JoinTree(Ug):
         ids.append(id)
 
         set1 = set(ids)
-        result = [clique for clique in self.get_cliques() if clique.get_node_ids().issuperset(set1)]
+        result = [
+            clique
+            for clique in self.get_cliques()
+            if clique.get_node_ids().issuperset(set1)
+        ]
         return result
 
     def add_potential(self, clique, potential):
@@ -290,11 +308,19 @@ class JoinTree(Ug):
             change = evidence.compare(potentials)
             changes.append(change)
 
-        count = len([change_type for change_type in changes if ChangeType.RETRACTION == change_type])
+        count = len(
+            [
+                change_type
+                for change_type in changes
+                if ChangeType.RETRACTION == change_type
+            ]
+        )
         if count > 0:
             return ChangeType.RETRACTION
 
-        count = len([change_type for change_type in changes if ChangeType.UPDATE == change_type])
+        count = len(
+            [change_type for change_type in changes if ChangeType.UPDATE == change_type]
+        )
         if count > 0:
             return ChangeType.UPDATE
 
@@ -399,16 +425,9 @@ class JoinTree(Ug):
             d = {}
             for n in nodes:
                 if isinstance(n, SepSet):
-                    d[n.id] = {
-                        'left': n.left.id,
-                        'right': n.right.id,
-                        'type': 'sepset'
-                    }
+                    d[n.id] = {"left": n.left.id, "right": n.right.id, "type": "sepset"}
                 elif isinstance(n, Clique):
-                    d[n.id] = {
-                        'node_ids': list(n.node_ids),
-                        'type': 'clique'
-                    }
+                    d[n.id] = {"node_ids": list(n.node_ids), "type": "clique"}
             return d
 
         def edges_to_dict(edges):
@@ -419,12 +438,12 @@ class JoinTree(Ug):
         jt_edges = edges_to_dict(jt.get_edges())
 
         return {
-            'bbn_nodes': bbn_nodes,
-            'jt': {
-                'nodes': jt_nodes,
-                'edges': jt_edges,
-                'parent_info': {str(k): v for k, v in bbn.parents.items()}
-            }
+            "bbn_nodes": bbn_nodes,
+            "jt": {
+                "nodes": jt_nodes,
+                "edges": jt_edges,
+                "parent_info": {str(k): v for k, v in bbn.parents.items()},
+            },
         }
 
     @staticmethod
@@ -437,29 +456,40 @@ class JoinTree(Ug):
         """
 
         def get_variable(d):
-            return Variable(d['id'], d['name'], d['values'])
+            return Variable(d["id"], d["name"], d["values"])
 
         def get_bbn_node(d):
-            return BbnNode(get_variable(d['variable']), d['probs'])
+            return BbnNode(get_variable(d["variable"]), d["probs"])
 
         def get_clique(d, bbn_nodes):
-            return Clique([bbn_nodes[idx] if idx in bbn_nodes else bbn_nodes[str(idx)] for idx in d['node_ids']])
+            return Clique(
+                [
+                    bbn_nodes[idx] if idx in bbn_nodes else bbn_nodes[str(idx)]
+                    for idx in d["node_ids"]
+                ]
+            )
 
         def get_sep_set(lhs_clique, rhs_clique):
             _, lhs, rhs, intersection = lhs_clique.intersects(rhs_clique)
             return SepSet(lhs_clique, rhs_clique, lhs, rhs, intersection)
 
-        bbn_nodes = {k: get_bbn_node(n) for k, n in d['bbn_nodes'].items()}
+        bbn_nodes = {k: get_bbn_node(n) for k, n in d["bbn_nodes"].items()}
 
-        cliques = [get_clique(clique, bbn_nodes)
-                   for k, clique in d['jt']['nodes'].items() if clique['type'] == 'clique']
+        cliques = [
+            get_clique(clique, bbn_nodes)
+            for k, clique in d["jt"]["nodes"].items()
+            if clique["type"] == "clique"
+        ]
         cliques = {c.id: c for c in cliques}
 
-        sepsets = [get_sep_set(cliques[s['left']], cliques[s['right']])
-                   for k, s in d['jt']['nodes'].items() if s['type'] == 'sepset']
+        sepsets = [
+            get_sep_set(cliques[s["left"]], cliques[s["right"]])
+            for k, s in d["jt"]["nodes"].items()
+            if s["type"] == "sepset"
+        ]
         sepsets = {s.id: s for s in sepsets}
 
-        edges = [JtEdge(sepsets[e]) for e in d['jt']['edges']]
+        edges = [JtEdge(sepsets[e]) for e in d["jt"]["edges"]]
 
         jt = JoinTree()
         if len(edges) > 0:
@@ -468,7 +498,7 @@ class JoinTree(Ug):
         else:
             jt.nodes = cliques
 
-        jt.parent_info = {int(k): v for k, v in d['jt']['parent_info'].items()}
+        jt.parent_info = {int(k): v for k, v in d["jt"]["parent_info"].items()}
         return jt
 
     def __shouldadd__(self, edge):
@@ -497,8 +527,8 @@ class JoinTree(Ug):
         :return: Array of parent ids.
         """
         node = self.get_bbn_node(id)
-        if 'parents' in node.metadata:
-            return [n.id for n in node.metadata['parents']]
+        if "parents" in node.metadata:
+            return [n.id for n in node.metadata["parents"]]
         return []
 
     def __notify_listener__(self, change):
@@ -595,6 +625,7 @@ class EvidenceType(Enum):
     """
     Evidence type.
     """
+
     VIRTUAL = 1
     FINDING = 2
     OBSERVATION = 3
@@ -605,6 +636,7 @@ class ChangeType(Enum):
     """
     Change type.
     """
+
     NONE = 1
     UPDATE = 2
     RETRACTION = 3
@@ -824,10 +856,14 @@ class Evidence(object):
 
         if EvidenceType.VIRTUAL == self.type:
             for value in self.node.variable.values:
-                self.values[value] = Evidence.__normalize_value_between_zero_one__(self.values[value])
+                self.values[value] = Evidence.__normalize_value_between_zero_one__(
+                    self.values[value]
+                )
         elif EvidenceType.FINDING == self.type:
             for value in self.node.variable.values:
-                self.values[value] = Evidence.__normalize_value_zero_or_one__(self.values[value])
+                self.values[value] = Evidence.__normalize_value_zero_or_one__(
+                    self.values[value]
+                )
 
             count = sum([x for x in self.values.values()])
             if 0.0 == count:
